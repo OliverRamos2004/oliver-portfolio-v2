@@ -1,0 +1,58 @@
+import type { ArtifactEntry } from "@/types/project";
+
+export const artifacts: ArtifactEntry[] = [
+  {
+    id: "artifact-01",
+    title: "Grain Study No. 3",
+    year: 2025,
+    category: "Generative",
+    medium: "Generative — p5.js",
+    note: "Flow field seeded from a single scanned fingerprint.",
+    media: { type: "image", src: "/explorations/artifact-01.jpg", alt: "Generative flow field study", aspectRatio: 4 / 5 },
+  },
+  {
+    id: "artifact-02",
+    title: "Untitled (Coordinates)",
+    year: 2025,
+    category: "Print",
+    medium: "Print / Risograph",
+    note: "GPS trace of every walk taken during one winter.",
+    media: { type: "image", src: "/explorations/artifact-02.jpg", alt: "Risograph print of GPS traces", aspectRatio: 1 },
+  },
+  {
+    id: "artifact-03",
+    title: "Loop Object 002",
+    year: 2024,
+    category: "Physical Computing",
+    medium: "Physical Computing",
+    note: "Servo-driven paper loop, 6-second cycle.",
+    media: { type: "video", src: "/explorations/artifact-03.mp4", alt: "Kinetic paper sculpture loop", aspectRatio: 9 / 16 },
+  },
+  {
+    id: "artifact-04",
+    title: "Signal / Noise",
+    year: 2024,
+    category: "Sound",
+    medium: "Sound Visualization",
+    note: "Subway platform ambience rendered as topographic contour.",
+    media: { type: "image", src: "/explorations/artifact-04.jpg", alt: "Topographic sound visualization", aspectRatio: 16 / 9 },
+  },
+  {
+    id: "artifact-05",
+    title: "Specimen Sheet A",
+    year: 2023,
+    category: "Type",
+    medium: "Type Design",
+    note: "Variable typeface exploring failure states of a grid.",
+    media: { type: "image", src: "/explorations/artifact-05.jpg", alt: "Type specimen sheet", aspectRatio: 3 / 4 },
+  },
+  {
+    id: "artifact-06",
+    title: "Rehearsal Footage",
+    year: 2023,
+    category: "Video",
+    medium: "Video / Installation Documentation",
+    note: "Two-channel projection test, unreleased.",
+    media: { type: "video", src: "/explorations/artifact-06.mp4", alt: "Two-channel projection test footage", aspectRatio: 16 / 9 },
+  },
+];

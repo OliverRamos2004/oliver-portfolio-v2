@@ -97,7 +97,7 @@ body {
   border-top: 1px solid var(--color-hairline-on-dark);
 }
 
-/* Body scroll lock while the drawer is open (see ProjectDrawer) */
+/* Body scroll lock while the drawer (or the mobile nav menu) is open */
 body[data-drawer-open="true"] {
   overflow: hidden;
 }

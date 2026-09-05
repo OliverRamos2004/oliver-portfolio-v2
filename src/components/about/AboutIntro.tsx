@@ -17,16 +17,14 @@ export function AboutIntro() {
       </div>
 
       <div className="mt-8 px-4 md:mt-10 md:px-8">
-        <div
-          className="relative mx-auto max-w-6xl overflow-hidden border border-hairline-on-light"
-          style={{ aspectRatio: 2000 / 1371 }}
-        >
+        <div className="mx-auto max-w-6xl overflow-hidden border border-hairline-on-light">
           <Image
-            src="/images/oliver/ramos-hero2.jpg"
+            src="/about/hero.jpg"
             alt="Oliver Ramos"
-            fill
+            width={2000}
+            height={1371}
             sizes="(min-width: 1152px) 1152px, 100vw"
-            className="object-cover"
+            className="block h-auto w-full object-cover"
             priority
           />
         </div>

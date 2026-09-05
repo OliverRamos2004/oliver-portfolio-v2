@@ -37,6 +37,14 @@ yarn-error.log*
 # vercel
 .vercel
 
+# raw, full-resolution photo uploads — source material for the optimized
+# copies actually used by the site (public/gallery/, public/about/, etc.);
+# kept locally, not tracked, to avoid repo bloat
+/public/images/
+/public/about/NM.JPG
+/public/about/barber10.JPG
+/public/about/drmset2.JPG
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

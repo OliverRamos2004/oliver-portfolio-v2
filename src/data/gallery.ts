@@ -1,10 +1,10 @@
 import type { GalleryPhoto } from "@/types/gallery";
 
 export const galleryPhotos: GalleryPhoto[] = [
-  { id: "g1", src: "/gallery/01.jpg", alt: "Desk setup with sketches and a laptop", caption: "Studio, Austin, TX — 2026", aspectRatio: 4 / 5 },
-  { id: "g2", src: "/gallery/02.jpg", alt: "On-site visit at a client's property", caption: "Client site visit, Austin — 2026", aspectRatio: 3 / 2 },
-  { id: "g3", src: "/gallery/03.jpg", alt: "Handwritten notebook pages of system diagrams", caption: "Notebook, workflow sketches — 2026", aspectRatio: 4 / 5 },
-  { id: "g4", src: "/gallery/04.jpg", alt: "Portrait at a coworking space", caption: "Working session, Austin — 2025", aspectRatio: 1 },
-  { id: "g5", src: "/gallery/05.jpg", alt: "Close-up of a laptop screen showing a database schema", caption: "Schema design, late night — 2025", aspectRatio: 3 / 2 },
-  { id: "g6", src: "/gallery/06.jpg", alt: "View from a walk around Austin", caption: "Walk around town — 2025", aspectRatio: 4 / 5 },
+  { id: "g1", src: "/gallery/01.jpg", alt: "Drum kit, sticks resting on the snare", caption: "Practice kit, Austin — 2026", aspectRatio: 1350 / 1800 },
+  { id: "g2", src: "/gallery/02.jpg", alt: "Fresh taper fade haircut at a barbershop", caption: "Fresh cut by @CutbyOliver — 2026", aspectRatio: 1350 / 1800 },
+  { id: "g3", src: "/gallery/03.jpg", alt: "Rose and lavender garden in bloom", caption: "Rose & lavender garden — 2026", aspectRatio: 1350 / 1800 },
+  { id: "g4", src: "/gallery/04.jpg", alt: "Ancient cliff dwelling carved into sandstone", caption: "New Mexico — 2025", aspectRatio: 1350 / 1800 },
+  { id: "g5", src: "/gallery/05.jpg", alt: "Aerial view of a town at dusk beneath a wide sky", caption: "Overlook at dusk — 2025", aspectRatio: 1350 / 1800 },
+  { id: "g6", src: "/gallery/06.jpg", alt: "Blooming prickly pear cactus along a Texas hill-country path", caption: "Hill country, Texas — 2026", aspectRatio: 1350 / 1800 },
 ];

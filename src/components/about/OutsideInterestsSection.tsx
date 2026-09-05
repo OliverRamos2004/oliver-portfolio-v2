@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { InterestEntry } from "@/types/about";
 import type { GalleryPhoto } from "@/types/gallery";
 
@@ -35,10 +36,16 @@ export function OutsideInterestsSection({ interests, photos }: { interests: Inte
           {photos.map((photo) => (
             <figure key={photo.id} className="border border-hairline-on-light">
               <div
-                className="flex items-center justify-center overflow-hidden bg-charcoal/5 font-mono text-[9px] uppercase text-charcoal/35"
+                className="relative overflow-hidden bg-charcoal/5"
                 style={{ aspectRatio: photo.aspectRatio }}
               >
-                {photo.alt}
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(min-width: 768px) 25vw, 33vw"
+                  className="object-cover"
+                />
               </div>
               <figcaption className="hairline-t px-2 py-1.5 font-mono text-[9px] uppercase text-charcoal/45" style={{ letterSpacing: "var(--tracking-wide)" }}>
                 {photo.caption}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import type { ArtifactEntry } from "@/types/project";
 import { Button } from "@/components/ui/Button";
 
@@ -41,10 +42,27 @@ export function VisualExplorationsGrid({ artifacts }: { artifacts: ArtifactEntry
             className={`group mb-4 break-inside-avoid border border-hairline-on-light ${i % 3 === 1 ? "sm:mt-10" : ""}`}
           >
             <div
-              className="flex items-center justify-center overflow-hidden bg-charcoal/5 font-mono text-[10px] uppercase text-charcoal/35 transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+              className="relative overflow-hidden bg-charcoal/5"
               style={{ aspectRatio: artifact.media.aspectRatio }}
             >
-              {artifact.media.alt}
+              {artifact.media.type === "image" ? (
+                <Image
+                  src={artifact.media.src}
+                  alt={artifact.media.alt}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                />
+              ) : (
+                <video
+                  src={artifact.media.src}
+                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                />
+              )}
             </div>
             <figcaption className="hairline-t flex items-baseline justify-between px-3 py-2.5">
               <span className="font-sans text-sm text-charcoal">{artifact.title}</span>

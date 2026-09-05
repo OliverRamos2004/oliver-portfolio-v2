@@ -9,7 +9,7 @@ export function PhilosophySection() {
           className="font-display text-xl font-bold uppercase text-charcoal md:text-2xl"
           style={{ letterSpacing: "var(--tracking-tight)" }}
         >
-          Philosophy
+          My Philosophy
         </h2>
       </div>
 
@@ -37,7 +37,7 @@ export function PhilosophySection() {
         <p className="font-sans text-base leading-relaxed text-charcoal/70">
           What I care about is being the person who can sit in a room with a
           healthcare administrator or a business owner, understand what they
-          actually need — not what a generic template assumes they need —
+          actually need,
           and then go build the exact right-sized system for it. That&rsquo;s
           the consulting work. The engineering is just how I keep the
           promise.

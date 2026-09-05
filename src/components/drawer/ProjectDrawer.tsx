@@ -58,7 +58,11 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
         </button>
       </header>
 
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 py-8 md:px-10 md:py-12">
+      <div
+        data-lenis-prevent
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 py-8 md:px-10 md:py-12"
+      >
+
         <h2
           className="font-display text-5xl font-black uppercase leading-[0.9] text-white md:text-6xl"
           style={{ letterSpacing: "var(--tracking-tightest)" }}

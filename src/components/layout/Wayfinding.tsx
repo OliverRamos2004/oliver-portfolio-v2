@@ -13,6 +13,7 @@ const COORDINATES = "30.2672° N / 97.7431° W";
 const JUMP_LINKS = [
   { label: "Index", target: "#index" },
   { label: "Skills", target: "#skills" },
+  { label: "Product", target: "#pm" },
   { label: "Explorations", target: "#explorations" },
   { label: "Gallery", target: "#gallery" },
   { label: "Contact", target: "#contact" },

@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
+import { User } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { SOCIALS } from "@/data/socials";
 
 const LINES = ["CREATIVE", "TECHNOLOGIST", "& ARTIST"];
 
@@ -65,6 +68,24 @@ export function HeroManifesto() {
         production software with generative art, and love to build things that are both functional and beautiful.
         Based in Austin, TX.
       </motion.p>
+
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.85, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+        className="relative mt-8 flex flex-wrap items-center gap-2"
+      >
+        {SOCIALS.map((social) => (
+          <Button key={social.href} href={social.href} target="_blank" rel="noopener noreferrer">
+            {social.label}
+          </Button>
+        ))}
+
+        <Button href="/about">
+          <User size={13} strokeWidth={1.5} />
+          About
+        </Button>
+      </motion.div>
 
       <div className="hairline-t absolute inset-x-4 bottom-0 pt-0 md:inset-x-8" />
     </section>

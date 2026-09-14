@@ -17,13 +17,11 @@ export function PhilosophySection() {
         className="mt-8 max-w-3xl font-display font-bold uppercase leading-[1.05] text-charcoal"
         style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)", letterSpacing: "var(--tracking-tight)" }}
       >
-        “I believe in the relentless pursuit of growth—through learning, hands-on 
+        “I believe in the relentless pursuit of growth: through learning, hands-on 
           experiences, and the communities that help us prosper together. 
           If you aren&rsquo;t a slightly different person at the end of the journey 
           than when you started, transformation hasn&rsquo;t really happened. 
-          In a professional setting, that mindset shapes everything I build: 
-          systems for a clinic taking patient records off paper, cash flow clarity 
-          for a landscaping business, and sites launched without the fluff. 
+          In a professional setting, that mindset shapes everything I build. 
           None of it is glamorous work, but all of it requires listening first 
           and growing alongside the people you&rsquo;re building for.”
       </p>

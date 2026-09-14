@@ -6,7 +6,7 @@ import { User } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SOCIALS } from "@/data/socials";
 
-const LINES = ["CREATIVE", "TECHNOLOGIST", "& ARTIST"];
+const LINES = ["MY NAME IS", "OLIVER RAMOS:", "CREATIVE TECH"];
 
 const container = {
   hidden: {},
@@ -25,7 +25,7 @@ export function HeroManifesto() {
   return (
     <section className="relative flex min-h-screen flex-col justify-end overflow-hidden px-4 pb-16 pt-32 md:px-8 md:pb-24">
       <Image
-        src="/hero/clouds.jpg"
+        src="/hero/gradient.jpg"
         alt=""
         fill
         priority
@@ -64,8 +64,8 @@ export function HeroManifesto() {
         transition={{ delay: 0.7, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
         className="relative mt-8 max-w-md font-sans text-sm text-charcoal/70 md:text-base"
       >
-        My name is Oliver. I blend
-        production software with generative art, and love to build things that are both functional and beautiful.
+        My name is Oliver. I have a background in
+        production software, operations, have an eye for art, and love to build things that are both functional and beautiful.
         Based in Austin, TX.
       </motion.p>
 

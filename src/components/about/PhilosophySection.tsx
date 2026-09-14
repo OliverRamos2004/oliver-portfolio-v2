@@ -17,31 +17,27 @@ export function PhilosophySection() {
         className="mt-8 max-w-3xl font-display font-bold uppercase leading-[1.05] text-charcoal"
         style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)", letterSpacing: "var(--tracking-tight)" }}
       >
-        “I don&rsquo;t think of consulting and engineering as two different
-        skill sets. A clinic administrator&rsquo;s actual workflow, a small
-        business&rsquo;s real budget, a compliance requirement — that&rsquo;s
-        the same kind of constraint an algorithm is, and it deserves the same
-        rigor.”
+        “I believe in the relentless pursuit of growth—through learning, hands-on 
+          experiences, and the communities that help us prosper together. 
+          If you aren&rsquo;t a slightly different person at the end of the journey 
+          than when you started, transformation hasn&rsquo;t really happened. 
+          In a professional setting, that mindset shapes everything I build: 
+          systems for a clinic taking patient records off paper, cash flow clarity 
+          for a landscaping business, and sites launched without the fluff. 
+          None of it is glamorous work, but all of it requires listening first 
+          and growing alongside the people you&rsquo;re building for.”
       </p>
 
       <div className="mt-10 grid gap-6 md:max-w-2xl">
         <p className="font-sans text-base leading-relaxed text-charcoal/70">
-          Most of what I&rsquo;ve built has been for people who needed
-          something to simply work: a clinic that needed patient records off
-          paper, a landscaping business that needed to see its own cash flow
-          clearly, small business owners who needed a professional site
-          launched without a six-month runway. None of that is glamorous
-          work, but all of it required actually listening before writing a
-          line of code.
-        </p>
-        <p className="font-sans text-base leading-relaxed text-charcoal/70">
-          What I care about is being the person who can sit in a room with a
+        What I care about is being the person who can sit in a room with a
           healthcare administrator or a business owner, understand what they
           actually need,
           and then go build the exact right-sized system for it. That&rsquo;s
           the consulting work. The engineering is just how I keep the
           promise.
         </p>
+
       </div>
     </section>
   );

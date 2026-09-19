@@ -50,3 +50,19 @@ export interface ArtifactEntry {
   note: string;
   media: ProjectMedia;
 }
+
+/**
+ * Smaller, lighter-weight builds (hackathon sprints, quick demos) — a card
+ * grid with a single screenshot and an outbound link, not a full case-study
+ * drawer like ProjectEntry.
+ */
+export interface SideProjectEntry {
+  id: string;
+  title: string;
+  year: number;
+  /** one-line pitch, ~60-90 chars, shown under the title */
+  tagline: string;
+  stack: string[];
+  links: ProjectLink[];
+  media: ProjectMedia;
+}

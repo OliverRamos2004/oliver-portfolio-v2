@@ -15,6 +15,7 @@ const JUMP_LINKS = [
   { label: "Skills", target: "#skills" },
   { label: "Product", target: "#pm" },
   { label: "Explorations", target: "#explorations" },
+  { label: "Builds", target: "#side-projects" },
   { label: "Gallery", target: "#gallery" },
   { label: "Contact", target: "#contact" },
 ];

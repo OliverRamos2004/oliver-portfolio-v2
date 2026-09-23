@@ -1,8 +1,17 @@
 import type { SkillCategory } from "@/types/skills";
 
-export function SkillsSection({ categories }: { categories: SkillCategory[] }) {
+interface SkillsSectionProps {
+  categories: SkillCategory[];
+  /** false when a divider-less CTA strip already precedes this section */
+  dividerTop?: boolean;
+}
+
+export function SkillsSection({ categories, dividerTop = true }: SkillsSectionProps) {
   return (
-    <section id="skills" className="hairline-t px-4 py-24 md:px-8 md:py-32">
+    <section
+      id="skills"
+      className={`${dividerTop ? "hairline-t " : ""}px-4 py-24 md:px-8 md:py-32`}
+    >
       <header className="mb-10 flex items-baseline justify-between pb-4 md:mb-14">
         <h2
           className="font-display text-2xl font-bold uppercase text-charcoal md:text-3xl"

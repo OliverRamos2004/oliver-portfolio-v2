@@ -2,11 +2,6 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import { User } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { SOCIALS } from "@/data/socials";
-
-const LINES = ["MY NAME IS", "OLIVER RAMOS:", "CREATIVE TECH"];
 
 const container = {
   hidden: {},
@@ -23,7 +18,7 @@ const line = {
 
 export function HeroManifesto() {
   return (
-    <section className="relative flex min-h-screen flex-col justify-end overflow-hidden px-4 pb-16 pt-32 md:px-8 md:pb-24">
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 text-center md:px-8">
       <Image
         src="/hero/gradient.jpg"
         alt=""
@@ -38,56 +33,18 @@ export function HeroManifesto() {
         variants={container}
         initial="hidden"
         animate="visible"
-        className="relative font-display leading-[0.82] font-black uppercase text-charcoal"
-        style={{ letterSpacing: "var(--tracking-tightest)" }}
+        className="relative font-hero leading-[0.9] font-black uppercase text-white"
       >
-        {LINES.map((text, i) => (
-          <span key={text} className="block overflow-hidden">
-            <motion.span
-              variants={line}
-              className="block"
-              style={{
-                fontSize: "clamp(3.2rem, 12vw, 10.5rem)",
-                transform: i === 1 ? "scaleX(0.92) scaleY(1.08)" : undefined,
-                transformOrigin: "left center",
-              }}
-            >
-              {text}
-            </motion.span>
-          </span>
-        ))}
+        <span className="block overflow-hidden">
+          <motion.span
+            variants={line}
+            className="block"
+            style={{ fontSize: "clamp(3rem, 9vw, 7rem)", letterSpacing: "-0.045em" }}
+          >
+            Oliver Ramos
+          </motion.span>
+        </span>
       </motion.h1>
-
-      <motion.p
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-        className="relative mt-8 max-w-md font-sans text-sm text-charcoal/70 md:text-base"
-      >
-        My name is Oliver. I have a background in
-        production software, operations, have an eye for art, and love to build things that are both functional and beautiful.
-        Based in Austin, TX.
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.85, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-        className="relative mt-8 flex flex-wrap items-center gap-2"
-      >
-        {SOCIALS.map((social) => (
-          <Button key={social.href} href={social.href} target="_blank" rel="noopener noreferrer">
-            {social.label}
-          </Button>
-        ))}
-
-        <Button href="/about">
-          <User size={13} strokeWidth={1.5} />
-          About
-        </Button>
-      </motion.div>
-
-      <div className="hairline-t absolute inset-x-4 bottom-0 pt-0 md:inset-x-8" />
     </section>
   );
 }

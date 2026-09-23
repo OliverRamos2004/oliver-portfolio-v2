@@ -6,9 +6,17 @@ const RESUMES = [
   { label: "Resume — Product", href: "/resume-product.pdf" },
 ];
 
-export function ResumeSection() {
+interface ResumeSectionProps {
+  /** false when a divider-less CTA strip already precedes this section */
+  dividerTop?: boolean;
+}
+
+export function ResumeSection({ dividerTop = true }: ResumeSectionProps = {}) {
   return (
-    <section id="resume" className="hairline-t px-4 py-14 md:px-8 md:py-20">
+    <section
+      id="resume"
+      className={`${dividerTop ? "hairline-t " : ""}px-4 py-14 md:px-8 md:py-20`}
+    >
       <div className="flex flex-wrap items-center justify-center gap-2">
         {RESUMES.map((resume) => (
           <Button key={resume.href} href={resume.href} target="_blank" rel="noopener noreferrer">

@@ -156,7 +156,7 @@ export function Wayfinding({ variant = "light" }: WayfindingProps) {
                 <button
                   type="button"
                   aria-haspopup="true"
-                  className={`flex items-center gap-1 transition-colors duration-200 ${linkHoverClass}`}
+                  className={`flex items-center gap-1 uppercase transition-colors duration-200 ${linkHoverClass}`}
                 >
                   {item.label}
                   <ChevronDown

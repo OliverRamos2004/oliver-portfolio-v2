@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, Inter, IBM_Plex_Mono, Big_Shoulders } from "next/font/google";
+import { Anton, Inter, IBM_Plex_Mono } from "next/font/google";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { NoiseOverlay } from "@/components/layout/NoiseOverlay";
 import { BackToTop } from "@/components/layout/BackToTop";
@@ -25,15 +25,6 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-// Hero-only headline face — the site's original display face (see
-// PORTFOLIO_SPEC.md), deliberately scoped away from `--font-display` (Anton)
-// which every other section heading still uses.
-const bigShoulders = Big_Shoulders({
-  subsets: ["latin"],
-  variable: "--font-big-shoulders",
-  weight: ["900"],
-});
-
 export const metadata: Metadata = {
   title: "Oliver Ramos — Creative Technologist & Artist",
   description:
@@ -50,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${anton.variable} ${inter.variable} ${plexMono.variable} ${bigShoulders.variable}`}
+      className={`${anton.variable} ${inter.variable} ${plexMono.variable}`}
     >
       <body>
         <SmoothScrollProvider>

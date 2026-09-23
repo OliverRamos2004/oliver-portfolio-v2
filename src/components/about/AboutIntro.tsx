@@ -17,20 +17,6 @@ export function AboutIntro() {
       </div>
 
       <div className="mt-8 px-4 md:mt-10 md:px-8">
-        <div className="mx-auto max-w-6xl overflow-hidden border border-hairline-on-light">
-          <Image
-            src="/about/hero.jpg"
-            alt="Oliver Ramos"
-            width={2000}
-            height={1371}
-            sizes="(min-width: 1152px) 1152px, 100vw"
-            className="block h-auto w-full object-cover"
-            priority
-          />
-        </div>
-      </div>
-
-      <div className="mt-10 px-4 md:mt-14 md:px-8">
         <div className="grid gap-8 md:grid-cols-[1.3fr_1fr] md:gap-16">
           <div>
             <span
@@ -49,11 +35,24 @@ export function AboutIntro() {
             </h1>
           </div>
           <p className="max-w-lg font-sans text-base leading-relaxed text-charcoal/70 md:self-end">
-            I&rsquo;m Oliver, a creative technologist and artist based in
-            Austin, TX. I have a background in technology and systems with an eye for art and design.
+            I&rsquo;m Oliver, I have a background in technology and systems with an eye for art and design.
             I love to build things that are both functional and beautiful, and solve problems in a way that is both practical and efficient.
             I consider my work to be a reflection of my own personal journey.
           </p>
+        </div>
+      </div>
+
+      <div className="mt-10 px-4 md:mt-14 md:px-8">
+        <div className="mx-auto max-w-6xl overflow-hidden border border-hairline-on-light">
+          <Image
+            src="/about/ramos-hero2.jpg"
+            alt="Oliver Ramos"
+            width={2000}
+            height={1371}
+            sizes="(min-width: 1152px) 1152px, 100vw"
+            className="block h-auto w-full object-cover"
+            priority
+          />
         </div>
       </div>
     </section>

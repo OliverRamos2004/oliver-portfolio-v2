@@ -14,8 +14,8 @@ export function PhilosophySection() {
       </div>
 
       <p
-        className="mt-8 max-w-3xl font-display font-bold uppercase leading-[1.05] text-charcoal"
-        style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)", letterSpacing: "var(--tracking-tight)" }}
+        className="mt-8 max-w-3xl font-sans font-medium leading-snug text-charcoal"
+        style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)" }}
       >
         “I believe in the relentless pursuit of growth: through learning, hands-on 
           experiences, and the communities that help us prosper together. 
@@ -26,7 +26,7 @@ export function PhilosophySection() {
           and growing alongside the people you&rsquo;re building for.”
       </p>
 
-      <div className="mt-10 grid gap-6 md:max-w-2xl">
+      {/* <div className="mt-10 grid gap-6 md:max-w-2xl">
         <p className="font-sans text-base leading-relaxed text-charcoal/70">
         What I care about is being the person who can sit in a room with a
           healthcare administrator or a business owner, understand what they
@@ -36,7 +36,7 @@ export function PhilosophySection() {
           promise.
         </p>
 
-      </div>
+      </div> */}
     </section>
   );
 }

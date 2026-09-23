@@ -33,13 +33,13 @@ export function HeroManifesto() {
         variants={container}
         initial="hidden"
         animate="visible"
-        className="relative font-hero leading-[0.9] font-black uppercase text-white"
+        className="relative font-sans leading-[0.9] font-medium text-white"
       >
         <span className="block overflow-hidden">
           <motion.span
             variants={line}
             className="block"
-            style={{ fontSize: "clamp(3rem, 9vw, 7rem)", letterSpacing: "-0.045em" }}
+            style={{ fontSize: "clamp(3rem, 9vw, 7rem)" }}
           >
             Oliver Ramos
           </motion.span>

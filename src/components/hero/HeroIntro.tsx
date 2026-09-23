@@ -13,7 +13,7 @@ export function HeroIntro() {
         transition={{ delay: 0.7, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
         className="mx-auto max-w-md font-sans text-lg font-medium text-charcoal md:text-2xl"
       >
-        Production software. Operations. An eye for art.
+        Software & Art
       </motion.p>
 
       <motion.p
@@ -22,7 +22,7 @@ export function HeroIntro() {
         transition={{ delay: 0.78, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
         className="mx-auto mt-3 max-w-md font-sans text-sm text-charcoal/70 md:text-base"
       >
-        I build things that are both functional and beautiful — based in Austin, TX.
+        I like to build things that are both functional and beautiful. Based in Austin, TX.
       </motion.p>
 
       <motion.div

@@ -1,22 +1,16 @@
 import type { Metadata } from "next";
-import { Anton, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Inter, IBM_Plex_Mono } from "next/font/google";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { NoiseOverlay } from "@/components/layout/NoiseOverlay";
 import { BackToTop } from "@/components/layout/BackToTop";
 import "./globals.css";
 
-// Anton ships one weight (400) but is drawn as a heavy, blocky impact face —
-// no need for multiple weights the way Big Shoulders needed them.
-const anton = Anton({
-  subsets: ["latin"],
-  variable: "--font-anton",
-  weight: "400",
-});
-
+// Also serves as the display face (--font-display) — every section heading
+// site-wide uses font-bold/font-black, hence loading those weights too.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-  weight: ["400", "500"],
+  weight: ["400", "500", "700", "900"],
 });
 
 const plexMono = IBM_Plex_Mono({
@@ -41,7 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${anton.variable} ${inter.variable} ${plexMono.variable}`}
+      className={`${inter.variable} ${plexMono.variable}`}
     >
       <body>
         <SmoothScrollProvider>

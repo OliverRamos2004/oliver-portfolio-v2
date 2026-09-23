@@ -33,7 +33,7 @@ export function HeroManifesto() {
         variants={container}
         initial="hidden"
         animate="visible"
-        className="relative font-sans leading-[0.9] font-medium text-white"
+        className="relative font-display leading-[0.9] font-black uppercase text-white"
       >
         <span className="block overflow-hidden">
           <motion.span

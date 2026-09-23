@@ -23,14 +23,12 @@
   --color-hairline-on-dark: rgba(255, 255, 255, 0.14);
 
   /* Type families, assigned from next/font CSS variables in layout.tsx */
-  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-display: var(--font-inter), system-ui, sans-serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), "SFMono-Regular", monospace;
 
-  /* Letter-spacing scale used across the editorial/mono system.
-     tightest/tight are Anton-only (font-display) — Anton's glyphs already
-     sit close together, so these stayed net-positive/near-zero rather than
-     negative to keep headlines from crowding. */
+  /* Letter-spacing scale used across the editorial/mono system. Near-zero/
+     positive rather than negative, so headlines don't crowd. */
   --tracking-tightest: 0em;
   --tracking-tight: 0.02em;
   --tracking-wide: 0.08em;

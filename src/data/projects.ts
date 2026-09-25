@@ -161,4 +161,64 @@ export const projects: ProjectEntry[] = [
     ],
     media: [],
   },
+  {
+    id: "sterling-parking-solutions",
+    ref: "07",
+    title: "STERLING PARKING SOLUTIONS",
+    year: 2026,
+    discipline: ["Web Development", "Client Consulting"],
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Figma"],
+    role: "Independent Technical Consultant & Developer",
+    status: "in-progress",
+    summary:
+      "Brand site for an Austin valet and private-event parking company, positioned as hospitality rather than logistics.",
+    overview:
+      "Sterling Parking Solutions is a licensed, insured valet operation for private events and venues in Austin. The brief was to make it read like a five-star hospitality brand instead of another local valet vendor. I ran discovery with the founders, set an \"Old-World Concierge\" direction, and am building the site across Home, About, Contact, FAQ, and Gallery, with regular stakeholder syncs shaping each pass.",
+    systemNotes: [
+      {
+        heading: "Positioning",
+        body: "Competitors lead with trust badges and instant booking. Sterling states its licensing and insurance in one confident line and puts the weight on taste and exclusivity, modeled on the hospitality brands the client pointed to as references.",
+      },
+      {
+        heading: "Client-driven iteration",
+        body: "Feedback from stakeholder syncs turns directly into build passes. The home page's detail tiles now link each claim to the page that backs it up, and the site got a full-screen mobile nav after the founders found the menu missing on phones.",
+      },
+      {
+        heading: "Current stage",
+        body: "Core pages are built. Final copy sign-off, gallery photography, and the contact form's email delivery are still open before launch.",
+      },
+    ],
+    links: [],
+    media: [],
+  },
+  {
+    id: "yosi-archive",
+    ref: "08",
+    title: "YOSI ARCHIVE",
+    year: 2026,
+    discipline: ["Headless Commerce", "Client Consulting"],
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Shopify Storefront API", "GraphQL", "Vercel"],
+    role: "Independent Technical Consultant & Developer",
+    status: "in-progress",
+    summary:
+      "Brutalist headless Shopify storefront for an archival clothing brand, with a custom front end on Shopify checkout.",
+    overview:
+      "YOSI Archive is a digital flagship for an archival clothing seller. It's a custom brutalist storefront built in Next.js, with Shopify handling products, inventory, and checkout through the Storefront API. The MVP is scoped to a homepage and a filterable catalog, with guest checkout through Shopify's native flow so there's no custom auth to build or maintain.",
+    systemNotes: [
+      {
+        heading: "Headless architecture",
+        body: "A server-only GraphQL client reads products from the Shopify Storefront API, so the access token never reaches the browser. The catalog uses incremental revalidation, so new pieces show up within a minute without a redeploy.",
+      },
+      {
+        heading: "Scope discipline",
+        body: "Checkout goes to Shopify's hosted checkout URL instead of a custom cart and payment flow. That keeps the MVP small, secure, and cheap to run for a single-owner brand.",
+      },
+      {
+        heading: "Current stage",
+        body: "The storefront is connected to the live Shopify store and the catalog renders real products. Product detail, the cart flow, and a preview deploy for client review come next.",
+      },
+    ],
+    links: [],
+    media: [],
+  },
 ];

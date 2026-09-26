@@ -17,13 +17,8 @@ export function PhilosophySection() {
         className="mt-8 max-w-3xl font-sans font-medium leading-snug text-charcoal"
         style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)" }}
       >
-        “I believe in the relentless pursuit of growth: through learning, hands-on 
-          experiences, and the communities that help us prosper together. 
-          If you aren&rsquo;t a slightly different person at the end of the journey 
-          than when you started, transformation hasn&rsquo;t really happened. 
-          In a professional setting, that mindset shapes everything I build. 
-          None of it is glamorous work, but all of it requires listening first 
-          and growing alongside the people you&rsquo;re building for.”
+        “I am someone who believes in the continuous pursuit of growth through learning, hands-on experiences, and community work. If I am not a different person at the end of the journey than when I started, transformation hasn&rsquo;t really happened.
+        This mindset shapes who I am at both a personal and professional level.”
       </p>
 
       {/* <div className="mt-10 grid gap-6 md:max-w-2xl">

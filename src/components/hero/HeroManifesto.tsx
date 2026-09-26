@@ -20,7 +20,7 @@ export function HeroManifesto() {
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 text-center md:px-8">
       <Image
-        src="/hero/gradient.jpg"
+        src="/hero/hero2.jpg"
         alt=""
         fill
         priority

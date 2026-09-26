@@ -13,7 +13,7 @@ export function HeroIntro() {
         transition={{ delay: 0.7, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
         className="mx-auto max-w-md font-sans text-lg font-medium text-charcoal md:text-2xl"
       >
-        Software & Art
+        Software & Art Design
       </motion.p>
 
       <motion.p

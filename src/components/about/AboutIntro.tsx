@@ -35,9 +35,9 @@ export function AboutIntro() {
             </h1>
           </div>
           <p className="max-w-lg font-sans text-base leading-relaxed text-charcoal/70 md:self-end">
-            I&rsquo;m Oliver, I have a background in technology and systems with an eye for art and design.
+            I&rsquo;m Oliver, I have a Bachelor&rsquo;s in CS and an eye for art and design.
             I love to build things that are both functional and beautiful, and solve problems in a way that is both practical and efficient.
-            I consider my work to be a reflection of my own personal journey.
+            My work is a reflection of my own personal journey.
           </p>
         </div>
       </div>

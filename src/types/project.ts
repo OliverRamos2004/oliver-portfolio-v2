@@ -6,6 +6,10 @@ export interface ProjectMedia {
   alt: string;
   /** width / height, used to reserve layout space before media loads */
   aspectRatio: number;
+  /** set on framed device shots (transparent background) — they render with object-contain on a stage instead of a cropped cover */
+  device?: "desktop" | "phone";
+  /** short mono caption shown under the drawer gallery's main stage */
+  caption?: string;
 }
 
 export interface ProjectLink {
@@ -29,6 +33,8 @@ export interface ProjectEntry {
   stack: string[];
   role: string;
   status: ProjectStatus;
+  /** overrides the status wording where "Live"/"Building" is too coarse, e.g. "Live demo" */
+  statusLabel?: string;
   /** one-line ledger summary, ~60-90 chars, shown in the index row */
   summary: string;
   /** longer editorial copy, shown at the top of the drawer */
@@ -37,6 +43,12 @@ export interface ProjectEntry {
   systemNotes: SystemNote[];
   links: ProjectLink[];
   media: ProjectMedia[];
+  /**
+   * position in the homepage Selected Work band (1 = first); omit to keep a
+   * project out of it. Featured rows use the first desktop + first phone shot
+   * in `media`, so a featured project needs at least one of each.
+   */
+  featured?: number;
 }
 
 export interface ArtifactEntry {

@@ -20,6 +20,7 @@ const NAV_ITEMS: NavItem[] = [
     type: "category",
     label: "Work",
     items: [
+      { label: "Selected Work", target: "#work" },
       { label: "Index", target: "#index" },
       { label: "Product", target: "#pm" },
       { label: "Resume", target: "#resume" },

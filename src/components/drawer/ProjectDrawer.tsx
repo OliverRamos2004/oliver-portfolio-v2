@@ -15,9 +15,11 @@ interface ProjectDrawerProps {
   project: ProjectEntry;
   /** true when rendered as the intercepted overlay (has a background page to return to) */
   isOverlay: boolean;
+  /** set when this project has a PRD — Product moved off the homepage, so the drawer is its entry point */
+  prdHref?: string;
 }
 
-export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
+export function ProjectDrawer({ project, isOverlay, prdHref }: ProjectDrawerProps) {
   const router = useRouter();
   const lenis = useLenis();
 
@@ -143,8 +145,19 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
           </div>
         )}
 
-        {project.links.length > 0 && (
+        {(project.links.length > 0 || prdHref) && (
           <div className="mt-12 flex flex-wrap gap-4 hairline-t-dark pt-8">
+            {prdHref && (
+              // plain <a>, not <Link>: a soft navigation can leave the @modal slot rendered over /pm/[slug]
+              <a
+                href={prdHref}
+                className="group flex items-center gap-1.5 font-mono text-xs uppercase text-accent transition-colors duration-200 hover:text-white"
+                style={{ letterSpacing: "var(--tracking-wide)" }}
+              >
+                Read the PRD
+                <ArrowUpRight size={14} strokeWidth={1.5} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            )}
             {project.links.map((link) => (
               <a
                 key={link.href}

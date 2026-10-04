@@ -27,7 +27,7 @@ export function FeaturedWork({ projects }: { projects: ProjectEntry[] }) {
   if (featured.length === 0) return null;
 
   return (
-    <section id="work" className="px-4 pt-24 md:px-8 md:pt-32">
+    <section id="work" className="px-4 pt-16 md:px-8 md:pt-24">
       <header className="flex items-baseline justify-between gap-4 hairline-b pb-4">
         <h2
           className="font-display text-2xl font-bold uppercase text-charcoal md:text-3xl"

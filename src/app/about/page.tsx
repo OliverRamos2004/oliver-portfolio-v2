@@ -5,8 +5,10 @@ import { AboutIntro } from "@/components/about/AboutIntro";
 import { PhilosophySection } from "@/components/about/PhilosophySection";
 import { TimelineSection } from "@/components/about/TimelineSection";
 import { OutsideInterestsSection } from "@/components/about/OutsideInterestsSection";
+import { GallerySection } from "@/components/gallery/GallerySection";
 import { Button } from "@/components/ui/Button";
 import { timeline, interests, aboutPhotos } from "@/data/about";
+import { galleryPhotos } from "@/data/gallery";
 
 export const metadata: Metadata = {
   title: "About — Oliver Ramos",
@@ -22,6 +24,7 @@ export default function AboutPage() {
         <PhilosophySection />
         <TimelineSection entries={timeline} />
         <OutsideInterestsSection interests={interests} photos={aboutPhotos} />
+        <GallerySection photos={galleryPhotos} />
 
         <section className="hairline-t-dark bg-charcoal px-4 py-16 md:px-8 md:py-20">
           <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
@@ -32,7 +35,7 @@ export default function AboutPage() {
               Curious about the work?
             </p>
             <div className="flex flex-wrap gap-3">
-              <Button variant="dark" href="/#index">
+              <Button variant="dark" href="/#work">
                 View Work
               </Button>
               <Button variant="dark" href="/#contact">

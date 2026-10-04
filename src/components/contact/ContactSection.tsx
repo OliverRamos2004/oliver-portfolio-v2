@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowUpRight, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -54,10 +53,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-charcoal px-4 py-24 md:px-8 md:py-32">
-      <Image src="/contact/bricks.jpg" alt="" fill sizes="100vw" className="object-cover" />
-      <div className="absolute inset-0 bg-charcoal/45" />
-
+    <section id="contact" className="relative overflow-hidden bg-charcoal px-4 py-16 md:px-8 md:py-24">
       <div className="relative z-10">
         <motion.span
           initial={{ opacity: 0, y: 12 }}

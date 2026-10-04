@@ -3,8 +3,8 @@
 import type { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from "react";
 
 interface CommonProps {
-  /** which surface the button sits on — controls the resting border/text color */
-  variant?: "light" | "dark";
+  /** which surface the button sits on — controls the resting border/text color; "solid" is the one primary action on a light surface */
+  variant?: "light" | "dark" | "solid";
   /** selected state (filter toggles) — always a solid accent fill, on either surface */
   active?: boolean;
   children: ReactNode;
@@ -33,7 +33,9 @@ export function Button(props: ButtonAsButton | ButtonAsAnchor) {
     ? "border-accent bg-accent text-charcoal"
     : variant === "dark"
       ? "border-hairline-on-dark text-white hover:bg-white hover:text-charcoal"
-      : "border-hairline-on-light text-charcoal hover:bg-charcoal hover:text-cream";
+      : variant === "solid"
+        ? "border-charcoal bg-charcoal text-cream hover:bg-transparent hover:text-charcoal"
+        : "border-hairline-on-light text-charcoal hover:bg-charcoal hover:text-cream";
 
   const classes = `${base} ${theme} ${className}`;
   const style = { letterSpacing: "var(--tracking-wide)" };

@@ -22,7 +22,6 @@ const NAV_ITEMS: NavItem[] = [
     items: [
       { label: "Selected Work", target: "#work" },
       { label: "Index", target: "#index" },
-      { label: "Product", target: "#pm" },
       { label: "Resume", target: "#resume" },
     ],
   },
@@ -31,11 +30,27 @@ const NAV_ITEMS: NavItem[] = [
     label: "Studio",
     items: [
       { label: "Skillset", target: "#skills" },
-      { label: "Gallery", target: "#gallery" },
+      { label: "Gallery", target: "/about#gallery" },
     ],
   },
   { type: "link", label: "Contact", target: "#contact" },
 ];
+
+/** true once the page has scrolled — the bar gets a surface so content stops colliding with its labels */
+function useScrolled(threshold = 24) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > threshold);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [threshold]);
+
+  return scrolled;
+}
 
 function useLocalTime() {
   const [time, setTime] = useState<string | null>(null);
@@ -66,6 +81,7 @@ interface WayfindingProps {
 
 export function Wayfinding({ variant = "light" }: WayfindingProps) {
   const time = useLocalTime();
+  const scrolled = useScrolled();
   const lenis = useLenis();
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -98,7 +114,8 @@ export function Wayfinding({ variant = "light" }: WayfindingProps) {
 
   function handleJump(e: React.MouseEvent<HTMLAnchorElement>, target: string) {
     closeMenu();
-    if (!isHome) return; // not on the page the section lives on — let the link really navigate
+    // a full path (e.g. "/about#gallery") or off-home: let the link really navigate
+    if (!isHome || target.startsWith("/")) return;
     e.preventDefault();
 
     if (target === "#top") {
@@ -119,7 +136,7 @@ export function Wayfinding({ variant = "light" }: WayfindingProps) {
   // "#top" has no matching element id — it's a scroll-to-top sentinel handled
   // above, and off-home should just link to the plain root instead of "/#top".
   function linkHref(target: string) {
-    if (isHome) return target;
+    if (isHome || target.startsWith("/")) return target;
     return target === "#top" ? "/" : `/${target}`;
   }
 
@@ -132,11 +149,16 @@ export function Wayfinding({ variant = "light" }: WayfindingProps) {
       : "hover:text-charcoal hover:underline hover:decoration-accent hover:decoration-2 hover:underline-offset-4";
   const panelClass =
     variant === "dark" ? "border-hairline-on-dark bg-charcoal" : "border-hairline-on-light bg-cream";
+  const surfaceClass = !scrolled
+    ? "border-transparent"
+    : variant === "dark"
+      ? "border-hairline-on-dark bg-charcoal/85 backdrop-blur-md"
+      : "border-hairline-on-light bg-cream/85 backdrop-blur-md";
 
   return (
     <>
       <div
-        className={`fixed inset-x-0 top-0 z-30 grid grid-cols-[1fr_auto_1fr] items-center px-4 py-3 font-mono text-[11px] uppercase tracking-widest md:px-8 ${textClass}`}
+        className={`fixed inset-x-0 top-0 z-30 grid grid-cols-[1fr_auto_1fr] items-center border-b px-4 py-3 font-mono text-[11px] uppercase tracking-widest transition-colors duration-300 md:px-8 ${textClass} ${surfaceClass}`}
         style={{ letterSpacing: "var(--tracking-widest)" }}
       >
         <span className="hidden justify-self-start sm:inline">{COORDINATES}</span>

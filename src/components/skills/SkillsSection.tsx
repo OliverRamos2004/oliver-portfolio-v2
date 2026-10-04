@@ -10,7 +10,7 @@ export function SkillsSection({ categories, dividerTop = true }: SkillsSectionPr
   return (
     <section
       id="skills"
-      className={`${dividerTop ? "hairline-t " : ""}px-4 py-24 md:px-8 md:py-32`}
+      className={`${dividerTop ? "hairline-t " : ""}px-4 py-16 md:px-8 md:py-24`}
     >
       <header className="mb-10 flex items-baseline justify-between pb-4 md:mb-14">
         <h2
@@ -40,19 +40,19 @@ export function SkillsSection({ categories, dividerTop = true }: SkillsSectionPr
             </div>
             <p className="mt-2 max-w-xs font-sans text-sm text-charcoal/60">{category.description}</p>
 
-            <dl className="mt-8 space-y-6">
+            {/* names only — scannable; the long `detail` copy stays in skills.ts (title tooltip) */}
+            <ul className="mt-6">
               {category.items.map((item) => (
-                <div key={item.name} className="hairline-t pt-4 first:border-t-0 first:pt-0">
-                  <dt
-                    className="font-mono text-xs uppercase text-charcoal"
-                    style={{ letterSpacing: "var(--tracking-wide)" }}
-                  >
-                    {item.name}
-                  </dt>
-                  <dd className="mt-1.5 font-sans text-sm leading-relaxed text-charcoal/60">{item.detail}</dd>
-                </div>
+                <li
+                  key={item.name}
+                  title={item.detail}
+                  className="hairline-t py-2.5 font-mono text-xs uppercase text-charcoal"
+                  style={{ letterSpacing: "var(--tracking-wide)" }}
+                >
+                  {item.name}
+                </li>
               ))}
-            </dl>
+            </ul>
           </div>
         ))}
       </div>

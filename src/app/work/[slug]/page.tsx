@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
+import { prds } from "@/data/prds";
 import { ProjectDrawer } from "@/components/drawer/ProjectDrawer";
 import { Wayfinding } from "@/components/layout/Wayfinding";
 
@@ -30,11 +31,12 @@ export default async function WorkPage({
   const { slug } = await params;
   const project = projects.find((p) => p.id === slug);
   if (!project) notFound();
+  const prdHref = prds.some((p) => p.id === project.id) ? `/pm/${project.id}` : undefined;
 
   return (
     <>
       <Wayfinding variant="dark" />
-      <ProjectDrawer project={project} isOverlay={false} />
+      <ProjectDrawer project={project} isOverlay={false} prdHref={prdHref} />
     </>
   );
 }

@@ -4,7 +4,7 @@ import type { ProjectEntry } from "@/types/project";
 
 export function ProjectIndexTable({ projects }: { projects: ProjectEntry[] }) {
   return (
-    <section id="index" className="px-4 pb-24 pt-16 md:px-8 md:pb-32 md:pt-20">
+    <section id="index" className="px-4 pb-16 pt-8 md:px-8 md:pb-24 md:pt-12">
       <header className="mb-2 flex items-baseline justify-between hairline-b pb-4 md:mb-4">
         <h2
           className="font-display text-2xl font-bold uppercase text-charcoal md:text-3xl"

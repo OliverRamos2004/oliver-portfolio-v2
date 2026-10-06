@@ -5,7 +5,7 @@ const COLUMNS = [
   },
   {
     heading: "Type",
-    rows: ["Big Shoulders — Display", "Inter — Body", "IBM Plex Mono — System"],
+    rows: ["Inter — Display & Body", "IBM Plex Mono — System"],
   },
 ];
 

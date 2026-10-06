@@ -3,7 +3,7 @@ import type { GalleryPhoto } from "@/types/gallery";
 
 export function GallerySection({ photos }: { photos: GalleryPhoto[] }) {
   return (
-    <section id="gallery" className="hairline-t px-4 py-24 md:px-8 md:py-32">
+    <section id="gallery" className="hairline-t px-4 py-16 md:px-8 md:py-24">
       <header className="mb-10 flex items-baseline justify-between md:mb-14">
         <h2
           className="font-display text-2xl font-bold uppercase text-charcoal md:text-3xl"

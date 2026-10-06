@@ -1,6 +1,7 @@
 import { Wayfinding } from "@/components/layout/Wayfinding";
 import { HeroManifesto } from "@/components/hero/HeroManifesto";
 import { HeroIntro } from "@/components/hero/HeroIntro";
+import { FeaturedWork } from "@/components/featured/FeaturedWork";
 import { ProjectIndexTable } from "@/components/index/ProjectIndexTable";
 import { SkillsSection } from "@/components/skills/SkillsSection";
 import { PmSection } from "@/components/pm/PmSection";
@@ -21,6 +22,7 @@ export default function Home() {
       <main>
         <HeroManifesto />
         <HeroIntro />
+        <FeaturedWork projects={projects} />
         <ProjectIndexTable projects={projects} />
         <SkillsSection categories={skillCategories} dividerTop={false} />
         <PmSection prds={prds} />

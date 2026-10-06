@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, ArrowUpRight } from "lucide-react";
 import type { ProjectEntry } from "@/types/project";
 import { useLenis } from "@/components/layout/SmoothScrollProvider";
+import { ProjectGallery } from "./ProjectGallery";
 
 const EASE_CRISP = [0.76, 0, 0.24, 1] as const;
 
@@ -43,6 +44,9 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
     else router.push("/");
   }
 
+  // 2+ shots open the drawer on a gallery; a lone homepage screenshot keeps the simple grid at the bottom
+  const hasGallery = project.media.length > 1;
+
   const content = (
     <div className="flex h-full flex-col bg-charcoal">
       <header className="hairline-b-dark flex items-center justify-between px-6 py-5 md:px-10">
@@ -62,9 +66,9 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
         data-lenis-prevent
         className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 py-8 md:px-10 md:py-12"
       >
-
+        {hasGallery && <ProjectGallery media={project.media} title={project.title} />}
         <h2
-          className="font-display text-5xl font-black uppercase leading-[0.9] text-white md:text-6xl"
+          className={`${hasGallery ? "mt-10 " : ""}font-display text-5xl font-black uppercase leading-[0.9] text-white md:text-6xl`}
           style={{ letterSpacing: "var(--tracking-tightest)" }}
         >
           {project.title}
@@ -121,7 +125,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
           ))}
         </div>
 
-        {project.media.length > 0 && (
+        {project.media.length === 1 && (
           <div className="mt-12 grid gap-4 hairline-t-dark pt-8 sm:grid-cols-2">
             {project.media.map((m) => (
               <div

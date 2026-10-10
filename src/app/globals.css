@@ -47,6 +47,9 @@
   --text-bleed: clamp(7rem, 24vw, 30rem);
   /* The cover name: sized so "OLIVER" overruns the viewport (tuned by measurement). */
   --text-cover: clamp(7rem, 41vw, 72rem);
+  /* A sentence must stay readable: sized so only the period of "SOMETHING."
+     crosses the edge (25vw ran to 120%). */
+  --text-contact: 21.5vw;
   --text-d1: clamp(3rem, 9vw, 9rem);
   --text-d2: clamp(2rem, 5vw, 4.5rem);
   --text-quote: clamp(1.25rem, 2.4vw, 2rem);

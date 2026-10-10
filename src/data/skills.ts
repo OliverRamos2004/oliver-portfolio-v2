@@ -74,3 +74,18 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
 ];
+
+/** The credits ledger (SPEC §3): the few skills the feature spreads prove, two per column. */
+const LEDGER = new Set([
+  "Requirements Gathering",
+  "Workflow Automation",
+  "AWS",
+  "Relational Database Design",
+  "Frontend Engineering",
+  "Figma Prototyping",
+]);
+
+export const skillsLedger = skillCategories.map((c) => ({
+  heading: c.heading,
+  items: c.items.filter((i) => LEDGER.has(i.name)).map((i) => i.name),
+}));

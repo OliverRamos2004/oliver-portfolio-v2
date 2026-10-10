@@ -6,16 +6,7 @@ import { PartOpener } from "@/components/part/PartOpener";
 import { FeatureSpread } from "@/components/part/FeatureSpread";
 import { ShortTakes } from "@/components/part/ShortTakes";
 import { PART_ORDER, featuresFor, shortTakesFor } from "@/lib/monograph";
-import { SkillsSection } from "@/components/skills/SkillsSection";
-import { PmSection } from "@/components/pm/PmSection";
-import { ConnectBento } from "@/components/connect/ConnectBento";
-import { ResumeSection } from "@/components/resume/ResumeSection";
-import { GallerySection } from "@/components/gallery/GallerySection";
-import { ContactSection } from "@/components/contact/ContactSection";
-import { Colophon } from "@/components/layout/Colophon";
-import { skillCategories } from "@/data/skills";
-import { galleryPhotos } from "@/data/gallery";
-import { prds } from "@/data/prds";
+import { Credits } from "@/components/credits/Credits";
 
 export default function Home() {
   return (
@@ -33,18 +24,8 @@ export default function Home() {
             <ShortTakes part={part} items={shortTakesFor(part)} />
           </Part>
         ))}
-        {/* Stages 4–5 replace everything below (SPEC §5 rollout). */}
-        <SkillsSection categories={skillCategories} dividerTop={false} />
-        <PmSection prds={prds} />
-        <ConnectBento />
-
-        {/* Smaller Builds section temporarily unrendered — Oliver wants it hidden for now, not deleted */}
-        <ResumeSection dividerTop={false} />
-
-        <GallerySection photos={galleryPhotos} />
-        <ContactSection />
+        <Credits />
       </main>
-      <Colophon />
     </>
   );
 }

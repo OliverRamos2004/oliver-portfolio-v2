@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import { NoiseOverlay } from "@/components/layout/NoiseOverlay";
-import { BackToTop } from "@/components/layout/BackToTop";
 import "./globals.css";
 
 // Display face: a variable grotesque. Loading the width axis lets headlines
@@ -40,7 +39,6 @@ export default function RootLayout({
         <NoiseOverlay />
         {children}
         {modal}
-        <BackToTop />
       </body>
     </html>
   );

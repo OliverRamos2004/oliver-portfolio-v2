@@ -8,9 +8,13 @@ import type { Part, ProjectEntry, ShortTakeEntry } from "@/types/project";
  * spreads and the running head can never disagree.
  */
 
-export const PARTS: Record<Part, { numeral: string; word: string; label: string }> = {
-  systems: { numeral: "I", word: "SYSTEMS", label: "PART I · SYSTEMS" },
-  craft: { numeral: "II", word: "CRAFT", label: "PART II · CRAFT" },
+/**
+ * `openerVw` is the opener headline size, measured so each line overruns the
+ * viewport by ~12% (SYSTEMS: 35vw ran to 124%; "II CRAFT": 30.75vw to 99%).
+ */
+export const PARTS: Record<Part, { numeral: string; word: string; label: string; openerVw: number }> = {
+  systems: { numeral: "I", word: "SYSTEMS", label: "PART I · SYSTEMS", openerVw: 32 },
+  craft: { numeral: "II", word: "CRAFT", label: "PART II · CRAFT", openerVw: 35 },
 };
 
 export const PART_ORDER: Part[] = ["systems", "craft"];

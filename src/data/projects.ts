@@ -211,27 +211,39 @@ export const projects: ProjectEntry[] = [
     discipline: ["Headless Commerce", "Client Consulting"],
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Shopify Storefront API", "GraphQL", "Vercel"],
     role: "Independent Technical Consultant & Developer",
-    status: "in-progress",
+    status: "live",
     summary:
-      "Brutalist headless Shopify storefront for an archival clothing brand, with a custom front end on Shopify checkout.",
+      "Brutalist headless Shopify storefront for a one-of-one vintage brand, live with 49 pieces and Shopify checkout.",
     overview:
-      "YOSI Archive is a digital flagship for an archival clothing seller. It's a custom brutalist storefront built in Next.js, with Shopify handling products, inventory, and checkout through the Storefront API. The MVP is scoped to a homepage and a filterable catalog, with guest checkout through Shopify's native flow so there's no custom auth to build or maintain.",
+      "YOSI Archive sells one-of-one vintage and archival pieces through Instagram drops; sales used to run through DMs. I built it a storefront of its own: a brutalist Next.js front end on Vercel, with Shopify handling products, inventory, payments and checkout through the Storefront API. Scoped, built and launched on a custom domain on October 10, 2026, as an independent client engagement.",
     systemNotes: [
       {
         heading: "Headless architecture",
-        body: "A server-only GraphQL client reads products from the Shopify Storefront API, so the access token never reaches the browser. The catalog uses incremental revalidation, so new pieces show up within a minute without a redeploy.",
+        body: "A server-only GraphQL client reads products from the Shopify Storefront API, so the access token never reaches the browser. The catalog uses incremental revalidation, so new and sold pieces update within about a minute without a redeploy.",
       },
       {
-        heading: "Scope discipline",
-        body: "Checkout goes to Shopify's hosted checkout URL instead of a custom cart and payment flow. That keeps the MVP small, secure, and cheap to run for a single-owner brand.",
+        heading: "Built for one-of-ones",
+        body: "Quantity is locked to one, sold pieces stamp SOLD and can't be added, and a piece that sells while it sits in someone's bag is caught before checkout. The bag runs on Shopify's Cart API through server actions, with the cart ID in an httpOnly cookie.",
       },
       {
-        heading: "Current stage",
-        body: "The storefront is connected to the live Shopify store and the catalog renders real products. Product detail, the cart flow, and a preview deploy for client review come next.",
+        heading: "Shareable product drawer",
+        body: "Intercepting and parallel routes open a piece in a quick-view drawer inside the catalog, while a shared link lands on a full, statically generated product page with its own preview image.",
+      },
+      {
+        heading: "Launch",
+        body: "Before launch, a real-card test order was paid, refunded and verified end to end: the SOLD flip, the confirmation email and the admin order. Checkout stays Shopify's, with Shop Pay, PayPal, Google Pay, Venmo and local pickup; hosting costs nothing per month.",
       },
     ],
-    links: [],
-    media: [],
+    links: [{ label: "Live", href: "https://www.yosiarchive.shop" }],
+    media: [
+      { type: "image", device: "desktop", src: "/work/yosi-archive/desktop-01-home.webp", alt: "YOSI Archive home page: a full-bleed photo of vintage band tees under the YOSI ARCHIVE wordmark", caption: "Home", aspectRatio: 1600 / 1083 },
+      { type: "image", device: "desktop", src: "/work/yosi-archive/desktop-02-catalog.webp", alt: "YOSI Archive catalog: a grid of vintage band tees with category, size and sort filters", caption: "Catalog · filters", aspectRatio: 1600 / 1083 },
+      { type: "image", device: "desktop", src: "/work/yosi-archive/desktop-03-quick-view.webp", alt: "YOSI Archive quick-view drawer open over the catalog, showing a 1990s Dwight Yoakam tee", caption: "Quick-view drawer", aspectRatio: 1600 / 1083 },
+      { type: "image", device: "desktop", src: "/work/yosi-archive/desktop-04-bag.webp", alt: "YOSI Archive bag drawer with one piece and a checkout button", caption: "Bag", aspectRatio: 1600 / 1083 },
+      { type: "image", device: "phone", src: "/work/yosi-archive/phone-01-home.webp", alt: "YOSI Archive phone home page with the wordmark over a photo of band tees", caption: "Home", aspectRatio: 600 / 1151 },
+      { type: "image", device: "phone", src: "/work/yosi-archive/phone-02-catalog.webp", alt: "YOSI Archive catalog on a phone with category and size filter chips", caption: "Catalog", aspectRatio: 600 / 1151 },
+      { type: "image", device: "phone", src: "/work/yosi-archive/phone-03-quick-view.webp", alt: "YOSI Archive product quick view on a phone with size, status and Add to bag", caption: "Product", aspectRatio: 600 / 1151 },
+    ],
   },
   {
     id: "back-issue-supply",

@@ -1,7 +1,8 @@
 import { skillsLedger } from "@/data/skills";
 import { SOCIALS } from "@/data/socials";
-import { MALDEN, RESUMES } from "@/data/contact";
+import { RESUMES } from "@/data/contact";
 import { ContactForm } from "./ContactForm";
+import { Masthead } from "./Masthead";
 
 const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
 const stamp = "hover:bg-signal hover:text-ink focus-visible:bg-signal focus-visible:text-ink";
@@ -74,23 +75,7 @@ export function Credits() {
         </div>
       </div>
 
-      <footer className={`grid grid-cols-4 gap-x-4 gap-y-3 border-t border-rule-on-ink px-4 py-8 md:grid-cols-12 md:px-10 ${label}`}>
-        <p className="col-span-4 md:col-span-4">Oliver Ramos · © 2026</p>
-        <p className="col-span-4 flex gap-3 md:col-span-4">
-          <span className="text-paper-muted">Studio</span>
-          <span aria-hidden="true" className="flex-1 border-b border-dotted border-paper-muted/50" />
-          {MALDEN.live ? (
-            <a href={MALDEN.href} target="_blank" rel="noopener noreferrer" className={stamp}>
-              {MALDEN.name} ↗
-            </a>
-          ) : (
-            <span>
-              {MALDEN.name} <span className="text-paper-muted">(soon)</span>
-            </span>
-          )}
-        </p>
-        <p className="col-span-4 text-paper-muted md:col-span-4 md:text-right">Set in Archivo &amp; IBM Plex Mono</p>
-      </footer>
+      <Masthead />
     </section>
   );
 }

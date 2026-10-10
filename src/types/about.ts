@@ -1,10 +1,6 @@
-export interface TimelineEntry {
-  year: string;
-  heading: string;
-  body: string;
-}
-
 export interface InterestEntry {
+  id: string;
   title: string;
   body: string;
+  photo?: { src: string; alt: string; width: number; height: number };
 }

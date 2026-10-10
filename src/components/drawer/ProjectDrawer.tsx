@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { X, ArrowUpRight } from "lucide-react";
 import type { ProjectEntry } from "@/types/project";
-import { useLenis } from "@/components/layout/SmoothScrollProvider";
 import { ProjectGallery } from "./ProjectGallery";
 
 const EASE_CRISP = [0.76, 0, 0.24, 1] as const;
@@ -19,13 +18,11 @@ interface ProjectDrawerProps {
 
 export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
   const router = useRouter();
-  const lenis = useLenis();
 
   useEffect(() => {
     if (!isOverlay) return;
 
     document.body.dataset.drawerOpen = "true";
-    lenis?.stop();
 
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") router.back();
@@ -34,10 +31,9 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
 
     return () => {
       delete document.body.dataset.drawerOpen;
-      lenis?.start();
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [isOverlay, router, lenis]);
+  }, [isOverlay, router]);
 
   function close() {
     if (isOverlay) router.back();
@@ -63,7 +59,6 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
       </header>
 
       <div
-        data-lenis-prevent
         className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 py-8 md:px-10 md:py-12"
       >
         {hasGallery && <ProjectGallery media={project.media} title={project.title} />}

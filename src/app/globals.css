@@ -3,29 +3,52 @@
 /* ---------------------------------------------------------------------- */
 /* Design tokens — Tailwind v4 CSS-first config.                          */
 /* No tailwind.config.ts: v4 reads tokens straight from this @theme block */
-/* and generates utilities (bg-cream, text-accent, font-display, etc).    */
+/* and generates utilities (bg-paper, text-signal, font-display, etc).    */
 /*                                                                        */
-/* Palette model: the site is light-first (cream/charcoal) — cream is the */
-/* primary surface, charcoal is the primary ink. Charcoal+white inverts   */
-/* as a secondary "dark module" for the parts meant to read as a terminal */
-/* or a closing statement: the project drawer, the Contact section, and   */
-/* the Colophon. Baby blue accent is used identically in both contexts.   */
+/* Palette model (docs/Specs/editorial-redesign/SPEC.md §2): a split      */
+/* edition. Part I is ink on paper, Part II is paper on ink, joined by a  */
+/* hard cut ("the turn"). One accent, label orange, used ~5 times: on     */
+/* paper only for large type, markers, fills and focus rings (3.18:1);    */
+/* on ink for anything (5.00:1). No shadows; depth = surface steps.       */
 /* ---------------------------------------------------------------------- */
 @theme {
   /* Palette */
-  --color-cream: #f3eee3;
-  --color-charcoal: #1b1a18;
-  --color-accent: #b4d4e1;
-  --color-accent-deep: #a3c7d6;
+  --color-paper: #f2eee6;
+  --color-paper-sunk: #e9e3d7;
+  --color-ink: #151412;
+  --color-ink-muted: #5e5a53; /* secondary text on paper, 5.92:1 */
+  --color-paper-muted: #a39e94; /* secondary text on ink, 6.90:1 */
+  --color-signal: #e4572e;
+  --color-error: #b42318;
+  --color-success: #2f6f3e;
 
   /* Hairlines — never a "border color", always low-alpha over the surface */
-  --color-hairline-on-light: rgba(27, 26, 24, 0.14);
-  --color-hairline-on-dark: rgba(255, 255, 255, 0.14);
+  --color-rule: rgb(21 20 18 / 0.16);
+  --color-rule-on-ink: rgb(242 238 230 / 0.16);
 
-  /* Type families, assigned from next/font CSS variables in layout.tsx */
-  --font-display: var(--font-inter), system-ui, sans-serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  /* TEMPORARY aliases so the pre-redesign components keep building until
+     they're deleted in stage 7. Don't use these in new code. */
+  --color-cream: var(--color-paper);
+  --color-charcoal: var(--color-ink);
+  --color-accent: var(--color-signal);
+  --color-accent-deep: var(--color-signal);
+  --color-hairline-on-light: var(--color-rule);
+  --color-hairline-on-dark: var(--color-rule-on-ink);
+
+  /* Type families, assigned from next/font CSS variables in layout.tsx.
+     Display = Archivo at condensed width (set per element with
+     font-stretch / the .display utility below); body + labels = Plex Mono. */
+  --font-display: var(--font-archivo), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-plex-mono), "SFMono-Regular", monospace;
   --font-mono: var(--font-plex-mono), "SFMono-Regular", monospace;
+
+  /* Fluid type scale (SPEC §2). "bleed" is meant to be wider than the
+     viewport — its section must clip with overflow-x: clip. */
+  --text-bleed: clamp(7rem, 24vw, 30rem);
+  --text-d1: clamp(3rem, 9vw, 9rem);
+  --text-d2: clamp(2rem, 5vw, 4.5rem);
+  --text-quote: clamp(1.25rem, 2.4vw, 2rem);
+  --text-label: 0.75rem;
 
   /* Letter-spacing scale used across the editorial/mono system. Near-zero/
      positive rather than negative, so headlines don't crowd. */
@@ -44,20 +67,49 @@
 }
 
 html {
-  background: var(--color-cream);
+  background: var(--color-paper);
   color-scheme: light;
+  /* Native smooth scrolling replaces Lenis; off for reduced motion. */
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
-  background: var(--color-cream);
-  color: var(--color-charcoal);
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
+/* Anchor jumps land below the fixed header. */
+[id] {
+  scroll-margin-top: 4rem;
+}
+
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-charcoal);
+  background: var(--color-signal);
+  color: var(--color-ink);
+}
+
+/* Focus ring, site-wide: the same signal outline on paper and ink. */
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+}
+
+/* Display type: Archivo, condensed, heavy, uppercase (SPEC §2). */
+.display {
+  font-family: var(--font-display);
+  font-stretch: 65%;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.82;
 }
 
 /* ---------------------------------------------------------------------- */

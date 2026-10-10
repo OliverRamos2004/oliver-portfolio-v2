@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
-import { useLenis } from "@/components/layout/SmoothScrollProvider";
 
 export function BackToTop() {
   const [visible, setVisible] = useState(false);
-  const lenis = useLenis();
 
   useEffect(() => {
     function onScroll() {
@@ -18,8 +16,8 @@ export function BackToTop() {
   }, []);
 
   function scrollToTop() {
-    if (lenis) lenis.scrollTo(0);
-    else window.scrollTo({ top: 0, behavior: "smooth" });
+    // Smoothness comes from CSS scroll-behavior (off under reduced motion).
+    window.scrollTo({ top: 0 });
   }
 
   return (

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { useLenis } from "@/components/layout/SmoothScrollProvider";
 
 /** Edit to taste — shown in the wayfinding bar as an editorial flourish, not a real map pin. */
 const COORDINATES = "30.2672° N / 97.7431° W";
@@ -66,7 +65,6 @@ interface WayfindingProps {
 
 export function Wayfinding({ variant = "light" }: WayfindingProps) {
   const time = useLocalTime();
-  const lenis = useLenis();
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [menuOpen, setMenuOpen] = useState(false);
@@ -76,7 +74,6 @@ export function Wayfinding({ variant = "light" }: WayfindingProps) {
     if (!menuOpen) return;
 
     document.body.dataset.drawerOpen = "true";
-    lenis?.stop();
 
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") closeMenu();
@@ -85,10 +82,9 @@ export function Wayfinding({ variant = "light" }: WayfindingProps) {
 
     return () => {
       delete document.body.dataset.drawerOpen;
-      lenis?.start();
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [menuOpen, lenis]);
+  }, [menuOpen]);
 
   // Also collapses any open drawer category, so it doesn't reopen already-expanded next time.
   function closeMenu() {
@@ -102,18 +98,14 @@ export function Wayfinding({ variant = "light" }: WayfindingProps) {
     e.preventDefault();
 
     if (target === "#top") {
-      if (lenis) lenis.scrollTo(0);
-      else window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0 });
       return;
     }
 
     const el = document.querySelector(target);
     if (!el) return;
-    if (lenis) {
-      lenis.scrollTo(el as HTMLElement, { offset: -24 });
-    } else {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    // Smoothness and the header offset come from CSS (scroll-behavior, scroll-margin-top).
+    el.scrollIntoView();
   }
 
   // "#top" has no matching element id — it's a scroll-to-top sentinel handled

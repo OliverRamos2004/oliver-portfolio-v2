@@ -1,6 +1,6 @@
-import { Wayfinding } from "@/components/layout/Wayfinding";
-import { HeroManifesto } from "@/components/hero/HeroManifesto";
-import { HeroIntro } from "@/components/hero/HeroIntro";
+import { RunningHead } from "@/components/layout/RunningHead";
+import { Cover } from "@/components/cover/Cover";
+import { Contents } from "@/components/contents/Contents";
 import { FeaturedWork } from "@/components/featured/FeaturedWork";
 import { ProjectIndexTable } from "@/components/index/ProjectIndexTable";
 import { SkillsSection } from "@/components/skills/SkillsSection";
@@ -18,10 +18,11 @@ import { prds } from "@/data/prds";
 export default function Home() {
   return (
     <>
-      <Wayfinding />
+      <RunningHead />
       <main>
-        <HeroManifesto />
-        <HeroIntro />
+        <Cover />
+        <Contents />
+        {/* Stage 3+ replaces everything below (SPEC §5 rollout). */}
         <FeaturedWork projects={projects} />
         <ProjectIndexTable projects={projects} />
         <SkillsSection categories={skillCategories} dividerTop={false} />

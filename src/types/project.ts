@@ -1,5 +1,11 @@
 export type ProjectStatus = "live" | "archived" | "in-progress";
 
+/** The two halves of the monograph (SPEC §1): Part I Systems, Part II Craft. */
+export type Part = "systems" | "craft";
+
+/** Features get a full spread; short takes get one rule-separated row. */
+export type Tier = "feature" | "short";
+
 export interface ProjectMedia {
   type: "image" | "video";
   src: string;
@@ -49,6 +55,32 @@ export interface ProjectEntry {
    * in `media`, so a featured project needs at least one of each.
    */
   featured?: number;
+  part: Part;
+  tier: Tier;
+  /** position within its part and tier, 1-based; drives the derived ref (I·01) */
+  order: number;
+  /** features: the one interesting decision, ≤ 120 chars */
+  pullQuote?: string;
+  /** short takes: one line of real insight, ≤ 110 chars */
+  insight?: string;
+  /** links the case file to its PRD in prds.ts */
+  prdId?: string;
+}
+
+/**
+ * A Part II short take that isn't a client project (CutbyOliver, photography,
+ * drumming). Project short takes are mapped into the same shape for rendering.
+ */
+export interface ShortTakeEntry {
+  id: string;
+  part: Part;
+  order: number;
+  title: string;
+  year: number;
+  insight: string;
+  image: { src: string; alt: string };
+  /** a case file (/work/…) or an outbound link; omit for no link */
+  href?: string;
 }
 
 export interface ArtifactEntry {

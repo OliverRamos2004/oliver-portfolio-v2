@@ -45,6 +45,8 @@
   /* Fluid type scale (SPEC §2). "bleed" is meant to be wider than the
      viewport — its section must clip with overflow-x: clip. */
   --text-bleed: clamp(7rem, 24vw, 30rem);
+  /* The cover name: sized so "OLIVER" overruns the viewport (tuned by measurement). */
+  --text-cover: clamp(7rem, 41vw, 72rem);
   --text-d1: clamp(3rem, 9vw, 9rem);
   --text-d2: clamp(2rem, 5vw, 4.5rem);
   --text-quote: clamp(1.25rem, 2.4vw, 2rem);
@@ -109,6 +111,8 @@ body {
   font-weight: 850;
   text-transform: uppercase;
   letter-spacing: -0.01em;
+  /* Condensed caps swallow normal spaces ("YOSIARCHIVE"); open them up. */
+  word-spacing: 0.12em;
   line-height: 0.82;
 }
 

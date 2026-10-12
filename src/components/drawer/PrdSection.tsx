@@ -4,16 +4,19 @@ const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.1
 
 type Tone = { muted: string; rule: string };
 
+/** Block headings sit one level below the section heading (h3 on the page, h4 in the drawer). */
+type BlockHeading = "h3" | "h4";
+
 const body = "text-[15px] leading-[1.6] max-md:text-[14px]";
 
 function tone(onInk: boolean): Tone {
   return { muted: onInk ? "text-paper-muted" : "text-ink-muted", rule: onInk ? "border-rule-on-ink" : "border-rule" };
 }
 
-function Block({ heading, t, children }: { heading: string; t: Tone; children: React.ReactNode }) {
+function Block({ heading, as: H, t, children }: { heading: string; as: BlockHeading; t: Tone; children: React.ReactNode }) {
   return (
     <div className={`mt-10 border-t ${t.rule} pt-5`}>
-      <h4 className={`${label} ${t.muted} mb-4`}>{heading}</h4>
+      <H className={`${label} ${t.muted} mb-4`}>{heading}</H>
       {children}
     </div>
   );
@@ -36,8 +39,10 @@ function List({ items, t, dim = false }: { items: string[]; t: Tone; dim?: boole
  * The PRD, folded into the case file (SPEC §4) — it replaced the standalone
  * /pm/[slug] page, which now 308s to /work/[slug]#prd. Anchored as #prd.
  */
-export function PrdSection({ prd, onInk }: { prd: PrdEntry; onInk: boolean }) {
+export function PrdSection({ prd, onInk, isPage }: { prd: PrdEntry; onInk: boolean; isPage: boolean }) {
   const t = tone(onInk);
+  const Heading = isPage ? "h2" : "h3";
+  const sub: BlockHeading = isPage ? "h3" : "h4";
   const { muted, rule } = t;
 
   return (
@@ -45,20 +50,20 @@ export function PrdSection({ prd, onInk }: { prd: PrdEntry; onInk: boolean }) {
       <p className={`${label} ${muted}`}>
         {prd.ref} · {prd.status === "shipped" ? "Shipped" : "In progress"}
       </p>
-      <h3 id="prd-title" className="display mt-3 text-[length:var(--text-d2)]">
+      <Heading id="prd-title" className="display mt-3 text-[length:var(--text-d2)]">
         Product requirements
-      </h3>
+      </Heading>
       <p className={`mt-4 max-w-xl ${body}`}>{prd.subtitle}</p>
 
-      <Block t={t} heading="Problem">
+      <Block t={t} as={sub} heading="Problem">
         <p className={`max-w-2xl ${body}`}>{prd.problem}</p>
       </Block>
 
-      <Block t={t} heading="Goals">
+      <Block t={t} as={sub} heading="Goals">
         <List t={t} items={prd.goals} />
       </Block>
 
-      <Block t={t} heading="Target users">
+      <Block t={t} as={sub} heading="Target users">
         <dl className="grid gap-6 sm:grid-cols-2">
           {prd.targetUsers.map((u) => (
             <div key={u.segment}>
@@ -69,11 +74,11 @@ export function PrdSection({ prd, onInk }: { prd: PrdEntry; onInk: boolean }) {
         </dl>
       </Block>
 
-      <Block t={t} heading="User stories">
+      <Block t={t} as={sub} heading="User stories">
         <List t={t} items={prd.userStories} />
       </Block>
 
-      <Block t={t} heading="Scope">
+      <Block t={t} as={sub} heading="Scope">
         <div className="grid gap-8 sm:grid-cols-2">
           <div>
             <p className={`${label} mb-3`}>In</p>
@@ -86,7 +91,7 @@ export function PrdSection({ prd, onInk }: { prd: PrdEntry; onInk: boolean }) {
         </div>
       </Block>
 
-      <Block t={t} heading="Success metrics">
+      <Block t={t} as={sub} heading="Success metrics">
         <dl className={`grid border-t ${rule} sm:grid-cols-2`}>
           {prd.successMetrics.map((m) => (
             <div key={m.metric} className={`border-b ${rule} py-3 sm:odd:border-r sm:odd:pr-4 sm:even:pl-4`}>
@@ -97,7 +102,7 @@ export function PrdSection({ prd, onInk }: { prd: PrdEntry; onInk: boolean }) {
         </dl>
       </Block>
 
-      <Block t={t} heading="Risks & open questions">
+      <Block t={t} as={sub} heading="Risks & open questions">
         <List t={t} items={prd.risks} />
       </Block>
     </section>

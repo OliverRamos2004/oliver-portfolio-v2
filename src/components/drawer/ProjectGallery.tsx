@@ -17,11 +17,15 @@ export function ProjectGallery({ media, title, onInk }: { media: ProjectMedia[];
   const muted = onInk ? "text-paper-muted" : "text-ink-muted";
   const hover = onInk ? "hover:text-signal" : "hover:bg-ink hover:text-paper";
   const [active, setActive] = useState(0);
+  // The first shot is the LCP: it renders visible (no fade-in) and loads eagerly.
+  // Only shots the visitor switches to fade in.
+  const [switched, setSwitched] = useState(false);
   const current = media[active];
   const count = media.length;
   const reduceMotion = useReducedMotion();
 
   function step(delta: number) {
+    setSwitched(true);
     setActive((i) => (i + delta + count) % count);
   }
 
@@ -37,7 +41,7 @@ export function ProjectGallery({ media, title, onInk }: { media: ProjectMedia[];
       <div className={`relative ${stage}`} style={{ aspectRatio: STAGE_RATIO }}>
         <motion.div
           key={current.src}
-          initial={reduceMotion ? false : { opacity: 0 }}
+          initial={reduceMotion || !switched ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.25, ease: EASE_CRISP }}
           className="absolute inset-[5%]"
@@ -48,6 +52,8 @@ export function ProjectGallery({ media, title, onInk }: { media: ProjectMedia[];
               alt={current.alt}
               fill
               sizes="(min-width: 768px) 768px, 100vw"
+              loading={switched ? undefined : "eager"}
+              fetchPriority={switched ? undefined : "high"}
               className="object-contain"
             />
           ) : (
@@ -78,7 +84,10 @@ export function ProjectGallery({ media, title, onInk }: { media: ProjectMedia[];
         {media.map((m, i) => (
           <button
             key={m.src}
-            onClick={() => setActive(i)}
+            onClick={() => {
+              setSwitched(true);
+              setActive(i);
+            }}
             aria-label={`Show ${m.caption ?? m.alt}`}
             aria-current={i === active}
             className={clsx(
@@ -88,7 +97,7 @@ export function ProjectGallery({ media, title, onInk }: { media: ProjectMedia[];
               i === active ? "opacity-100 outline outline-1 outline-signal" : "opacity-45 hover:opacity-100",
             )}
           >
-            {m.type === "image" && <Image src={m.src} alt="" fill sizes="96px" className="object-contain p-1" />}
+            {m.type === "image" && <Image src={m.src} alt="" fill sizes="96px" fetchPriority="low" className="object-contain p-1" />}
           </button>
         ))}
       </div>

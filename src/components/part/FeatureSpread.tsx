@@ -51,7 +51,8 @@ export function FeatureSpread({ project, index, lead = false }: { project: Proje
       data-part={project.part}
       className={`grid grid-cols-4 gap-x-4 gap-y-8 border-t ${rule} px-4 py-16 md:grid-cols-12 md:px-10 md:py-24 ${lead ? "md:py-32" : ""}`}
     >
-      <div className={`relative col-span-4 md:col-span-7 ${flip ? "md:order-2 md:col-start-6" : ""} ${phone ? "mb-[18%]" : ""}`}>
+      {/* self-start: grid items stretch to the row, which would drop the phone (anchored to the bottom) far below the stage. */}
+      <div className={`relative col-span-4 self-start md:col-span-7 ${flip ? "md:order-2 md:col-start-6" : ""} ${phone ? "mb-[18%]" : ""}`}>
         {desktop && <Shot media={desktop} onInk={onInk} sizes="(min-width: 768px) 58vw, 100vw" />}
         {phone && (
           // The phone overlaps the desktop stage's bottom-right corner, like a magazine layout.

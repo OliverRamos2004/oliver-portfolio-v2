@@ -90,6 +90,9 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
   const hasGallery = project.media.length > 1;
   // One h1 per page: the case file is the page on a direct link, a section of the issue in the drawer.
   const Title = isOverlay ? "h2" : "h1";
+  // Section and note headings sit one and two levels below the title.
+  const SectionHeading = isOverlay ? "h3" : "h2";
+  const NoteHeading = isOverlay ? "h4" : "h3";
   // PRD links that duplicate a project link (same GitHub repo) are shown once.
   const links = [...project.links, ...(prd?.links ?? []).filter((l) => !project.links.some((p) => p.href === l.href))];
 
@@ -139,17 +142,17 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
         <p className={`mt-8 max-w-2xl ${body}`}>{project.overview}</p>
 
         <section aria-labelledby="system-notes" className={`mt-12 border-t ${rule} pt-6`}>
-          <h3 id="system-notes" className={`${label} ${muted}`}>
+          <SectionHeading id="system-notes" className={`${label} ${muted}`}>
             System notes
-          </h3>
+          </SectionHeading>
           <ol className="mt-6 grid gap-8">
             {project.systemNotes.map((note, i) => (
               <li key={note.heading} className="grid grid-cols-[2.5rem_1fr] gap-x-2">
-                <span aria-hidden="true" className={`${label} pt-1 text-signal`}>
+                <span aria-hidden="true" className={`${label} pt-1 ${onInk ? "text-signal" : "text-ink"}`}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h4 className="font-display text-xl font-semibold uppercase leading-tight [font-stretch:80%]">{note.heading}</h4>
+                  <NoteHeading className="font-display text-xl font-semibold uppercase leading-tight [font-stretch:80%]">{note.heading}</NoteHeading>
                   <p className={`mt-2 max-w-2xl ${body} ${muted}`}>{note.body}</p>
                 </div>
               </li>
@@ -175,7 +178,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
           </div>
         )}
 
-        {prd && <PrdSection prd={prd} onInk={onInk} />}
+        {prd && <PrdSection prd={prd} onInk={onInk} isPage={!isOverlay} />}
 
         {links.length > 0 && (
           <ul className={`mt-12 flex flex-wrap gap-2 border-t ${rule} pt-6`}>

@@ -9,12 +9,16 @@ import type { Part, ProjectEntry, BentoEntry } from "@/types/project";
  */
 
 /**
- * `openerVw` is the opener headline size, measured so each line overruns the
- * viewport by ~12% (SYSTEMS: 35vw ran to 124%; "II CRAFT": 30.75vw to 99%).
+ * `openerEm` sizes the opener headline: the line's width in em from its first
+ * glyph to 40% into its last, less the -0.04em margin (measured in Archivo at
+ * 65% width: SYSTEMS L=3.018 g=0.471, "II CRAFT" L=2.697 g=0.475). The font is
+ * the content width divided by it, so the viewport edge always cuts 40% into
+ * the last letter. Sizing by vw alone let the fixed gutter push the whole S
+ * off at 768 ("SYSTEM").
  */
-export const PARTS: Record<Part, { numeral: string; word: string; label: string; openerVw: number }> = {
-  systems: { numeral: "I", word: "SYSTEMS", label: "PART I · SYSTEMS", openerVw: 32 },
-  craft: { numeral: "II", word: "CRAFT", label: "PART II · CRAFT", openerVw: 35 },
+export const PARTS: Record<Part, { numeral: string; word: string; label: string; openerEm: number }> = {
+  systems: { numeral: "I", word: "SYSTEMS", label: "PART I · SYSTEMS", openerEm: 3.166 },
+  craft: { numeral: "II", word: "CRAFT", label: "PART II · CRAFT", openerEm: 2.847 },
 };
 
 export const PART_ORDER: Part[] = ["systems", "craft"];

@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
      internal asset/image requests from any origin other than localhost,
      which can otherwise look like "images just don't load" on-device. */
   allowedDevOrigins: ["192.168.1.69"],
+  // The standalone PRD pages folded into the case file (editorial redesign
+  // stage 6). PRD ids match project ids, so one rule covers both.
+  async redirects() {
+    return [{ source: "/pm/:slug", destination: "/work/:slug#prd", permanent: true }];
+  },
 };
 
 export default nextConfig;

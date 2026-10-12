@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
 import { ProjectDrawer } from "@/components/drawer/ProjectDrawer";
-import { Wayfinding } from "@/components/layout/Wayfinding";
+import { RunningHead } from "@/components/layout/RunningHead";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.id }));
@@ -33,7 +33,7 @@ export default async function WorkPage({
 
   return (
     <>
-      <Wayfinding variant="dark" />
+      <RunningHead />
       <ProjectDrawer project={project} isOverlay={false} />
     </>
   );

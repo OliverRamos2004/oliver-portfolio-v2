@@ -26,6 +26,15 @@ export function featureRef(project: ProjectEntry): string {
   return `${PARTS[project.part].numeral}·${pad(project.order)}`;
 }
 
+/**
+ * The case file's reference: "I·01" for a feature; short takes number
+ * separately ("I · SHORT 01"), so they never collide with a feature's ref.
+ */
+export function caseFileRef(project: ProjectEntry): string {
+  if (project.tier === "feature") return featureRef(project);
+  return `${PARTS[project.part].numeral} · SHORT ${pad(project.order)}`;
+}
+
 /** Text for the fixed running head, e.g. "SYSTEMS — 01 YOSI ARCHIVE". */
 export function runningHead(part: Part, order?: number, title?: string): string {
   const word = PARTS[part].word;

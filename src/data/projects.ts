@@ -36,7 +36,11 @@ export const projects: ProjectEntry[] = [
       { label: "GitHub", href: "https://github.com/OliverRamos2004/moco-clinic-forms-main" },
       { label: "Live", href: "https://moco-clinic-forms-main.vercel.app/" },
     ],
-    media: [{ type: "image", src: "/work/clinic-intake.png", alt: "Montgomery County Free Clinic digital intake form interface", aspectRatio: 1280 / 900 }],
+    media: [
+      { type: "image", device: "desktop", src: "/work/clinic-intake/desktop-01-basic-info.webp", alt: "Montgomery County Free Clinic new patient intake: the Basic Info tab of a five-step form", caption: "Basic info", aspectRatio: 1600 / 1083 },
+      { type: "image", device: "desktop", src: "/work/clinic-intake/desktop-02-health-history.webp", alt: "Health History tab: reason for visit, allergies and current medications added as repeatable entries", caption: "Health history", aspectRatio: 1600 / 1083 },
+      { type: "image", device: "desktop", src: "/work/clinic-intake/desktop-03-espanol.webp", alt: "The same intake form switched to Spanish with the English/Español toggle", caption: "Español", aspectRatio: 1600 / 1083 },
+    ],
   },
   {
     id: "ramos-lawn-care",

@@ -3,14 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-/** Editorial flourish, not a map pin. */
-const COORDINATES = "30.2672° N / 97.7431° W";
-
 type Head = { label: string; short: string; tone: "paper" | "ink"; inPart: boolean };
 
 const INITIAL: Head = { label: "COVER", short: "COVER", tone: "paper", inPart: false };
 
-/** Austin time, to match the coordinates (not the visitor's local time). */
+/** Austin time (not the visitor's local time). */
 function useAustinTime() {
   const [time, setTime] = useState<string | null>(null);
   useEffect(() => {
@@ -88,7 +85,7 @@ export function RunningHead() {
           <Link href="/#credits" className={`${label} px-2 py-1 ${stamp}`}>Contact</Link>
         </nav>
         <p className={`${label} hidden shrink-0 tabular-nums lg:block ${onInk ? "text-paper-muted" : "text-ink-muted"}`}>
-          {COORDINATES} · {time ?? "--:--:--"}
+          {time ?? "--:--:--"}
         </p>
       </div>
     </header>

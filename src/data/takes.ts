@@ -1,10 +1,23 @@
 import type { ShortTakeEntry } from "@/types/project";
+import { MALDEN } from "@/data/contact";
 
 /**
  * Part II short takes that aren't client projects. Insight lines are
  * placeholders until Oliver writes them (SPEC §3, open items).
  */
 export const takes: ShortTakeEntry[] = [
+  {
+    id: "malden-studios",
+    part: "craft",
+    order: 0,
+    title: "MALDEN STUDIOS",
+    year: 2025,
+    // Draft from the studio's own mission line; Oliver's to edit.
+    insight: "My design and development studio: websites and headless Shopify storefronts for brands with something to say.",
+    image: { src: "/studio/malden.jpg", alt: "The Malden Studios home page: the wordmark over hot-air balloons at dawn" },
+    // Unlinked until maldenstudios.com is live.
+    ...(MALDEN.live && { href: MALDEN.href }),
+  },
   {
     id: "cutbyoliver",
     part: "craft",

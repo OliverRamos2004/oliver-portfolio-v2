@@ -14,6 +14,20 @@ export const philosophy = {
   quote: "If I am not a different person at the end of the journey than when I started, transformation hasn't really happened.",
 };
 
+/** "The studio" on /about. A draft adapted from Malden's mission line; Oliver's to edit. */
+export const studio = {
+  body: [
+    "In 2025 I started Malden Studios, a design and development studio in Austin.",
+    "We build websites and headless Shopify storefronts for brands with something to say. YOSI Archive and Back Issue Supply were built there.",
+  ],
+  image: {
+    src: "/studio/malden.jpg",
+    alt: "The Malden Studios home page: the wordmark over hot-air balloons at dawn",
+    width: 2400,
+    height: 1500,
+  },
+};
+
 export const portrait = {
   src: "/about/hero.jpg",
   alt: "Oliver Ramos in the studio",

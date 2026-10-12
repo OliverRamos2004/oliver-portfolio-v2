@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { bio, interests, philosophy, portrait } from "@/data/about";
+import { bio, interests, philosophy, portrait, studio } from "@/data/about";
+import { MALDEN } from "@/data/contact";
 import { Masthead } from "@/components/credits/Masthead";
 
 const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
@@ -59,6 +60,48 @@ export function Profile() {
           </p>
           <p className="mt-6 max-w-[60ch] text-[15px] leading-[1.6] text-ink-muted">{philosophy.lead}</p>
         </blockquote>
+      </section>
+
+      {/* The studio, on paper, sets up "Outside the studio" on ink. */}
+      <section
+        aria-labelledby="studio-title"
+        data-running-head="PROFILE — THE STUDIO"
+        data-running-head-short="STUDIO"
+        data-tone="paper"
+        className="grid grid-cols-4 gap-x-4 gap-y-10 border-t border-rule bg-paper px-4 py-16 text-ink md:grid-cols-12 md:px-10 md:py-24"
+      >
+        <div className="col-span-4 md:col-span-4">
+          <p className={`${label} text-ink-muted`}>The studio</p>
+          <h2 id="studio-title" className="display mt-6 text-[length:var(--text-d2)]">
+            {MALDEN.name}
+          </h2>
+          <p className={`${label} mt-4 text-ink-muted`}>Austin, TX · Est. 2025</p>
+          {studio.body.map((p) => (
+            <p key={p} className="mt-6 text-[15px] leading-[1.6] max-md:text-[14px]">{p}</p>
+          ))}
+          {MALDEN.live ? (
+            <a
+              href={MALDEN.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${label} mt-8 inline-block px-1 hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper`}
+            >
+              Visit the studio ↗
+            </a>
+          ) : (
+            <p className={`${label} mt-8 text-ink-muted`}>Site coming soon</p>
+          )}
+        </div>
+        <figure className="col-span-4 md:col-span-7 md:col-start-6">
+          <Image
+            src={studio.image.src}
+            alt={studio.image.alt}
+            width={studio.image.width}
+            height={studio.image.height}
+            sizes="(min-width: 768px) 58vw, 100vw"
+            className="h-auto w-full border border-rule"
+          />
+        </figure>
       </section>
 
       <section

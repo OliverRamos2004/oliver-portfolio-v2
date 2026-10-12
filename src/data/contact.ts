@@ -6,5 +6,8 @@ export const RESUMES = [
   { label: "Resume — Product", href: "/resume-product.pdf" },
 ];
 
-/** Oliver's studio, credited once in the masthead. Flip `live` when maldenstudios.com launches. */
+/**
+ * Oliver's studio: the masthead credit, a Part II short take and /about's
+ * "The studio". Flip `live` when maldenstudios.com launches to link all three.
+ */
 export const MALDEN = { name: "Malden Studios", href: "https://maldenstudios.com", live: false };

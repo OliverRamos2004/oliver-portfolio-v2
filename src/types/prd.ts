@@ -20,8 +20,6 @@ export interface PrdEntry {
   year: number;
   role: string;
   status: PrdStatus;
-  /** one-line summary shown on the homepage card */
-  summary: string;
   problem: string;
   goals: string[];
   targetUsers: { segment: string; detail: string }[];

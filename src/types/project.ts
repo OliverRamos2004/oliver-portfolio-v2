@@ -1,5 +1,14 @@
 export type ProjectStatus = "live" | "archived" | "in-progress";
 
+/** The two halves of the monograph (SPEC §1): Part I Systems, Part II Craft. */
+export type Part = "systems" | "craft";
+
+/**
+ * Features get a full spread; bento items a tile in their part's bento;
+ * archive projects keep a case file (/work/[slug]) but stay off the home page.
+ */
+export type Tier = "feature" | "bento" | "archive";
+
 export interface ProjectMedia {
   type: "image" | "video";
   src: string;
@@ -43,38 +52,32 @@ export interface ProjectEntry {
   systemNotes: SystemNote[];
   links: ProjectLink[];
   media: ProjectMedia[];
-  /**
-   * position in the homepage Selected Work band (1 = first); omit to keep a
-   * project out of it. Featured rows use the first desktop + first phone shot
-   * in `media`, so a featured project needs at least one of each.
-   */
-  featured?: number;
-}
-
-export interface ArtifactEntry {
-  id: string;
-  title: string;
-  year: number;
-  /** short filter-friendly label, e.g. "Generative" — the grid's filter buttons key off this */
-  category: string;
-  /** longer display string shown in the caption, e.g. "Generative — p5.js" */
-  medium: string;
-  note: string;
-  media: ProjectMedia;
+  part: Part;
+  tier: Tier;
+  /** position within its part and tier, 1-based; drives the derived ref (I·01) */
+  order: number;
+  /** features: the one interesting decision, ≤ 120 chars */
+  pullQuote?: string;
+  /** bento tiles: one line of real insight, ≤ 110 chars */
+  insight?: string;
+  /** links the case file to its PRD in prds.ts */
+  prdId?: string;
 }
 
 /**
- * Smaller, lighter-weight builds (hackathon sprints, quick demos) — a card
- * grid with a single screenshot and an outbound link, not a full case-study
- * drawer like ProjectEntry.
+ * A bento tile that isn't a client project (Malden Studios, CutbyOliver,
+ * drumming). Project bento items are mapped into the same shape for rendering.
  */
-export interface SideProjectEntry {
+export interface BentoEntry {
   id: string;
+  part: Part;
+  order: number;
   title: string;
   year: number;
-  /** one-line pitch, ~60-90 chars, shown under the title */
-  tagline: string;
-  stack: string[];
-  links: ProjectLink[];
-  media: ProjectMedia;
+  insight: string;
+  /** `position` is a CSS object-position; tiles crop from the top (right for screenshots) unless set. */
+  image: { src: string; alt: string; position?: string };
+  /** a case file (/work/…) or an outbound link; omit for no link */
+  href?: string;
 }
+

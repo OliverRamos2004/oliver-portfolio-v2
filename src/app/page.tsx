@@ -1,40 +1,37 @@
-import { Wayfinding } from "@/components/layout/Wayfinding";
-import { HeroManifesto } from "@/components/hero/HeroManifesto";
-import { HeroIntro } from "@/components/hero/HeroIntro";
-import { FeaturedWork } from "@/components/featured/FeaturedWork";
-import { ProjectIndexTable } from "@/components/index/ProjectIndexTable";
-import { SkillsSection } from "@/components/skills/SkillsSection";
-import { PmSection } from "@/components/pm/PmSection";
-import { ConnectBento } from "@/components/connect/ConnectBento";
-import { ResumeSection } from "@/components/resume/ResumeSection";
-import { GallerySection } from "@/components/gallery/GallerySection";
-import { ContactSection } from "@/components/contact/ContactSection";
-import { Colophon } from "@/components/layout/Colophon";
-import { projects } from "@/data/projects";
-import { skillCategories } from "@/data/skills";
-import { galleryPhotos } from "@/data/gallery";
-import { prds } from "@/data/prds";
+import { RunningHead } from "@/components/layout/RunningHead";
+import { Cover } from "@/components/cover/Cover";
+import { Contents } from "@/components/contents/Contents";
+import { Part } from "@/components/part/Part";
+import { PartOpener } from "@/components/part/PartOpener";
+import { FeatureSpread } from "@/components/part/FeatureSpread";
+import { Bento } from "@/components/part/Bento";
+import { Turn } from "@/components/part/Turn";
+import { Fragment } from "react";
+import { PART_ORDER, featuresFor, bentoFor } from "@/lib/monograph";
+import { Credits } from "@/components/credits/Credits";
 
 export default function Home() {
   return (
     <>
-      <Wayfinding />
+      <RunningHead />
       <main>
-        <HeroManifesto />
-        <HeroIntro />
-        <FeaturedWork projects={projects} />
-        <ProjectIndexTable projects={projects} />
-        <SkillsSection categories={skillCategories} dividerTop={false} />
-        <PmSection prds={prds} />
-        <ConnectBento />
-
-        {/* Smaller Builds section temporarily unrendered — Oliver wants it hidden for now, not deleted */}
-        <ResumeSection dividerTop={false} />
-
-        <GallerySection photos={galleryPhotos} />
-        <ContactSection />
+        <Cover />
+        <Contents />
+        {PART_ORDER.map((part) => (
+          <Fragment key={part}>
+            {/* The turn sits on the seam, between the two parts. */}
+            {part === "craft" && <Turn />}
+            <Part part={part}>
+              <PartOpener part={part} />
+              {featuresFor(part).map((project, i) => (
+                <FeatureSpread key={project.id} project={project} index={i} lead={part === "systems" && i === 0} />
+              ))}
+              <Bento part={part} items={bentoFor(part)} />
+            </Part>
+          </Fragment>
+        ))}
+        <Credits />
       </main>
-      <Colophon />
     </>
   );
 }

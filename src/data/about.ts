@@ -1,58 +1,63 @@
-import type { TimelineEntry, InterestEntry } from "@/types/about";
-import type { GalleryPhoto } from "@/types/gallery";
+import type { InterestEntry } from "@/types/about";
 
-// Verified against the resume — only dated milestones that are actually confirmed.
-// Pre-2025 history (when Wabash started, earlier work) is intentionally left out
-// rather than invented; add real entries here once Oliver provides them.
-export const timeline: TimelineEntry[] = [
-  {
-    year: "Sept 2025",
-    heading: "Montgomery County Free Clinic",
-    body: "Joined as Project Lead & Systems Analyst Intern — led a 3-person team migrating clinical records into a secure PostgreSQL/Supabase environment.",
-  },
-  {
-    year: "Dec 2025",
-    heading: "Freelance Technical Work",
-    body: "Started an independent technical consulting practice, partnering directly with Austin-area business owners on custom web and platform solutions.",
-  },
-  {
-    year: "Feb 2026",
-    heading: "Ramos Lawn Care & Services",
-    body: "Took on Operations & Financial Systems Lead — architected the automated financial reporting system the business now runs on across 19 properties.",
-  },
-  {
-    year: "May 2026",
-    heading: "B.A. Computer Science + Studio Art",
-    body: "Graduating from Wabash College, with coursework in database programming, algorithm design, data science, and data structures.",
-  },
-  {
-    year: "2026",
-    heading: "This Site",
-    body: "Rebuilt this portfolio from the ground up to reflect the real practice — real projects, real skills, real story.",
-  },
+/**
+ * The About profile (mini-consultation 2026-10-10): Oliver's own words with
+ * typos fixed and each block trimmed to 2–3 sentences. His to edit.
+ */
+export const bio = [
+  "I'm Oliver. I have a bachelor's in computer science and an eye for art and design.",
+  "I love to build things that are both functional and beautiful, and to solve problems in a way that is practical and efficient. My work is a reflection of my own personal journey.",
 ];
+
+export const philosophy = {
+  lead: "I believe in the continuous pursuit of growth through learning, hands-on experience and community work.",
+  quote: "If I am not a different person at the end of the journey than when I started, transformation hasn't really happened.",
+};
+
+/** "The studio" on /about. A draft adapted from Malden's mission line; Oliver's to edit. */
+export const studio = {
+  body: [
+    "In 2025 I started Malden Studios, a design and development studio in Austin.",
+    "We build websites and headless Shopify storefronts for brands with something to say. YOSI Archive and Back Issue Supply were built there.",
+  ],
+  image: {
+    src: "/studio/malden.jpg",
+    alt: "The Malden Studios home page: the wordmark over hot-air balloons at dawn",
+    width: 2400,
+    height: 1500,
+  },
+};
+
+export const portrait = {
+  src: "/about/hero.jpg",
+  alt: "Oliver Ramos in the studio",
+  // The file's real size, so the frame always matches the photo (no hand-set ratio).
+  width: 2000,
+  height: 1371,
+};
 
 export const interests: InterestEntry[] = [
   {
+    id: "drumming",
     title: "Drumming",
-    body: "I've been playing drums for over 3 years and I love it. I've played in a few bands and I'm always looking to play more. I enjoy playing Brazilian Jazz, Funk, and Rock.",
+    body: "I've been playing drums for over three years and I love it. I've played in a few bands and I'm always looking to play more: Brazilian jazz, funk and rock.",
+    photo: { src: "/about/drumset.jpg", alt: "Oliver's four-piece bop drum kit", width: 1200, height: 1600 },
   },
   {
-    title: "CS Projects",
-    body: "On my free time, i have caught a passion for building projects. I am currently working on MatchCut: a web discovery search engine for Barbers and Clients.",
-  },
-  {
+    id: "barbering",
     title: "Barbering",
-    body: "Barbering to me is a form of art. On my free time, I enjoy cutting and styling hair. I  have been doing it for over 4 years now.",
+    body: "Barbering to me is a form of art. In my free time I cut and style hair, and I've been doing it for over four years.",
+    photo: { src: "/about/barbering.jpg", alt: "A haircut by CutbyOliver", width: 1200, height: 1600 },
   },
   {
-    title: "Self Improvement",
-    body: "I immerse myself in self improvement by reading books, working out, and always seeking to learn more. My favorite book is Mary Shelley's Frankeinstein.",
+    id: "building",
+    title: "Building",
+    body: "In my free time I've caught a passion for building projects. Right now that's MatchCut, a discovery engine for barbers and clients.",
+    photo: { src: "/about/ramos-grad.JPG", alt: "Oliver at his graduation, 2026", width: 1143, height: 1600 },
   },
-];
-
-export const aboutPhotos: GalleryPhoto[] = [
-  { id: "about-1", src: "/about/drumset.jpg", alt: "My 4-pc Bop Drumset", caption: "Drumset", aspectRatio: 1200 / 1600 },
-  { id: "about-2", src: "/about/barbering.jpg", alt: "Haircut by @CutbyOliver", caption: "Barbering", aspectRatio: 1200 / 1600 },
-  { id: "about-3", src: "/about/ramos-grad.JPG", alt: "Oliver as a recent grad", caption: "Graduation — 2026", aspectRatio: 1143 / 1600 },
+  {
+    id: "self-improvement",
+    title: "Self-improvement",
+    body: "I read, work out and keep looking to learn more. My favorite book is Mary Shelley's Frankenstein.",
+  },
 ];

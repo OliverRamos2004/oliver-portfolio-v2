@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, IBM_Plex_Mono } from "next/font/google";
-import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import { NoiseOverlay } from "@/components/layout/NoiseOverlay";
-import { BackToTop } from "@/components/layout/BackToTop";
 import "./globals.css";
 
-// Also serves as the display face (--font-display) — every section heading
-// site-wide uses font-bold/font-black, hence loading those weights too.
-const inter = Inter({
+// Display face: a variable grotesque. Loading the width axis lets headlines
+// run condensed (font-stretch ~65%) without a second font file.
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["400", "500", "700", "900"],
+  variable: "--font-archivo",
+  axes: ["wdth"],
 });
 
 const plexMono = IBM_Plex_Mono({
@@ -35,15 +33,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${plexMono.variable}`}
+      className={`${archivo.variable} ${plexMono.variable}`}
     >
       <body>
-        <SmoothScrollProvider>
-          <NoiseOverlay />
-          {children}
-          {modal}
-          <BackToTop />
-        </SmoothScrollProvider>
+        <NoiseOverlay />
+        {children}
+        {modal}
       </body>
     </html>
   );

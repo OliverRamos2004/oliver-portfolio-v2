@@ -8,6 +8,7 @@ export const RESUMES = [
 
 /**
  * Oliver's studio: the masthead credit, a Part II short take and /about's
- * "The studio". Flip `live` when maldenstudios.com launches to link all three.
+ * "The studio". `live` links all three (on since maldenstudios.com launched,
+ * 2026-10-12); www is primary, the apex redirects.
  */
-export const MALDEN = { name: "Malden Studios", href: "https://maldenstudios.com", live: false };
+export const MALDEN = { name: "Malden Studios", href: "https://www.maldenstudios.com", live: true };

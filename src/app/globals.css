@@ -19,21 +19,10 @@
   --color-ink-muted: #5e5a53; /* secondary text on paper, 5.92:1 */
   --color-paper-muted: #a39e94; /* secondary text on ink, 6.90:1 */
   --color-signal: #e4572e;
-  --color-error: #b42318;
-  --color-success: #2f6f3e;
 
   /* Hairlines — never a "border color", always low-alpha over the surface */
   --color-rule: rgb(21 20 18 / 0.16);
   --color-rule-on-ink: rgb(242 238 230 / 0.16);
-
-  /* TEMPORARY aliases so the pre-redesign components keep building until
-     they're deleted in stage 7. Don't use these in new code. */
-  --color-cream: var(--color-paper);
-  --color-charcoal: var(--color-ink);
-  --color-accent: var(--color-signal);
-  --color-accent-deep: var(--color-signal);
-  --color-hairline-on-light: var(--color-rule);
-  --color-hairline-on-dark: var(--color-rule-on-ink);
 
   /* Type families, assigned from next/font CSS variables in layout.tsx.
      Display = Archivo at condensed width (set per element with
@@ -56,16 +45,6 @@
   --text-d2: clamp(2rem, 5vw, 4.5rem);
   --text-quote: clamp(1.25rem, 2.4vw, 2rem);
   --text-label: 0.75rem;
-
-  /* Letter-spacing scale used across the editorial/mono system. Near-zero/
-     positive rather than negative, so headlines don't crowd. */
-  --tracking-tightest: 0em;
-  --tracking-tight: 0.02em;
-  --tracking-wide: 0.08em;
-  --tracking-widest: 0.18em;
-
-  /* Motion easing — a crisp "expo out", never a spring/bounce */
-  --ease-crisp: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 /* Zero border-radius everywhere, unconditionally — brutalist reset */
@@ -76,7 +55,7 @@
 html {
   background: var(--color-paper);
   color-scheme: light;
-  /* Native smooth scrolling replaces Lenis; off for reduced motion. */
+  /* Native smooth scrolling for anchor jumps; off for reduced motion. */
   scroll-behavior: smooth;
 }
 
@@ -124,10 +103,8 @@ body {
 /* ---------------------------------------------------------------------- */
 /* Micro-grain noise overlay                                              */
 /* Fixed, full-viewport, non-interactive; sits above content but below    */
-/* the drawer/backdrop layer. Opacity is intentionally subtle (editorial  */
-/* matte finish, not a visible texture) — tuned slightly up from the      */
-/* original dark-theme value since cream absorbs contrast more than       */
-/* obsidian did.                                                          */
+/* the running head and case file (z-50). Subtle on purpose: a matte      */
+/* finish on paper and ink, not a visible texture.                        */
 /* ---------------------------------------------------------------------- */
 .noise-overlay {
   position: fixed;
@@ -138,22 +115,6 @@ body {
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
-}
-
-/* Hairline utilities — 1px regardless of device pixel ratio.
-   Default (-b/-t) assumes the light cream surface; the -dark variants are
-   for the charcoal "dark module" sections (drawer, Contact, Colophon). */
-.hairline-b {
-  border-bottom: 1px solid var(--color-hairline-on-light);
-}
-.hairline-t {
-  border-top: 1px solid var(--color-hairline-on-light);
-}
-.hairline-b-dark {
-  border-bottom: 1px solid var(--color-hairline-on-dark);
-}
-.hairline-t-dark {
-  border-top: 1px solid var(--color-hairline-on-dark);
 }
 
 /* Body scroll lock while the drawer (or the mobile nav menu) is open */

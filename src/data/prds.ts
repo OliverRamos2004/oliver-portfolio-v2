@@ -9,8 +9,6 @@ export const prds: PrdEntry[] = [
     year: 2026,
     role: "Founder & Product Lead",
     status: "in-progress",
-    summary:
-      "A deterministic matching engine for barber discovery — client and barber onboarding, waitlist live now, core app in build.",
     problem:
       "Clients looking for a new barber default to generic directories (Yelp, Google Maps, Instagram search) that rank on proximity and star rating, not on the things that actually predict a good haircut: hair texture compatibility, style specialty, price range, and chair vibe. Independent barbers and student barbers, meanwhile, have no low-cost channel to reach new clients outside of word-of-mouth or expensive ad spend — directories treat them the same as any other local business listing.",
     goals: [
@@ -77,8 +75,6 @@ export const prds: PrdEntry[] = [
     year: 2026,
     role: "Operations & Financial Systems Lead",
     status: "shipped",
-    summary:
-      "Turned a paper-run lawn care operation into one with automated billing and P&L reporting across 19 properties.",
     problem:
       "Ramos Lawn Care ran on paper: invoices written by hand, visits tracked from memory, and no reporting layer separating recurring revenue from one-off project work. That made it impossible to answer basic operating questions — what's this month's actual cash position, which accounts are behind on billing, is the crew's 4-day route actually profitable — without manually reconstructing the numbers.",
     goals: [

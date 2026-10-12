@@ -185,7 +185,6 @@ export const projects: ProjectEntry[] = [
       { label: "Instagram", href: "https://instagram.com/joinmatchcut" },
       { label: "GitHub", href: "https://github.com/OliverRamos2004/matchcut-landing" },
     ],
-    featured: 1,
     media: [
       { type: "image", device: "desktop", src: "/work/matchcut/desktop-01-landing.webp", alt: "MatchCut landing page: \"Find your barber by texture, style, and vibe\" beside a 3D barber chair", caption: "Landing", aspectRatio: 1600 / 1083 },
       { type: "image", device: "desktop", src: "/work/matchcut/desktop-02-questionnaire.webp", alt: "MatchCut questionnaire step asking about the client's hair texture", caption: "Questionnaire", aspectRatio: 1600 / 1083 },
@@ -320,7 +319,6 @@ export const projects: ProjectEntry[] = [
       },
     ],
     links: [{ label: "Live demo (password: issue07)", href: "https://malden-studio.myshopify.com" }],
-    featured: 2,
     media: [
       { type: "image", device: "desktop", src: "/work/back-issue-supply/desktop-01-home.webp", alt: "Back Issue Supply home page: the Issue 07 magazine cover over a selvedge denim photo", caption: "Home · Issue 07 cover", aspectRatio: 1600 / 1083 },
       { type: "image", device: "desktop", src: "/work/back-issue-supply/desktop-02-detail-spread.webp", alt: "Back Issue Supply detail spread: 'Anatomy of a five-pocket' with numbered callouts", caption: "Detail spread · Anatomy of a five-pocket", aspectRatio: 1600 / 1083 },

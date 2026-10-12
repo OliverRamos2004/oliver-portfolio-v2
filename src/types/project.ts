@@ -49,12 +49,6 @@ export interface ProjectEntry {
   systemNotes: SystemNote[];
   links: ProjectLink[];
   media: ProjectMedia[];
-  /**
-   * position in the homepage Selected Work band (1 = first); omit to keep a
-   * project out of it. Featured rows use the first desktop + first phone shot
-   * in `media`, so a featured project needs at least one of each.
-   */
-  featured?: number;
   part: Part;
   tier: Tier;
   /** position within its part and tier, 1-based; drives the derived ref (I·01) */
@@ -83,30 +77,3 @@ export interface ShortTakeEntry {
   href?: string;
 }
 
-export interface ArtifactEntry {
-  id: string;
-  title: string;
-  year: number;
-  /** short filter-friendly label, e.g. "Generative" — the grid's filter buttons key off this */
-  category: string;
-  /** longer display string shown in the caption, e.g. "Generative — p5.js" */
-  medium: string;
-  note: string;
-  media: ProjectMedia;
-}
-
-/**
- * Smaller, lighter-weight builds (hackathon sprints, quick demos) — a card
- * grid with a single screenshot and an outbound link, not a full case-study
- * drawer like ProjectEntry.
- */
-export interface SideProjectEntry {
-  id: string;
-  title: string;
-  year: number;
-  /** one-line pitch, ~60-90 chars, shown under the title */
-  tagline: string;
-  stack: string[];
-  links: ProjectLink[];
-  media: ProjectMedia;
-}

@@ -83,9 +83,9 @@ export function RunningHead() {
           <span className="hidden truncate md:inline">{head.label}</span>
         </p>
         <nav aria-label="Primary" className="flex shrink-0 items-center gap-1">
-          <a href="/#contents" className={`${label} px-2 py-1 ${stamp}`}>Work</a>
+          <Link href="/#contents" className={`${label} px-2 py-1 ${stamp}`}>Work</Link>
           <Link href="/about" className={`${label} px-2 py-1 ${stamp}`}>About</Link>
-          <a href="/#credits" className={`${label} px-2 py-1 ${stamp}`}>Contact</a>
+          <Link href="/#credits" className={`${label} px-2 py-1 ${stamp}`}>Contact</Link>
         </nav>
         <p className={`${label} hidden shrink-0 tabular-nums lg:block ${onInk ? "text-paper-muted" : "text-ink-muted"}`}>
           {COORDINATES} · {time ?? "--:--:--"}

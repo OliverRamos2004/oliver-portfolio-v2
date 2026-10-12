@@ -5,6 +5,10 @@ import { Part } from "@/components/part/Part";
 import { PartOpener } from "@/components/part/PartOpener";
 import { FeatureSpread } from "@/components/part/FeatureSpread";
 import { ShortTakes } from "@/components/part/ShortTakes";
+import { Turn } from "@/components/part/Turn";
+import { PhotoInterlude } from "@/components/interlude/PhotoInterlude";
+import { INTERLUDES } from "@/data/interludes";
+import { Fragment } from "react";
 import { PART_ORDER, featuresFor, shortTakesFor } from "@/lib/monograph";
 import { Credits } from "@/components/credits/Credits";
 
@@ -16,13 +20,20 @@ export default function Home() {
         <Cover />
         <Contents />
         {PART_ORDER.map((part) => (
-          <Part key={part} part={part}>
-            <PartOpener part={part} />
-            {featuresFor(part).map((project, i) => (
-              <FeatureSpread key={project.id} project={project} index={i} lead={part === "systems" && i === 0} />
-            ))}
-            <ShortTakes part={part} items={shortTakesFor(part)} />
-          </Part>
+          <Fragment key={part}>
+            {/* The turn sits on the seam, between the two parts. */}
+            {part === "craft" && <Turn />}
+            <Part part={part}>
+              <PartOpener part={part} />
+              {featuresFor(part).map((project, i) => (
+                <FeatureSpread key={project.id} project={project} index={i} lead={part === "systems" && i === 0} />
+              ))}
+              {/* Part I closes on its photo; Part II sets its photo between features and takes. */}
+              {part === "craft" && <PhotoInterlude photo={INTERLUDES.craft} />}
+              <ShortTakes part={part} items={shortTakesFor(part)} />
+              {part === "systems" && <PhotoInterlude photo={INTERLUDES.systems} />}
+            </Part>
+          </Fragment>
         ))}
         <Credits />
       </main>

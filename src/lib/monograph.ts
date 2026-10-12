@@ -1,6 +1,6 @@
 import { projects } from "@/data/projects";
 import { takes } from "@/data/takes";
-import type { Part, ProjectEntry, ShortTakeEntry } from "@/types/project";
+import type { Part, ProjectEntry, BentoEntry } from "@/types/project";
 
 /**
  * The homepage is one magazine issue in two parts (SPEC §3). Everything that
@@ -27,12 +27,12 @@ export function featureRef(project: ProjectEntry): string {
 }
 
 /**
- * The case file's reference: "I·01" for a feature; short takes number
- * separately ("I · SHORT 01"), so they never collide with a feature's ref.
+ * The case file's reference: "I·01" for a feature; bento and archive
+ * projects number separately ("I · +01"), so they never collide with a feature's ref.
  */
 export function caseFileRef(project: ProjectEntry): string {
   if (project.tier === "feature") return featureRef(project);
-  return `${PARTS[project.part].numeral} · SHORT ${pad(project.order)}`;
+  return `${PARTS[project.part].numeral} · +${pad(project.order)}`;
 }
 
 /** Text for the fixed running head, e.g. "SYSTEMS — 01 YOSI ARCHIVE". */
@@ -51,10 +51,10 @@ export function featuresFor(part: Part): ProjectEntry[] {
   return projects.filter((p) => p.part === part && p.tier === "feature").sort(byOrder);
 }
 
-/** Project short takes (linked to their case file) followed by non-project takes. */
-export function shortTakesFor(part: Part): ShortTakeEntry[] {
-  const fromProjects: ShortTakeEntry[] = projects
-    .filter((p) => p.part === part && p.tier === "short")
+/** Project bento items (linked to their case file) followed by non-project tiles. */
+export function bentoFor(part: Part): BentoEntry[] {
+  const fromProjects: BentoEntry[] = projects
+    .filter((p) => p.part === part && p.tier === "bento")
     .sort(byOrder)
     .map((p) => {
       const shot = p.media.find((m) => m.type === "image");
@@ -78,7 +78,7 @@ export type ContentsPart = {
   part: Part;
   label: string;
   features: ContentsRow[];
-  shortTakes: { names: string[]; page: number; href: string };
+  bento: { names: string[]; page: number; href: string };
 };
 
 const pageLabel = (n: number) => `p.${pad(n)}`;
@@ -86,8 +86,8 @@ export { pageLabel };
 
 /**
  * Magazine "page numbers" for the Contents. Cover is p.01, Contents p.02;
- * each part opener takes one page, each feature a two-page spread, short
- * takes one page, and the photo interlude after Part I one page.
+ * each part opener takes one page, each feature a two-page spread and the
+ * bento one page.
  */
 export function contents(): ContentsPart[] {
   let page = 3;
@@ -98,13 +98,12 @@ export function contents(): ContentsPart[] {
       page += 2;
       return row;
     });
-    const shortTakes = {
-      names: shortTakesFor(part).map((t) => t.title),
+    const bento = {
+      names: bentoFor(part).map((t) => t.title),
       page,
-      href: `#short-takes-${part}`,
+      href: `#bento-${part}`,
     };
     page += 1;
-    if (part === "systems") page += 1; // photo interlude before the turn
-    return { part, label: PARTS[part].label, features, shortTakes };
+    return { part, label: PARTS[part].label, features, bento };
   });
 }

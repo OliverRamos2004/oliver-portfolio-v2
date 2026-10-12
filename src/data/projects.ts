@@ -41,8 +41,10 @@ export const projects: ProjectEntry[] = [
   {
     id: "ramos-lawn-care",
     part: "systems",
-    tier: "feature",
-    order: 3,
+    tier: "bento",
+    order: 1,
+    // Draft for the bento tile; Oliver's to edit.
+    insight: "Started as the website; now runs the P&L, billing and crew routes.",
     pullQuote: "The site came first. Then the P&L system the business now runs on.",
     prdId: "ramos-lawn-care",
     ref: "02",
@@ -75,8 +77,8 @@ export const projects: ProjectEntry[] = [
   {
     id: "tex-country-materials",
     part: "systems",
-    tier: "short",
-    order: 1,
+    tier: "bento",
+    order: 2,
     insight: "Next.js over a static build, so a quote form can come later without a rebuild.",
     ref: "03",
     title: "TEX COUNTRY MATERIALS",
@@ -104,8 +106,8 @@ export const projects: ProjectEntry[] = [
   {
     id: "green-valley-storage",
     part: "systems",
-    tier: "short",
-    order: 2,
+    tier: "bento",
+    order: 3,
     insight: "Prototyped in Figma with the owner before a line of code.",
     ref: "04",
     title: "GREEN VALLEY STORAGE",
@@ -132,7 +134,8 @@ export const projects: ProjectEntry[] = [
   {
     id: "jackies-bouquets",
     part: "systems",
-    tier: "short",
+    // Off the home page (2026-10-11); its case file stays at /work/jackies-bouquets.
+    tier: "archive",
     order: 3,
     insight: "A florist's storefront, sized right: static on S3, fast and cheap.",
     ref: "05",
@@ -201,7 +204,7 @@ export const projects: ProjectEntry[] = [
   {
     id: "sterling-parking-solutions",
     part: "systems",
-    tier: "short",
+    tier: "bento",
     order: 4,
     insight: "Valet sold as hospitality, not logistics.",
     ref: "07",

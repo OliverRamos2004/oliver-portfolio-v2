@@ -4,7 +4,7 @@ const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.1
 // Ink stamp (SPEC §2): instant fill, no transition.
 const stamp = "hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper";
 
-/** A magazine contents page: features with page markers, then one short-takes row per part. */
+/** A magazine contents page: features with page markers, then one "more" row per part (the bento). */
 export function Contents() {
   const parts = contents();
   return (
@@ -32,12 +32,12 @@ export function Contents() {
                 </li>
               ))}
               <li className="border-b border-rule">
-                <a href={part.shortTakes.href} className={`flex items-baseline gap-3 py-4 ${stamp}`}>
+                <a href={part.bento.href} className={`flex items-baseline gap-3 py-4 ${stamp}`}>
                   <span className={`${label} w-8 shrink-0`}>+</span>
                   <span className={`${label} flex-1`}>
-                    Short takes — {part.shortTakes.names.join(" · ")}
+                    More — {part.bento.names.join(" · ")}
                   </span>
-                  <span className={label}>{pageLabel(part.shortTakes.page)}</span>
+                  <span className={label}>{pageLabel(part.bento.page)}</span>
                 </a>
               </li>
             </ol>

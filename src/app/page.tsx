@@ -4,12 +4,10 @@ import { Contents } from "@/components/contents/Contents";
 import { Part } from "@/components/part/Part";
 import { PartOpener } from "@/components/part/PartOpener";
 import { FeatureSpread } from "@/components/part/FeatureSpread";
-import { ShortTakes } from "@/components/part/ShortTakes";
+import { Bento } from "@/components/part/Bento";
 import { Turn } from "@/components/part/Turn";
-import { PhotoInterlude } from "@/components/interlude/PhotoInterlude";
-import { INTERLUDES } from "@/data/interludes";
 import { Fragment } from "react";
-import { PART_ORDER, featuresFor, shortTakesFor } from "@/lib/monograph";
+import { PART_ORDER, featuresFor, bentoFor } from "@/lib/monograph";
 import { Credits } from "@/components/credits/Credits";
 
 export default function Home() {
@@ -28,10 +26,7 @@ export default function Home() {
               {featuresFor(part).map((project, i) => (
                 <FeatureSpread key={project.id} project={project} index={i} lead={part === "systems" && i === 0} />
               ))}
-              {/* Part I closes on its photo; Part II sets its photo between features and takes. */}
-              {part === "craft" && <PhotoInterlude photo={INTERLUDES.craft} />}
-              <ShortTakes part={part} items={shortTakesFor(part)} />
-              {part === "systems" && <PhotoInterlude photo={INTERLUDES.systems} />}
+              <Bento part={part} items={bentoFor(part)} />
             </Part>
           </Fragment>
         ))}

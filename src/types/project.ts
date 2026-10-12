@@ -3,8 +3,11 @@ export type ProjectStatus = "live" | "archived" | "in-progress";
 /** The two halves of the monograph (SPEC §1): Part I Systems, Part II Craft. */
 export type Part = "systems" | "craft";
 
-/** Features get a full spread; short takes get one rule-separated row. */
-export type Tier = "feature" | "short";
+/**
+ * Features get a full spread; bento items a tile in their part's bento;
+ * archive projects keep a case file (/work/[slug]) but stay off the home page.
+ */
+export type Tier = "feature" | "bento" | "archive";
 
 export interface ProjectMedia {
   type: "image" | "video";
@@ -55,24 +58,25 @@ export interface ProjectEntry {
   order: number;
   /** features: the one interesting decision, ≤ 120 chars */
   pullQuote?: string;
-  /** short takes: one line of real insight, ≤ 110 chars */
+  /** bento tiles: one line of real insight, ≤ 110 chars */
   insight?: string;
   /** links the case file to its PRD in prds.ts */
   prdId?: string;
 }
 
 /**
- * A Part II short take that isn't a client project (CutbyOliver, photography,
- * drumming). Project short takes are mapped into the same shape for rendering.
+ * A bento tile that isn't a client project (Malden Studios, CutbyOliver,
+ * drumming). Project bento items are mapped into the same shape for rendering.
  */
-export interface ShortTakeEntry {
+export interface BentoEntry {
   id: string;
   part: Part;
   order: number;
   title: string;
   year: number;
   insight: string;
-  image: { src: string; alt: string };
+  /** `position` is a CSS object-position; tiles crop from the top (right for screenshots) unless set. */
+  image: { src: string; alt: string; position?: string };
   /** a case file (/work/…) or an outbound link; omit for no link */
   href?: string;
 }

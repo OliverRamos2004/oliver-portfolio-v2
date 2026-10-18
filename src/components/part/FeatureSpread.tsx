@@ -46,7 +46,7 @@ export function FeatureSpread({ project, index, lead = false }: { project: Proje
       id={anchorId(project.id)}
       aria-labelledby={`${anchorId(project.id)}-title`}
       data-running-head={runningHead(project.part, project.order, project.title)}
-      data-running-head-short={featureRef(project)}
+      data-running-head-short={project.title}
       data-tone={onInk ? "ink" : "paper"}
       data-part={project.part}
       className={`grid grid-cols-4 gap-x-4 gap-y-8 border-t ${rule} px-4 py-16 md:grid-cols-12 md:px-10 md:py-24 ${lead ? "md:py-32" : ""}`}
@@ -72,10 +72,10 @@ export function FeatureSpread({ project, index, lead = false }: { project: Proje
         <h3 id={`${anchorId(project.id)}-title`} className="display mt-4 text-[length:var(--text-d1)]">
           {project.title}
         </h3>
-        {project.pullQuote && (
-          <blockquote className="mt-8 font-display text-[length:var(--text-quote)] font-medium leading-[1.1] [font-stretch:100%]">
-            “{project.pullQuote}”
-          </blockquote>
+        {project.dek && (
+          <p className="mt-8 font-display text-[length:var(--text-quote)] font-medium leading-[1.1] [font-stretch:100%]">
+            {project.dek}
+          </p>
         )}
         <dl className={`mt-10 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-t ${rule} pt-4 ${label}`}>
           <dt className={muted}>Role</dt>
@@ -90,7 +90,7 @@ export function FeatureSpread({ project, index, lead = false }: { project: Proje
           scroll={false}
           className={`group mt-8 inline-flex self-start border ${onInk ? "border-paper" : "border-ink"} px-4 py-3 ${label} active:translate-y-px ${stamp}`}
         >
-          Open case file
+          See the project
           <span aria-hidden="true" className="ml-3 inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1">→</span>
         </Link>
       </div>

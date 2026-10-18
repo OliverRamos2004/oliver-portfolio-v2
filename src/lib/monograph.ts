@@ -16,9 +16,9 @@ import type { Part, ProjectEntry, BentoEntry } from "@/types/project";
  * the last letter. Sizing by vw alone let the fixed gutter push the whole S
  * off at 768 ("SYSTEM").
  */
-export const PARTS: Record<Part, { numeral: string; word: string; label: string; openerEm: number }> = {
-  systems: { numeral: "I", word: "SYSTEMS", label: "PART I · SYSTEMS", openerEm: 3.166 },
-  craft: { numeral: "II", word: "CRAFT", label: "PART II · CRAFT", openerEm: 2.847 },
+export const PARTS: Record<Part, { numeral: string; word: string; label: string; blurb: string; openerEm: number }> = {
+  systems: { numeral: "I", word: "SYSTEMS", label: "PART I · SYSTEMS", blurb: "Websites and software I've built for businesses.", openerEm: 3.166 },
+  craft: { numeral: "II", word: "CRAFT", label: "PART II · CRAFT", blurb: "My studio, my own products and creative work.", openerEm: 2.847 },
 };
 
 export const PART_ORDER: Part[] = ["systems", "craft"];
@@ -77,37 +77,22 @@ export function bentoFor(part: Part): BentoEntry[] {
   return [...fromProjects, ...extra];
 }
 
-export type ContentsRow = { ref: string; title: string; page: number; href: string };
+export type ContentsRow = { ref: string; title: string; kind?: string; href: string };
 export type ContentsPart = {
   part: Part;
   label: string;
+  blurb: string;
   features: ContentsRow[];
-  bento: { names: string[]; page: number; href: string };
+  bento: { names: string[]; href: string };
 };
 
-const pageLabel = (n: number) => `p.${pad(n)}`;
-export { pageLabel };
-
-/**
- * Magazine "page numbers" for the Contents. Cover is p.01, Contents p.02;
- * each part opener takes one page, each feature a two-page spread and the
- * bento one page.
- */
+/** The Contents: each part's features in order, then one "more" row for its bento. */
 export function contents(): ContentsPart[] {
-  let page = 3;
-  return PART_ORDER.map((part) => {
-    page += 1; // the part opener
-    const features = featuresFor(part).map((p) => {
-      const row = { ref: pad(p.order), title: p.title, page, href: `#${anchorId(p.id)}` };
-      page += 2;
-      return row;
-    });
-    const bento = {
-      names: bentoFor(part).map((t) => t.title),
-      page,
-      href: `#bento-${part}`,
-    };
-    page += 1;
-    return { part, label: PARTS[part].label, features, bento };
-  });
+  return PART_ORDER.map((part) => ({
+    part,
+    label: PARTS[part].label,
+    blurb: PARTS[part].blurb,
+    features: featuresFor(part).map((p) => ({ ref: pad(p.order), title: p.title, kind: p.kind, href: `#${anchorId(p.id)}` })),
+    bento: { names: bentoFor(part).map((t) => t.title), href: `#bento-${part}` },
+  }));
 }

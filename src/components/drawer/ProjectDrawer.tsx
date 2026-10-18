@@ -122,10 +122,10 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
         </p>
         <Title className="display mt-3 text-[length:var(--text-d2)]">{project.title}</Title>
 
-        {project.pullQuote && (
-          <blockquote className="mt-6 font-display text-[length:var(--text-quote)] font-medium leading-[1.1] [font-stretch:100%]">
-            “{project.pullQuote}”
-          </blockquote>
+        {project.dek && (
+          <p className="mt-6 font-display text-[length:var(--text-quote)] font-medium leading-[1.1] [font-stretch:100%]">
+            {project.dek}
+          </p>
         )}
 
         <dl className={`mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-t ${rule} pt-4 ${label}`}>

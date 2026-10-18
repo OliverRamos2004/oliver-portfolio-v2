@@ -9,11 +9,6 @@ export const bio = [
   "I love to build things that are both functional and beautiful, and to solve problems in a way that is practical and efficient. My work is a reflection of my own personal journey.",
 ];
 
-export const philosophy = {
-  lead: "I believe in the continuous pursuit of growth through learning, hands-on experience and community work.",
-  quote: "If I am not a different person at the end of the journey than when I started, transformation hasn't really happened.",
-};
-
 /** "The studio" on /about. A draft adapted from Malden's mission line; Oliver's to edit. */
 export const studio = {
   body: [
@@ -29,11 +24,13 @@ export const studio = {
 };
 
 export const portrait = {
-  src: "/about/hero.jpg",
+  // hero.jpg cropped above the hands (Oliver: no hands or fingers in frame), so no crop can show them.
+  src: "/about/portrait.jpg",
   alt: "Oliver Ramos in the studio",
-  // The file's real size, so the frame always matches the photo (no hand-set ratio).
   width: 2000,
-  height: 1371,
+  height: 1230,
+  /** CSS object-position for the wide crop: keeps the face in the upper third, trims the wall above. */
+  position: "56% 30%",
 };
 
 export const interests: InterestEntry[] = [

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { bio, interests, philosophy, portrait, studio } from "@/data/about";
+import { bio, interests, portrait, studio } from "@/data/about";
 import { MALDEN } from "@/data/contact";
 import { Masthead } from "@/components/credits/Masthead";
 
@@ -33,33 +33,39 @@ export function Profile() {
         data-running-head="PROFILE — OLIVER RAMOS"
         data-running-head-short="PROFILE"
         data-tone="paper"
-        className="grid grid-cols-4 gap-x-4 gap-y-10 border-t border-rule bg-paper px-4 py-16 text-ink md:grid-cols-12 md:px-10 md:py-24"
+        className="border-t border-rule bg-paper text-ink"
       >
-        <figure className="col-span-4 md:col-span-7">
+        {/* Full-bleed portrait with the lead set over its bottom edge, like a magazine profile opener.
+            3:4 on phones leaves room under the face for the text; 16:9 on wide screens. */}
+        <div className="relative aspect-[3/4] w-full md:aspect-[4/3] lg:aspect-[16/9]">
           <Image
             src={portrait.src}
             alt={portrait.alt}
-            width={portrait.width}
-            height={portrait.height}
-            sizes="(min-width: 768px) 58vw, 100vw"
+            fill
+            sizes="100vw"
             priority
-            className="h-auto w-full"
+            className="object-cover"
+            style={{ objectPosition: portrait.position }}
           />
-        </figure>
-        <div className="col-span-4 md:col-span-4 md:col-start-9">
-          <p className={`${label} text-ink-muted`}>Oliver Ramos · Austin, TX</p>
-          {bio.map((p) => (
-            <p key={p} className="mt-6 text-[15px] leading-[1.6] max-md:text-[14px]">{p}</p>
+          {/* The photo is a light wall and a light shirt: paper text needs this scrim to stay legible.
+              Bottom-up below lg; left-to-right at lg, where the 16:9 crop fixes the face right of
+              center, so the text keeps to the left five columns and the face stays bright. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-linear-to-t from-ink/90 via-ink/45 via-35% to-transparent to-70% lg:bg-linear-to-r lg:from-ink/85 lg:via-ink/40 lg:via-35% lg:to-55%"
+          />
+          <div className="absolute inset-x-0 bottom-0 grid grid-cols-4 gap-x-4 px-4 pb-6 text-paper md:grid-cols-12 md:px-10 md:pb-10">
+            <p className={`${label} col-span-4 text-paper/85 md:col-span-12`}>Oliver Ramos · Austin, TX</p>
+            <p className="col-span-4 mt-3 font-display text-[clamp(1.75rem,4vw,3.5rem)] font-medium leading-[1.05] [font-stretch:100%] md:col-span-8 lg:col-span-5">
+              {bio[0]}
+            </p>
+          </div>
+        </div>
+        <div className="max-w-[60ch] px-4 py-16 md:px-10 md:py-24">
+          {bio.slice(1).map((p) => (
+            <p key={p} className="text-[15px] leading-[1.6] max-md:text-[14px] [&+p]:mt-6">{p}</p>
           ))}
         </div>
-
-        <blockquote className="col-span-4 mt-6 border-t border-rule pt-10 md:col-span-10 md:mt-12">
-          <p className={`${label} text-ink-muted`}>Philosophy</p>
-          <p className="mt-6 font-display text-[length:var(--text-d2)] font-semibold leading-[1.02] [font-stretch:85%]">
-            “{philosophy.quote}”
-          </p>
-          <p className="mt-6 max-w-[60ch] text-[15px] leading-[1.6] text-ink-muted">{philosophy.lead}</p>
-        </blockquote>
       </section>
 
       {/* The studio, on paper, sets up "Outside the studio" on ink. */}

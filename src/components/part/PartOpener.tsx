@@ -5,18 +5,21 @@ const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.1
 
 /** A full-page section opener: the part's word, cropped by the viewport. */
 export function PartOpener({ part }: { part: Part }) {
-  const { numeral, word, label: partLabel, openerEm } = PARTS[part];
+  const { numeral, word, label: partLabel, blurb, openerEm } = PARTS[part];
   const onInk = part === "craft";
   return (
     <section
       aria-labelledby={`opener-${part}`}
       data-running-head={runningHead(part)}
-      data-running-head-short={`${numeral}`}
+      data-running-head-short={word}
       data-tone={onInk ? "ink" : "paper"}
       data-part={part}
       className="flex min-h-[80svh] flex-col justify-between pt-20"
     >
-      <p className={`${label} px-4 md:px-10 ${onInk ? "text-paper-muted" : "text-ink-muted"}`}>{partLabel}</p>
+      <div className={`px-4 md:px-10 ${onInk ? "text-paper-muted" : "text-ink-muted"}`}>
+        <p className={label}>{partLabel}</p>
+        <p className="mt-2 font-mono text-sm">{blurb}</p>
+      </div>
       <h2
         id={`opener-${part}`}
         className="display reveal -ml-[0.04em] whitespace-nowrap px-[var(--gutter)] pb-2 [--gutter:1rem] md:[--gutter:2.5rem]"

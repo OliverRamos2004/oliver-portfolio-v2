@@ -56,8 +56,10 @@ export interface ProjectEntry {
   tier: Tier;
   /** position within its part and tier, 1-based; drives the derived ref (I·01) */
   order: number;
-  /** features: the one interesting decision, ≤ 120 chars */
-  pullQuote?: string;
+  /** features: one plain statement of what it is, for whom, what changed; ≤ 120 chars, no quote marks */
+  dek?: string;
+  /** features: what it is in plain words ("Online store"), shown in the Contents */
+  kind?: string;
   /** bento tiles: one line of real insight, ≤ 110 chars */
   insight?: string;
   /** links the case file to its PRD in prds.ts */

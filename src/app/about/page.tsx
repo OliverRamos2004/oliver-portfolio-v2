@@ -4,7 +4,7 @@ import { Profile } from "@/components/profile/Profile";
 
 export const metadata: Metadata = {
   title: "About — Oliver Ramos",
-  description: "Oliver Ramos, Austin, TX: a profile, a philosophy, and what happens outside the studio.",
+  description: "Oliver Ramos, Austin, TX: a profile, the studio, and what happens outside it.",
 };
 
 export default function AboutPage() {

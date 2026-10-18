@@ -17,12 +17,12 @@ export function Credits() {
     <section
       id="credits"
       aria-labelledby="credits-title"
-      data-running-head="CREDITS"
-      data-running-head-short="CREDITS"
+      data-running-head="CONTACT"
+      data-running-head-short="CONTACT"
       data-tone="ink"
       className="overflow-x-clip border-t border-rule-on-ink bg-ink pt-20 text-paper"
     >
-      <p className={`${label} px-4 text-paper-muted md:px-10`}>Credits · Contact</p>
+      <p className={`${label} px-4 text-paper-muted md:px-10`}>Contact</p>
       {/* Two lines measured to overrun the viewport like the openers. */}
       <h2 id="credits-title" className="display reveal -ml-[0.04em] mt-6 whitespace-nowrap px-4 text-[length:var(--text-contact)] md:px-10">
         <span className="block">Let’s build</span>

@@ -13,7 +13,6 @@ export type Tone = "ink" | "signal" | "paper";
 
 export interface MenuItem {
   key: SheetKey;
-  n: string;
   label: string;
   /** what the giant name rolls to while this word is hovered */
   swap: readonly [string, string];
@@ -55,7 +54,6 @@ function workCount(): string {
 export const MENU: readonly MenuItem[] = [
   {
     key: "work",
-    n: "01",
     label: "Work",
     swap: ["I build", "systems"],
     caption: `Stores and software for small businesses. ${workCount()}`,
@@ -63,7 +61,6 @@ export const MENU: readonly MenuItem[] = [
   },
   {
     key: "studio",
-    n: "02",
     label: "Studio",
     swap: ["Malden", "Studios"],
     caption: "My studio. Design-led Shopify stores for brands worth looking at.",
@@ -71,7 +68,6 @@ export const MENU: readonly MenuItem[] = [
   },
   {
     key: "about",
-    n: "03",
     label: "About",
     swap: ["Also", "drums"],
     caption: "CS degree, an eye for design, three years behind the kit.",
@@ -79,7 +75,6 @@ export const MENU: readonly MenuItem[] = [
   },
   {
     key: "contact",
-    n: "04",
     label: "Contact",
     swap: ["Say", "hello"],
     caption: "One email. I answer within a day.",

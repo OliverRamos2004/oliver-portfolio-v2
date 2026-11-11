@@ -70,7 +70,7 @@ export function WorkList({ rows }: { rows: readonly WorkRow[] }) {
             href={row.href}
             className={styles.proj}
             data-active={active === row.id}
-            data-cursor="VIEW"
+            data-cursor="View"
             onPointerEnter={(e) => {
               if (e.pointerType !== "mouse") return;
               setActive(row.id);
@@ -85,10 +85,8 @@ export function WorkList({ rows }: { rows: readonly WorkRow[] }) {
             onBlur={() => setActive(null)}
           >
             <span className={`display ${styles.projName}`}>{row.name}</span>
-            <span className={`${styles.label} ${styles.projMeta}`}>
-              {row.kind}
-              <br />
-              {row.status === "in-progress" ? `${row.year} · building` : row.year}
+            <span className={styles.projMeta}>
+              {row.kind}, {row.status === "in-progress" ? "building" : row.year}
             </span>
           </Link>
         ))}

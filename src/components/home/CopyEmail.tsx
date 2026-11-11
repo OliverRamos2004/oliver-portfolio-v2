@@ -30,7 +30,7 @@ export function CopyEmail({ email }: { email: string }) {
         className={`display ${styles.mail}`}
         onClick={copy}
         data-copied={copied}
-        data-cursor={copied ? "COPIED ✓" : "COPY"}
+        data-cursor={copied ? "Copied" : "Copy"}
         aria-label={`Copy ${email}`}
       >
         {email.slice(0, at)}

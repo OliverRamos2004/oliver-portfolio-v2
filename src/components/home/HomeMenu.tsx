@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { HOME, type MenuItem, type SheetKey } from "@/data/home";
-import { useAustinTime } from "@/lib/useAustinTime";
 import { RollName } from "./RollName";
 import { Sheet } from "./Sheet";
 import { Cursor } from "./Cursor";
@@ -24,7 +23,6 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
   const [open, setOpen] = useState<SheetKey | null>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
   const restoreFocus = useRef(false);
-  const time = useAustinTime();
 
   const current = open ?? hovered;
   const active = items.find((item) => item.key === current);
@@ -62,11 +60,6 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
   return (
     <div className={styles.root} data-tone={tone} data-surface={tone}>
       <main className={styles.home} inert={open !== null}>
-        <header className={`${styles.top} ${styles.label}`}>
-          <span>Oliver Ramos · Austin, TX</span>
-          <span aria-hidden="true">{time ? `${time} CT` : "--:--:-- CT"}</span>
-        </header>
-
         <h1 className={`display ${styles.stage}`} aria-label="Oliver Ramos">
           <RollName lines={active?.swap ?? HOME.swap} />
         </h1>
@@ -85,7 +78,7 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
               type="button"
               className={styles.word}
               data-active={item.key === current}
-              data-cursor="OPEN"
+              data-cursor="Open"
               aria-haspopup="dialog"
               aria-controls={`sheet-${item.key}`}
               onPointerEnter={(e) => e.pointerType === "mouse" && preview(item.key)}
@@ -95,9 +88,6 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
                 setOpen(item.key);
               }}
             >
-              <span className={styles.n} aria-hidden="true">
-                {item.n}
-              </span>
               {item.label}
             </button>
           ))}
@@ -112,7 +102,6 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
           id={`sheet-${item.key}`}
           open={open === item.key}
           tone={item.tone}
-          n={item.n}
           title={item.label}
           onClose={close}
         >

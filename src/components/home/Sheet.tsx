@@ -8,7 +8,6 @@ interface SheetProps {
   id: string;
   open: boolean;
   tone: Tone;
-  n: string;
   title: string;
   onClose: () => void;
   children: ReactNode;
@@ -20,7 +19,7 @@ interface SheetProps {
  * and a closed sheet is `inert` + `visibility: hidden`. Esc is handled by
  * the parent so it can defer to the case-file drawer when that's on top.
  */
-export function Sheet({ id, open, tone, n, title, onClose, children }: SheetProps) {
+export function Sheet({ id, open, tone, title, onClose, children }: SheetProps) {
   const ref = useRef<HTMLElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -43,14 +42,16 @@ export function Sheet({ id, open, tone, n, title, onClose, children }: SheetProp
       data-open={open}
       inert={!open}
     >
-      <div className={`${styles.bar} ${styles.label}`}>
-        <span aria-hidden="true">
-          {n} · {title}
-        </span>
-        <button ref={closeRef} type="button" className={styles.close} onClick={onClose} data-cursor="ESC">
-          Close ✕
-        </button>
-      </div>
+      <button
+        ref={closeRef}
+        type="button"
+        className={styles.close}
+        onClick={onClose}
+        aria-label={`Close ${title}`}
+        data-cursor="Close"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
       <div className={styles.stack}>{children}</div>
     </section>
   );

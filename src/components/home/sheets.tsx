@@ -24,7 +24,7 @@ export function StudioSheet() {
           {STUDIO.title[1]}
         </h2>
         <p className={styles.lede}>{STUDIO.body}</p>
-        <a className={styles.btn} href={MALDEN.href} target="_blank" rel="noopener" data-cursor="GO ↗">
+        <a className={styles.btn} href={MALDEN.href} target="_blank" rel="noopener" data-cursor="Visit ↗">
           {STUDIO.cta} <span aria-hidden="true">↗</span>
         </a>
       </div>
@@ -60,7 +60,7 @@ export function AboutSheet() {
         </h2>
         <div>
           <p className={styles.bio}>{ABOUT.body}</p>
-          <dl className={`${styles.facts} ${styles.label}`}>
+          <dl className={styles.facts}>
             {ABOUT.facts.map(([term, value]) => (
               <div key={term} className="contents">
                 <dt>{term}</dt>
@@ -77,10 +77,9 @@ export function AboutSheet() {
 export function ContactSheet() {
   return (
     <div className={`${styles.contact} ${styles.fill}`}>
-      <span className={`${styles.label} ${styles.muted}`}>Click to copy</span>
       <div>
         <CopyEmail email={EMAIL} />
-        <div className={`${styles.links} ${styles.label}`}>
+        <div className={styles.links}>
           <a href={`mailto:${EMAIL}`} data-cursor="↗">
             Email app
           </a>

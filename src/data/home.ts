@@ -4,6 +4,8 @@
  * edits happen in one file. Drafted by Claude; Oliver's to edit before merge.
  */
 
+import { projects } from "./projects";
+
 export type SheetKey = "work" | "studio" | "about" | "contact";
 
 /** Surface color: the page while a word is hovered, and that word's sheet. */
@@ -19,10 +21,43 @@ export interface MenuItem {
   tone: Tone;
 }
 
+/**
+ * Menu treatment trial (2026-11-10). "blocks": wine blocks with paper text,
+ * laid over the giant name. "clear": wine text, and the name shrinks to fit
+ * above the menu so they never overlap. Oliver picks one; delete the other.
+ */
+export const MENU_STYLE: "blocks" | "clear" = "blocks";
+
 export const HOME = {
   swap: ["Oliver", "Ramos"],
   caption: "I build systems for small businesses, and I make things.",
 } as const;
+
+/**
+ * The Work sheet, top to bottom. `id` must match a project in projects.ts
+ * (year, status and the case-file link come from there); `name` is the short
+ * display name, sized to fit one line at 10vw.
+ */
+export const WORK = [
+  { id: "yosi-archive", name: "YOSI Archive", kind: "Online store", image: "/work/yosi-archive/desktop-01-home.webp" },
+  { id: "matchcut", name: "MatchCut", kind: "Barber app · founder", image: "/work/matchcut/desktop-01-landing.webp" },
+  { id: "clinic-intake", name: "Clinic Intake", kind: "Clinic software", image: "/work/clinic-intake/desktop-01-basic-info.webp" },
+  { id: "back-issue-supply", name: "Back Issue", kind: "Shopify store", image: "/work/back-issue-supply/desktop-01-home.webp" },
+  { id: "ramos-lawn-care", name: "Ramos Lawn", kind: "Site + ops system", image: "/work/ramos-lawn-care.png" },
+  { id: "green-valley-storage", name: "Green Valley", kind: "Website", image: "/work/green-valley-storage.png" },
+  { id: "tex-country-materials", name: "Tex Country", kind: "Website", image: "/work/tex-country-materials.png" },
+] as const;
+
+const NUMBER = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
+
+/** "Six shipped, one in progress.", counted from WORK so the caption can't drift from the list. */
+function workCount(): string {
+  const listed = WORK.map((w) => projects.find((p) => p.id === w.id));
+  const building = listed.filter((p) => p?.status === "in-progress").length;
+  const shipped = listed.length - building;
+  const n = (k: number) => NUMBER[k] ?? String(k);
+  return building ? `${n(shipped)} shipped, ${n(building).toLowerCase()} in progress.` : `${n(shipped)} shipped.`;
+}
 
 export const MENU: readonly MenuItem[] = [
   {
@@ -30,7 +65,7 @@ export const MENU: readonly MenuItem[] = [
     n: "01",
     label: "Work",
     swap: ["I build", "systems"],
-    caption: "Stores and software for small businesses. Nine shipped, one in progress.",
+    caption: `Stores and software for small businesses. ${workCount()}`,
     tone: "ink",
   },
   {
@@ -59,20 +94,6 @@ export const MENU: readonly MenuItem[] = [
   },
 ];
 
-/**
- * The Work sheet, top to bottom. `id` must match a project in projects.ts
- * (year, status and the case-file link come from there); `name` is the short
- * display name, sized to fit one line at 10vw.
- */
-export const WORK = [
-  { id: "yosi-archive", name: "YOSI Archive", kind: "Online store", image: "/work/yosi-archive/desktop-01-home.webp" },
-  { id: "matchcut", name: "MatchCut", kind: "Barber app · founder", image: "/work/matchcut/desktop-01-landing.webp" },
-  { id: "clinic-intake", name: "Clinic Intake", kind: "Clinic software", image: "/work/clinic-intake/desktop-01-basic-info.webp" },
-  { id: "back-issue-supply", name: "Back Issue", kind: "Shopify store", image: "/work/back-issue-supply/desktop-01-home.webp" },
-  { id: "ramos-lawn-care", name: "Ramos Lawn", kind: "Site + ops system", image: "/work/ramos-lawn-care.png" },
-  { id: "green-valley-storage", name: "Green Valley", kind: "Website", image: "/work/green-valley-storage.png" },
-  { id: "tex-country-materials", name: "Tex Country", kind: "Website", image: "/work/tex-country-materials.png" },
-] as const;
 
 export const STUDIO = {
   title: ["Malden", "Studios"],

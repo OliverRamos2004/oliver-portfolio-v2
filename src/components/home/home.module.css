@@ -103,6 +103,44 @@
 .root[data-tone="signal"] .word[data-active="true"] {
   color: var(--color-ink);
 }
+.menu,
+.cap {
+  z-index: 2;
+}
+
+/* Trial A, "blocks": each word is a wine block, laid over the name. */
+.root[data-menu="blocks"] .menu {
+  gap: 4px;
+}
+.root[data-menu="blocks"] .word {
+  padding: 4px 14px 4px 10px;
+  background: var(--color-wine);
+  color: var(--color-paper);
+}
+.root[data-menu="blocks"] .n {
+  opacity: 0.6;
+}
+.root[data-menu="blocks"] .word[data-active="true"] {
+  background: var(--color-paper);
+  color: var(--color-wine);
+}
+
+/* Trial B, "clear": wine text; the name sizes itself to end above the menu. */
+.root[data-menu="clear"] .word {
+  color: var(--color-wine);
+}
+.root[data-menu="clear"][data-tone="ink"] .word {
+  color: var(--color-paper);
+}
+.root[data-menu="clear"] .word[data-active="true"] {
+  color: var(--color-signal);
+}
+.root[data-menu="clear"] .stage {
+  top: 11svh;
+  /* Two lines at line-height .82 must fit between the top and the menu (~4 rows + gutter). */
+  font-size: min(23vw, calc((89svh - 260px) / 1.7));
+}
+
 .cap {
   position: absolute;
   right: var(--gut);

@@ -19,6 +19,8 @@
   --color-ink-muted: #5e5a53; /* secondary text on paper, 5.92:1 */
   --color-paper-muted: #a39e94; /* secondary text on ink, 6.90:1 */
   --color-signal: #e4572e;
+  /* Wine: the home menu only, for now (trial 2026-11-10; palette pass pending). Paper on wine 11:1. */
+  --color-wine: #6b1d2a;
 
   /* Hairlines — never a "border color", always low-alpha over the surface */
   --color-rule: rgb(21 20 18 / 0.16);

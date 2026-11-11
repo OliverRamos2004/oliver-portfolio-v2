@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { FINE_POINTER, useMediaQuery } from "@/lib/useMediaQuery";
 import styles from "./home.module.css";
 
@@ -90,10 +91,13 @@ export function Cursor() {
   }, [enabled]);
 
   if (!enabled) return null;
-  return (
+  // Portaled to <body>: the home root is position: fixed (its own stacking
+  // context), so inside it the cursor would sit under the case-file drawer.
+  return createPortal(
     <>
       <div ref={dotRef} className={styles.cursor} data-hidden="true" aria-hidden="true" />
       <div ref={tagRef} className={styles.tag} aria-hidden="true" />
-    </>
+    </>,
+    document.body,
   );
 }

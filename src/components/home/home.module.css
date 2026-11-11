@@ -21,6 +21,7 @@
 }
 .root[data-tone="signal"] {
   background: var(--color-signal);
+  color: var(--color-paper);
 }
 
 .home {
@@ -45,11 +46,12 @@
 /* ---------- the name + roll ---------- */
 .stage {
   position: absolute;
-  top: 17svh;
+  top: 11svh;
   left: var(--gut);
   right: var(--gut);
   margin: 0;
-  font-size: 23vw;
+  /* Two lines at line-height .82 end above the menu (~4 rows + gutter) at any height. */
+  font-size: min(23vw, calc((89svh - 260px) / 1.7));
 }
 .line {
   display: block;
@@ -97,48 +99,22 @@
   font-size: 0.6em;
   padding-top: 0.55em;
 }
-.word[data-active="true"] {
+.word {
   color: var(--color-signal);
+  transition: opacity 0.2s, color 0.35s;
 }
-.root[data-tone="signal"] .word[data-active="true"] {
-  color: var(--color-ink);
+.root[data-tone="ink"] .word {
+  color: var(--color-signal-on-ink);
+}
+.root[data-tone="signal"] .word {
+  color: var(--color-paper);
+}
+.menu:has(.word[data-active="true"]) .word:not([data-active="true"]) {
+  opacity: 0.45;
 }
 .menu,
 .cap {
   z-index: 2;
-}
-
-/* Trial A, "blocks": each word is a wine block, laid over the name. */
-.root[data-menu="blocks"] .menu {
-  gap: 4px;
-}
-.root[data-menu="blocks"] .word {
-  padding: 4px 14px 4px 10px;
-  background: var(--color-wine);
-  color: var(--color-paper);
-}
-.root[data-menu="blocks"] .n {
-  opacity: 0.6;
-}
-.root[data-menu="blocks"] .word[data-active="true"] {
-  background: var(--color-paper);
-  color: var(--color-wine);
-}
-
-/* Trial B, "clear": wine text; the name sizes itself to end above the menu. */
-.root[data-menu="clear"] .word {
-  color: var(--color-wine);
-}
-.root[data-menu="clear"][data-tone="ink"] .word {
-  color: var(--color-paper);
-}
-.root[data-menu="clear"] .word[data-active="true"] {
-  color: var(--color-signal);
-}
-.root[data-menu="clear"] .stage {
-  top: 11svh;
-  /* Two lines at line-height .82 must fit between the top and the menu (~4 rows + gutter). */
-  font-size: min(23vw, calc((89svh - 260px) / 1.7));
 }
 
 .cap {
@@ -175,7 +151,7 @@
 }
 .sheet[data-tone="signal"] {
   background: var(--color-signal);
-  color: var(--color-ink);
+  color: var(--color-paper);
 }
 .sheet[data-tone="paper"] {
   background: var(--color-paper);
@@ -199,8 +175,13 @@
 .close:hover {
   color: var(--color-signal);
 }
+.sheet[data-tone="ink"] .close:hover {
+  color: var(--color-signal-on-ink);
+}
 .sheet[data-tone="signal"] .close:hover {
-  color: var(--color-paper);
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 .stack {
   position: relative;
@@ -242,7 +223,7 @@
   transform: translateX(1.4vw);
 }
 .list[data-dim="true"] .proj[data-active="true"] .projMeta {
-  color: var(--color-signal);
+  color: var(--color-signal-on-ink);
 }
 .peek {
   position: fixed;
@@ -291,15 +272,15 @@
   display: inline-flex;
   gap: 14px;
   padding: 16px 20px;
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--color-paper);
+  color: var(--color-signal);
   font: 500 13px var(--font-mono);
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 .btn:hover {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-paper);
 }
 .shot {
   display: block;
@@ -308,7 +289,8 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
   filter: grayscale(1) contrast(1.15);
-  mix-blend-mode: multiply;
+  /* On wine: darks go wine, lights stay light (a duotone). */
+  mix-blend-mode: screen;
 }
 
 /* ---------- about ---------- */
@@ -371,7 +353,7 @@
 }
 .mail:hover,
 .mail[data-copied="true"] {
-  color: var(--color-signal);
+  color: var(--color-signal-on-ink);
 }
 .links {
   display: flex;
@@ -380,7 +362,7 @@
   margin-top: 40px;
 }
 .links a:hover {
-  color: var(--color-signal);
+  color: var(--color-signal-on-ink);
 }
 
 /* ---------- cursor (fine pointers only; mounted by <Cursor>) ---------- */
@@ -391,6 +373,8 @@
   z-index: 90;
   width: 12px;
   height: 12px;
+  /* The one exception to the site's zero-radius rule (globals.css). */
+  border-radius: 50% !important;
   pointer-events: none;
   background: var(--color-paper);
   /* Inverts whatever is under it, so it reads on paper, ink and signal. */
@@ -405,7 +389,8 @@
   background: var(--color-signal);
   mix-blend-mode: multiply;
 }
-.cursor[data-big="true"][data-surface="ink"] {
+.cursor[data-big="true"][data-surface="ink"],
+.cursor[data-big="true"][data-surface="signal"] {
   mix-blend-mode: screen;
 }
 .cursor[data-hidden="true"] {
@@ -419,7 +404,7 @@
   padding: 4px 8px;
   pointer-events: none;
   background: var(--color-signal);
-  color: var(--color-ink);
+  color: var(--color-paper);
   font: 500 11px / 1.5 var(--font-mono);
   letter-spacing: 0.12em;
   white-space: nowrap;
@@ -427,8 +412,8 @@
   transition: opacity 0.15s;
 }
 .tag[data-surface="signal"] {
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--color-paper);
+  color: var(--color-signal);
 }
 .tag[data-show="true"] {
   opacity: 1;
@@ -441,7 +426,7 @@
   }
   /* Phones never hover, so the name only has to fit OLIVER / RAMOS: run it to the gutter. */
   .stage {
-    font-size: 30vw;
+    font-size: min(30vw, calc((89svh - 260px) / 1.7));
   }
   .word {
     padding: 6px 0;

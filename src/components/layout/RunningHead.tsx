@@ -43,7 +43,7 @@ export function RunningHead() {
   const onInk = head.tone === "ink";
   const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
   const stamp = onInk
-    ? "hover:bg-signal hover:text-ink focus-visible:bg-signal focus-visible:text-ink"
+    ? "hover:bg-signal hover:text-paper focus-visible:bg-signal focus-visible:text-paper"
     : "hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper";
 
   return (
@@ -57,7 +57,7 @@ export function RunningHead() {
           Oliver Ramos
         </Link>
         <p className={`${label} flex min-w-0 flex-1 items-center gap-2 md:justify-center`} aria-hidden="true">
-          {head.inPart && <span className="inline-block h-2 w-2 shrink-0 bg-signal" />}
+          {head.inPart && <span className={`inline-block h-2 w-2 shrink-0 ${onInk ? "bg-signal-on-ink" : "bg-signal"}`} />}
           <span className="truncate md:hidden">{head.short}</span>
           <span className="hidden truncate md:inline">{head.label}</span>
         </p>

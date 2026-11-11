@@ -8,7 +8,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
 const field =
   "w-full border border-rule-on-ink bg-transparent px-4 py-3 font-mono text-[15px] text-paper placeholder:text-paper-muted";
-const stamp = "hover:bg-signal hover:text-ink focus-visible:bg-signal focus-visible:text-ink";
+const stamp = "hover:bg-signal hover:text-paper focus-visible:bg-signal focus-visible:text-paper";
 
 /**
  * Email (with copy) and the Formspree form, posted with fetch so the reply
@@ -82,7 +82,7 @@ export function ContactForm() {
             {busy ? "Sending…" : "Send message →"}
           </button>
           {/* On ink, errors use signal (5.0:1) with a text prefix, never color alone. */}
-          <p aria-live="polite" className={`${label} ${status === "error" ? "text-signal" : "text-paper"}`}>
+          <p aria-live="polite" className={`${label} ${status === "error" ? "text-signal-on-ink" : "text-paper"}`}>
             {status === "success" && "✓ Thanks — your message is in."}
             {status === "error" && `Error: it didn't send. Email ${EMAIL} instead.`}
           </p>

@@ -17,7 +17,7 @@ export function Bento({ part, items }: { part: Part; items: BentoEntry[] }) {
   const muted = onInk ? "text-paper-muted" : "text-ink-muted";
   const rule = onInk ? "border-rule-on-ink" : "border-rule";
   const stamp = onInk
-    ? "hover:bg-signal hover:text-ink focus-visible:bg-signal focus-visible:text-ink"
+    ? "hover:bg-signal hover:text-paper focus-visible:bg-signal focus-visible:text-paper"
     : "hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper";
   // Equal tiles: one row on desktop, two columns below. With an odd count
   // the first tile runs full width on phone/tablet so the grid stays square.

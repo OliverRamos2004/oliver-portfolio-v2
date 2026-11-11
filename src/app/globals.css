@@ -18,9 +18,10 @@
   --color-ink: #151412;
   --color-ink-muted: #5e5a53; /* secondary text on paper, 5.92:1 */
   --color-paper-muted: #a39e94; /* secondary text on ink, 6.90:1 */
-  --color-signal: #e4572e;
-  /* Wine: the home menu only, for now (trial 2026-11-10; palette pass pending). Paper on wine 11:1. */
-  --color-wine: #6b1d2a;
+  /* The accent: wine (2026-11-10, replaced orange #e4572e). 9.9:1 on paper,
+     but only 1.6:1 on ink, so anything accented on ink uses signal-on-ink. */
+  --color-signal: #6b1d2a;
+  --color-signal-on-ink: #d0657a; /* 5.1:1 on ink, 3.1:1 on paper */
 
   /* Hairlines — never a "border color", always low-alpha over the surface */
   --color-rule: rgb(21 20 18 / 0.16);
@@ -81,12 +82,12 @@ body {
 
 ::selection {
   background: var(--color-signal);
-  color: var(--color-ink);
+  color: var(--color-paper);
 }
 
-/* Focus ring, site-wide: the same signal outline on paper and ink. */
+/* Focus ring, site-wide: the light wine clears 3:1 on both paper and ink. */
 :focus-visible {
-  outline: 2px solid var(--color-signal);
+  outline: 2px solid var(--color-signal-on-ink);
   outline-offset: 3px;
 }
 

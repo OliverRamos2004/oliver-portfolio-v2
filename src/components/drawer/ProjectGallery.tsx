@@ -15,7 +15,7 @@ const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.1
 export function ProjectGallery({ media, title, onInk }: { media: ProjectMedia[]; title: string; onInk: boolean }) {
   const stage = onInk ? "bg-paper/5" : "bg-paper-sunk";
   const muted = onInk ? "text-paper-muted" : "text-ink-muted";
-  const hover = onInk ? "hover:text-signal" : "hover:bg-ink hover:text-paper";
+  const hover = onInk ? "hover:text-signal-on-ink" : "hover:bg-ink hover:text-paper";
   const [active, setActive] = useState(0);
   // The first shot is the LCP: it renders visible (no fade-in) and loads eagerly.
   // Only shots the visitor switches to fade in.
@@ -94,7 +94,7 @@ export function ProjectGallery({ media, title, onInk }: { media: ProjectMedia[];
               "relative h-16 shrink-0 outline-offset-0 transition-opacity duration-200 focus-visible:opacity-100 focus-visible:outline-offset-[-2px]",
               stage,
               m.device === "phone" ? "w-10" : "w-24",
-              i === active ? "opacity-100 outline outline-1 outline-signal" : "opacity-45 hover:opacity-100",
+              i === active ? `opacity-100 outline outline-1 ${onInk ? "outline-signal-on-ink" : "outline-signal"}` : "opacity-45 hover:opacity-100",
             )}
           >
             {m.type === "image" && <Image src={m.src} alt="" fill sizes="96px" fetchPriority="low" className="object-contain p-1" />}

@@ -21,13 +21,6 @@ export interface MenuItem {
   tone: Tone;
 }
 
-/**
- * Menu treatment trial (2026-11-10). "blocks": wine blocks with paper text,
- * laid over the giant name. "clear": wine text, and the name shrinks to fit
- * above the menu so they never overlap. Oliver picks one; delete the other.
- */
-export const MENU_STYLE: "blocks" | "clear" = "blocks";
-
 export const HOME = {
   swap: ["Oliver", "Ramos"],
   caption: "I build systems for small businesses, and I make things.",

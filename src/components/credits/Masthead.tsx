@@ -2,7 +2,7 @@ import Link from "next/link";
 import { MALDEN } from "@/data/contact";
 
 const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
-const stamp = "hover:bg-signal hover:text-ink focus-visible:bg-signal focus-visible:text-ink";
+const stamp = "hover:bg-signal hover:text-paper focus-visible:bg-signal focus-visible:text-paper";
 
 /**
  * The issue's closing line (SPEC §3): credits the studio once. On /about it

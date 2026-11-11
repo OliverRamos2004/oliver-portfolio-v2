@@ -25,7 +25,7 @@ export function PartOpener({ part }: { part: Part }) {
         className="display reveal -ml-[0.04em] whitespace-nowrap px-[var(--gutter)] pb-2 [--gutter:1rem] md:[--gutter:2.5rem]"
         style={{ fontSize: `calc((100vw - var(--gutter)) / ${openerEm})` }}
       >
-        {onInk && <span className="text-signal">{numeral} </span>}
+        {onInk && <span className="text-signal-on-ink">{numeral} </span>}
         {word}
       </h2>
     </section>

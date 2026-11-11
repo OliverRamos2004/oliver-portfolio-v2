@@ -2,7 +2,7 @@ import type { PrdEntry } from "@/types/prd";
 
 const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
 
-type Tone = { muted: string; rule: string };
+type Tone = { muted: string; rule: string; marker: string };
 
 /** Block headings sit one level below the section heading (h3 on the page, h4 in the drawer). */
 type BlockHeading = "h3" | "h4";
@@ -10,7 +10,11 @@ type BlockHeading = "h3" | "h4";
 const body = "text-[15px] leading-[1.6] max-md:text-[14px]";
 
 function tone(onInk: boolean): Tone {
-  return { muted: onInk ? "text-paper-muted" : "text-ink-muted", rule: onInk ? "border-rule-on-ink" : "border-rule" };
+  return {
+    muted: onInk ? "text-paper-muted" : "text-ink-muted",
+    rule: onInk ? "border-rule-on-ink" : "border-rule",
+    marker: onInk ? "bg-signal-on-ink" : "bg-signal",
+  };
 }
 
 function Block({ heading, as: H, t, children }: { heading: string; as: BlockHeading; t: Tone; children: React.ReactNode }) {
@@ -27,7 +31,7 @@ function List({ items, t, dim = false }: { items: string[]; t: Tone; dim?: boole
     <ul className="space-y-3">
       {items.map((item) => (
         <li key={item} className={`flex gap-3 ${body} ${dim ? t.muted : ""}`}>
-          <span aria-hidden="true" className="mt-[0.6em] h-1.5 w-1.5 shrink-0 bg-signal" />
+          <span aria-hidden="true" className={`mt-[0.6em] h-1.5 w-1.5 shrink-0 ${t.marker}`} />
           {item}
         </li>
       ))}

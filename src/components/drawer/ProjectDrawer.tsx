@@ -82,7 +82,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
   const muted = onInk ? "text-paper-muted" : "text-ink-muted";
   const rule = onInk ? "border-rule-on-ink" : "border-rule";
   const stamp = onInk
-    ? "hover:bg-signal hover:text-ink focus-visible:bg-signal focus-visible:text-ink"
+    ? "hover:bg-signal hover:text-paper focus-visible:bg-signal focus-visible:text-paper"
     : "hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper";
   const body = "text-[15px] leading-[1.6] max-md:text-[14px]";
 
@@ -100,7 +100,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
     <div className={`flex h-full flex-col ${surface}`}>
       <header className={`flex shrink-0 items-center justify-between gap-4 border-b ${rule} px-4 py-3 md:px-10`}>
         <p className={label}>
-          <span aria-hidden="true" className="mr-2 inline-block h-2 w-2 bg-signal" />
+          <span aria-hidden="true" className={`mr-2 inline-block h-2 w-2 ${onInk ? "bg-signal-on-ink" : "bg-signal"}`} />
           Case file · {ref}
         </p>
         {isOverlay ? (
@@ -148,7 +148,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
           <ol className="mt-6 grid gap-8">
             {project.systemNotes.map((note, i) => (
               <li key={note.heading} className="grid grid-cols-[2.5rem_1fr] gap-x-2">
-                <span aria-hidden="true" className={`${label} pt-1 ${onInk ? "text-signal" : "text-ink"}`}>
+                <span aria-hidden="true" className={`${label} pt-1 ${onInk ? "text-signal-on-ink" : "text-ink"}`}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>

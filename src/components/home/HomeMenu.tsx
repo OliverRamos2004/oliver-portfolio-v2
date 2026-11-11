@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import { HOME, MENU_STYLE, type MenuItem, type SheetKey } from "@/data/home";
+import { HOME, type MenuItem, type SheetKey } from "@/data/home";
 import { useAustinTime } from "@/lib/useAustinTime";
 import { RollName } from "./RollName";
 import { Sheet } from "./Sheet";
@@ -60,7 +60,7 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
   const tone = active?.tone ?? "paper";
 
   return (
-    <div className={styles.root} data-tone={tone} data-surface={tone} data-menu={MENU_STYLE}>
+    <div className={styles.root} data-tone={tone} data-surface={tone}>
       <main className={styles.home} inert={open !== null}>
         <header className={`${styles.top} ${styles.label}`}>
           <span>Oliver Ramos · Austin, TX</span>

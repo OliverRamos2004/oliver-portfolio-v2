@@ -119,16 +119,32 @@
   z-index: 20;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: calc(var(--gut) * 2.4) var(--gut) calc(var(--gut) * 2);
+  padding: calc(var(--gut) * 2.4) var(--gut) calc(var(--gut) * 2 + 48px);
   transform: translateY(101%);
   visibility: hidden;
   /* Stay visible until the slide-down finishes, then drop out of the a11y tree. */
   transition: transform 0.7s var(--ease), visibility 0s linear 0.7s;
 }
 .sheet[data-open="true"] {
+  z-index: 22;
   transform: none;
   visibility: visible;
   transition: transform 0.7s var(--ease);
+}
+/* Journey: an away sheet entering from above waits behind the top edge. */
+.sheet[data-pos="away"][data-from="above"] {
+  transform: translateY(-101%);
+}
+/* The sheet being covered holds still until the new one lands. */
+.sheet[data-pos="under"] {
+  z-index: 21;
+  transform: none;
+  visibility: visible;
+  transition: none;
+}
+/* One frame: jump to the entry edge without animating. */
+.sheet[data-staged="true"] {
+  transition: none;
 }
 .sheet[data-tone="ink"] {
   background: var(--color-ink);
@@ -174,7 +190,37 @@
   opacity: 1;
 }
 .fill {
-  min-height: calc(100svh - var(--gut) * 4.4);
+  min-height: calc(100svh - var(--gut) * 4.4 - 48px);
+}
+
+/* Journey: previous and next section, pinned to the bottom corners. */
+.journey {
+  position: fixed;
+  left: var(--gut);
+  right: var(--gut);
+  bottom: var(--gut);
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.journey button {
+  pointer-events: auto;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: color 0.2s, opacity 0.2s;
+}
+.sheet[data-tone="paper"] .journey button:hover {
+  color: var(--color-signal);
+}
+.sheet[data-tone="ink"] .journey button:hover {
+  color: var(--color-signal-on-ink);
+}
+.sheet[data-tone="signal"] .journey button:hover {
+  opacity: 0.6;
 }
 
 /* ---------- work ---------- */

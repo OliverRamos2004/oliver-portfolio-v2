@@ -3,9 +3,12 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { HOME, type MenuItem, type SheetKey } from "@/data/home";
 import { RollName } from "./RollName";
-import { Sheet } from "./Sheet";
+import { Sheet, type SheetFrom } from "./Sheet";
 import { Cursor } from "./Cursor";
 import styles from "./home.module.css";
+
+/** Matches `.sheet`'s transform transition in home.module.css. */
+const SLIDE_MS = 700;
 
 interface HomeMenuProps {
   items: readonly MenuItem[];
@@ -21,8 +24,17 @@ interface HomeMenuProps {
 export function HomeMenu({ items, sheets }: HomeMenuProps) {
   const [hovered, setHovered] = useState<SheetKey | null>(null);
   const [open, setOpen] = useState<SheetKey | null>(null);
+  // The journey: the sheet being covered stays in place until the new one lands.
+  const [under, setUnder] = useState<SheetKey | null>(null);
+  const [staged, setStaged] = useState<{ key: SheetKey; from: SheetFrom } | null>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
   const restoreFocus = useRef(false);
+  const openRef = useRef<SheetKey | null>(null);
+  const timers = useRef({ raf: 0, settle: 0 });
+
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
 
   const current = open ?? hovered;
   const active = items.find((item) => item.key === current);
@@ -31,11 +43,50 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
     if (open === null) setHovered(key);
   };
 
+  const cancelJourney = useCallback(() => {
+    cancelAnimationFrame(timers.current.raf);
+    window.clearTimeout(timers.current.settle);
+  }, []);
+
   const close = useCallback(() => {
+    cancelJourney();
     restoreFocus.current = true;
     setOpen(null);
+    setUnder(null);
+    setStaged(null);
     setHovered(null);
-  }, []);
+  }, [cancelJourney]);
+
+  /**
+   * Sheet to sheet without going home. Frame 1 parks the target behind its
+   * entry edge with transitions off; two frames later it slides in over the
+   * current sheet, which drops away once it's covered.
+   */
+  const goTo = useCallback((key: SheetKey, from: SheetFrom) => {
+    cancelJourney();
+    const leaving = openRef.current;
+    setStaged({ key, from });
+    timers.current.raf = requestAnimationFrame(() => {
+      timers.current.raf = requestAnimationFrame(() => {
+        setUnder(leaving);
+        setOpen(key);
+        setStaged(null);
+        timers.current.settle = window.setTimeout(() => setUnder(null), SLIDE_MS);
+      });
+    });
+  }, [cancelJourney]);
+
+  const step = useCallback(
+    (by: 1 | -1) => {
+      const at = items.findIndex((item) => item.key === openRef.current);
+      if (at < 0) return;
+      const to = items[(at + by + items.length) % items.length];
+      goTo(to.key, by === 1 ? "below" : "above");
+    },
+    [items, goTo],
+  );
+
+  useEffect(() => cancelJourney, [cancelJourney]);
 
   // Focus goes back to the word that opened the sheet, once the home page is no longer inert.
   useEffect(() => {
@@ -47,13 +98,15 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
   useEffect(() => {
     if (open === null) return;
     const onKeyDown = (e: KeyboardEvent) => {
-      // The case-file drawer opens over a sheet and owns Esc while it's up.
-      if (e.key !== "Escape" || document.body.dataset.drawerOpen) return;
-      close();
+      // The case-file drawer opens over a sheet and owns these keys while it's up.
+      if (document.body.dataset.drawerOpen) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") step(1);
+      else if (e.key === "ArrowLeft") step(-1);
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open, close]);
+  }, [open, close, step]);
 
   const tone = active?.tone ?? "paper";
 
@@ -96,13 +149,17 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
         <p className={styles.cap}>{active?.caption ?? HOME.caption}</p>
       </main>
 
-      {items.map((item) => (
+      {items.map((item, i) => (
         <Sheet
           key={item.key}
           id={`sheet-${item.key}`}
-          open={open === item.key}
+          pos={open === item.key ? "open" : under === item.key ? "under" : "away"}
+          from={staged?.key === item.key ? staged.from : "below"}
+          staged={staged?.key === item.key}
           tone={item.tone}
           title={item.label}
+          prev={{ label: items[(i - 1 + items.length) % items.length].label, onGo: () => step(-1) }}
+          next={{ label: items[(i + 1) % items.length].label, onGo: () => step(1) }}
           onClose={close}
         >
           {sheets[item.key]}

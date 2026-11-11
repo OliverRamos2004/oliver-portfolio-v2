@@ -2,29 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useAustinTime } from "@/lib/useAustinTime";
 
 type Head = { label: string; short: string; tone: "paper" | "ink"; inPart: boolean };
 
 const INITIAL: Head = { label: "COVER", short: "COVER", tone: "paper", inPart: false };
-
-/** Austin time (not the visitor's local time). */
-function useAustinTime() {
-  const [time, setTime] = useState<string | null>(null);
-  useEffect(() => {
-    const fmt = new Intl.DateTimeFormat("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-      timeZone: "America/Chicago",
-    });
-    const tick = () => setTime(fmt.format(new Date()));
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return time;
-}
 
 /**
  * The fixed running head (SPEC §4): like the line at the top of a magazine

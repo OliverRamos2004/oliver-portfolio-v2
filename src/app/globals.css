@@ -144,3 +144,11 @@ body[data-drawer-open="true"] {
   }
 }
 
+
+/* The home page's custom cursor (components/home/Cursor.tsx) adds this class
+   while mounted, on mouse/trackpad only. It covers the case-file drawer too,
+   since the cursor floats above it. */
+html.custom-cursor,
+html.custom-cursor * {
+  cursor: none !important;
+}

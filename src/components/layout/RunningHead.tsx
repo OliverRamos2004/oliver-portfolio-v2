@@ -2,39 +2,26 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useAustinTime } from "@/lib/useAustinTime";
 
-type Head = { label: string; short: string; tone: "paper" | "ink"; inPart: boolean };
+type Tone = "paper" | "ink";
 
-const INITIAL: Head = { label: "COVER", short: "COVER", tone: "paper", inPart: false };
-
-/** Austin time (not the visitor's local time). */
-function useAustinTime() {
-  const [time, setTime] = useState<string | null>(null);
-  useEffect(() => {
-    const fmt = new Intl.DateTimeFormat("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-      timeZone: "America/Chicago",
-    });
-    const tick = () => setTime(fmt.format(new Date()));
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return time;
-}
+/** The home page's four words; each opens its sheet (HomeMenu reads the hash). */
+const NAV = [
+  { href: "/#work", label: "Work" },
+  { href: "/#studio", label: "Studio" },
+  { href: "/about", label: "About" },
+  { href: "/#contact", label: "Contact" },
+] as const;
 
 /**
- * The fixed running head (SPEC §4): like the line at the top of a magazine
- * page, it names where you are ("SYSTEMS — 01 YOSI ARCHIVE") and switches
- * paper/ink at the turn. One IntersectionObserver watches every section with
- * a data-running-head attribute and picks whichever crosses the viewport's
- * midline. Decorative: the real headings carry the semantics.
+ * The fixed header on /about and the case files: the name home, the four
+ * words, Austin time. It takes the tone (paper/ink) of whichever section with
+ * a data-running-head attribute crosses the viewport's midline. No hairline:
+ * the header is a solid field of the surface color.
  */
 export function RunningHead() {
-  const [head, setHead] = useState<Head>(INITIAL);
+  const [tone, setTone] = useState<Tone>("paper");
   const time = useAustinTime();
 
   useEffect(() => {
@@ -43,13 +30,7 @@ export function RunningHead() {
       (entries) => {
         const hit = entries.find((e) => e.isIntersecting);
         if (!hit) return;
-        const el = hit.target as HTMLElement;
-        setHead({
-          label: el.dataset.runningHead ?? INITIAL.label,
-          short: el.dataset.runningHeadShort ?? el.dataset.runningHead ?? INITIAL.short,
-          tone: el.dataset.tone === "ink" ? "ink" : "paper",
-          inPart: el.dataset.part !== undefined,
-        });
+        setTone((hit.target as HTMLElement).dataset.tone === "ink" ? "ink" : "paper");
       },
       // A zero-height band at the midline: exactly one section intersects it.
       { rootMargin: "-50% 0px -50% 0px" },
@@ -58,33 +39,25 @@ export function RunningHead() {
     return () => observer.disconnect();
   }, []);
 
-  const onInk = head.tone === "ink";
-  const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
+  const onInk = tone === "ink";
   const stamp = onInk
-    ? "hover:bg-signal hover:text-ink focus-visible:bg-signal focus-visible:text-ink"
+    ? "hover:bg-signal hover:text-paper focus-visible:bg-signal focus-visible:text-paper"
     : "hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper";
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 border-b ${
-        onInk ? "border-rule-on-ink bg-ink text-paper" : "border-rule bg-paper text-ink"
-      }`}
-    >
-      <div className="flex h-12 items-center gap-4 px-4 md:px-10">
-        <Link href="/#top" className={`${label} hidden shrink-0 px-1 md:block ${stamp}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 ${onInk ? "bg-ink text-paper" : "bg-paper text-ink"}`}>
+      <div className="small-text flex h-12 items-center gap-3 px-4 md:gap-4 md:px-10">
+        <Link href="/" className={`mr-auto shrink-0 px-1 ${stamp}`}>
           Oliver Ramos
         </Link>
-        <p className={`${label} flex min-w-0 flex-1 items-center gap-2 md:justify-center`} aria-hidden="true">
-          {head.inPart && <span className="inline-block h-2 w-2 shrink-0 bg-signal" />}
-          <span className="truncate md:hidden">{head.short}</span>
-          <span className="hidden truncate md:inline">{head.label}</span>
-        </p>
-        <nav aria-label="Primary" className="flex shrink-0 items-center gap-1">
-          <Link href="/#contents" className={`${label} px-2 py-1 ${stamp}`}>Work</Link>
-          <Link href="/about" className={`${label} px-2 py-1 ${stamp}`}>About</Link>
-          <Link href="/#credits" className={`${label} px-2 py-1 ${stamp}`}>Contact</Link>
+        <nav aria-label="Primary" className="flex shrink-0 items-center md:gap-1">
+          {NAV.map((item) => (
+            <Link key={item.href} href={item.href} className={`px-1.5 py-1 md:px-2 ${stamp}`}>
+              {item.label}
+            </Link>
+          ))}
         </nav>
-        <p className={`${label} hidden shrink-0 tabular-nums lg:block ${onInk ? "text-paper-muted" : "text-ink-muted"}`}>
+        <p className={`hidden w-[5.5rem] shrink-0 text-right tabular-nums lg:block ${onInk ? "text-paper-muted" : "text-ink-muted"}`}>
           {time ?? "--:--:--"}
         </p>
       </div>

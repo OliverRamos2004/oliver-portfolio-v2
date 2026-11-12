@@ -1,37 +1,31 @@
-import { RunningHead } from "@/components/layout/RunningHead";
-import { Cover } from "@/components/cover/Cover";
-import { Contents } from "@/components/contents/Contents";
-import { Part } from "@/components/part/Part";
-import { PartOpener } from "@/components/part/PartOpener";
-import { FeatureSpread } from "@/components/part/FeatureSpread";
-import { Bento } from "@/components/part/Bento";
-import { Turn } from "@/components/part/Turn";
-import { Fragment } from "react";
-import { PART_ORDER, featuresFor, bentoFor } from "@/lib/monograph";
-import { Credits } from "@/components/credits/Credits";
+import { HomeMenu } from "@/components/home/HomeMenu";
+import { AboutSheet, ContactSheet, StudioSheet, WorkSheet } from "@/components/home/sheets";
+import type { WorkRow } from "@/components/home/WorkList";
+import { MENU, WORK } from "@/data/home";
+import { projects } from "@/data/projects";
+
+/* The old monograph (Cover / Contents / Part / Turn / Bento) is retired from
+   the home page; its components stay in the tree until the refresh merges. */
+
+function workRows(): WorkRow[] {
+  return WORK.map((w) => {
+    const project = projects.find((p) => p.id === w.id);
+    // Fail the build, not the visitor: a typo here would otherwise ship a dead link.
+    if (!project) throw new Error(`data/home.ts WORK: no project with id "${w.id}"`);
+    return { ...w, href: `/work/${project.id}`, year: project.year, status: project.status };
+  });
+}
 
 export default function Home() {
   return (
-    <>
-      <RunningHead />
-      <main>
-        <Cover />
-        <Contents />
-        {PART_ORDER.map((part) => (
-          <Fragment key={part}>
-            {/* The turn sits on the seam, between the two parts. */}
-            {part === "craft" && <Turn />}
-            <Part part={part}>
-              <PartOpener part={part} />
-              {featuresFor(part).map((project, i) => (
-                <FeatureSpread key={project.id} project={project} index={i} lead={part === "systems" && i === 0} />
-              ))}
-              <Bento part={part} items={bentoFor(part)} />
-            </Part>
-          </Fragment>
-        ))}
-        <Credits />
-      </main>
-    </>
+    <HomeMenu
+      items={MENU}
+      sheets={{
+        work: <WorkSheet rows={workRows()} />,
+        studio: <StudioSheet />,
+        about: <AboutSheet />,
+        contact: <ContactSheet />,
+      }}
+    />
   );
 }

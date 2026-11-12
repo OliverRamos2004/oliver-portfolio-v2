@@ -18,7 +18,10 @@
   --color-ink: #151412;
   --color-ink-muted: #5e5a53; /* secondary text on paper, 5.92:1 */
   --color-paper-muted: #a39e94; /* secondary text on ink, 6.90:1 */
-  --color-signal: #e4572e;
+  /* The accent: wine (2026-11-10, replaced orange #e4572e). 9.9:1 on paper,
+     but only 1.6:1 on ink, so anything accented on ink uses signal-on-ink. */
+  --color-signal: #6b1d2a;
+  --color-signal-on-ink: #d0657a; /* 5.1:1 on ink, 3.1:1 on paper */
 
   /* Hairlines — never a "border color", always low-alpha over the surface */
   --color-rule: rgb(21 20 18 / 0.16);
@@ -26,10 +29,13 @@
 
   /* Type families, assigned from next/font CSS variables in layout.tsx.
      Display = Archivo at condensed width (set per element with
-     font-stretch / the .display utility below); body + labels = Plex Mono. */
+     font-stretch / the .display utility below); body + small text = Archivo 100%. */
   --font-display: var(--font-archivo), "Arial Narrow", sans-serif;
-  --font-sans: var(--font-plex-mono), "SFMono-Regular", monospace;
-  --font-mono: var(--font-plex-mono), "SFMono-Regular", monospace;
+  /* Body is Archivo at normal width too (2026-11-11): mono read as a generic
+     AI-design tic, so it's gone from the pages as well as the labels. */
+  --font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  /* Plex Mono is no longer loaded; only the retired monograph components use this. */
+  --font-mono: "SFMono-Regular", monospace;
 
   /* Fluid type scale (SPEC §2). "bleed" is meant to be wider than the
      viewport — its section must clip with overflow-x: clip. */
@@ -69,7 +75,21 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-stretch: 100%;
+  font-weight: 450;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Small text (was the mono uppercase label): Archivo at normal width,
+   sentence case, untracked. Same voice as the home page's small text. */
+@utility small-text {
+  font-family: var(--font-display);
+  font-stretch: 100%;
+  font-weight: 450;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 /* Anchor jumps land below the fixed header. */
@@ -79,12 +99,12 @@ body {
 
 ::selection {
   background: var(--color-signal);
-  color: var(--color-ink);
+  color: var(--color-paper);
 }
 
-/* Focus ring, site-wide: the same signal outline on paper and ink. */
+/* Focus ring, site-wide: the light wine clears 3:1 on both paper and ink. */
 :focus-visible {
-  outline: 2px solid var(--color-signal);
+  outline: 2px solid var(--color-signal-on-ink);
   outline-offset: 3px;
 }
 
@@ -144,3 +164,11 @@ body[data-drawer-open="true"] {
   }
 }
 
+
+/* The home page's custom cursor (components/home/Cursor.tsx) adds this class
+   while mounted, on mouse/trackpad only. It covers the case-file drawer too,
+   since the cursor floats above it. */
+html.custom-cursor,
+html.custom-cursor * {
+  cursor: none !important;
+}

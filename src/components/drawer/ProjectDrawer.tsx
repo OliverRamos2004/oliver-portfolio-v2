@@ -7,12 +7,12 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import type { ProjectEntry } from "@/types/project";
 import { prds } from "@/data/prds";
-import { caseFileRef } from "@/lib/monograph";
 import { ProjectGallery } from "./ProjectGallery";
 import { PrdSection } from "./PrdSection";
+import { Icon } from "@/components/ui/Icon";
 
 const EASE_CRISP = [0.76, 0, 0.24, 1] as const;
-const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
+const label = "small-text";
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 interface ProjectDrawerProps {
@@ -37,7 +37,6 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
   const router = useRouter();
   const panelRef = useRef<HTMLDivElement>(null);
   const onInk = project.part === "craft";
-  const ref = caseFileRef(project);
   const prd = project.prdId ? prds.find((p) => p.id === project.prdId) : undefined;
 
   useEffect(() => {
@@ -80,9 +79,8 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
 
   const surface = onInk ? "bg-ink text-paper" : "bg-paper text-ink";
   const muted = onInk ? "text-paper-muted" : "text-ink-muted";
-  const rule = onInk ? "border-rule-on-ink" : "border-rule";
   const stamp = onInk
-    ? "hover:bg-signal hover:text-ink focus-visible:bg-signal focus-visible:text-ink"
+    ? "hover:bg-signal hover:text-paper focus-visible:bg-signal focus-visible:text-paper"
     : "hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper";
   const body = "text-[15px] leading-[1.6] max-md:text-[14px]";
 
@@ -98,18 +96,14 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
 
   const content = (
     <div className={`flex h-full flex-col ${surface}`}>
-      <header className={`flex shrink-0 items-center justify-between gap-4 border-b ${rule} px-4 py-3 md:px-10`}>
-        <p className={label}>
-          <span aria-hidden="true" className="mr-2 inline-block h-2 w-2 bg-signal" />
-          Case file · {ref}
-        </p>
+      <header className="flex shrink-0 items-center justify-end gap-4 px-4 py-3 md:px-10">
         {isOverlay ? (
           <button type="button" onClick={() => router.back()} className={`${label} px-2 py-1 ${stamp}`}>
             Close <span aria-hidden="true">✕</span>
           </button>
         ) : (
-          <Link href="/" className={`${label} px-2 py-1 ${stamp}`}>
-            <span aria-hidden="true">←</span> The issue
+          <Link href="/#work" className={`${label} px-2 py-1 ${stamp}`}>
+            <span aria-hidden="true">←</span> Work
           </Link>
         )}
       </header>
@@ -118,7 +112,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
         {hasGallery && <ProjectGallery media={project.media} title={project.title} onInk={onInk} />}
 
         <p className={`${label} ${muted} ${hasGallery ? "mt-10" : ""}`}>
-          {ref} · {project.statusLabel ?? STATUS[project.status]}
+          {project.statusLabel ?? STATUS[project.status]}
         </p>
         <Title className="display mt-3 text-[length:var(--text-d2)]">{project.title}</Title>
 
@@ -128,7 +122,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
           </p>
         )}
 
-        <dl className={`mt-8 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-t ${rule} pt-4 ${label}`}>
+        <dl className={`mt-10 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 ${label}`}>
           <dt className={muted}>Role</dt>
           <dd>{project.role}</dd>
           <dt className={muted}>Year</dt>
@@ -141,14 +135,14 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
 
         <p className={`mt-8 max-w-2xl ${body}`}>{project.overview}</p>
 
-        <section aria-labelledby="system-notes" className={`mt-12 border-t ${rule} pt-6`}>
+        <section aria-labelledby="system-notes" className="mt-16">
           <SectionHeading id="system-notes" className={`${label} ${muted}`}>
             System notes
           </SectionHeading>
           <ol className="mt-6 grid gap-8">
             {project.systemNotes.map((note, i) => (
               <li key={note.heading} className="grid grid-cols-[2.5rem_1fr] gap-x-2">
-                <span aria-hidden="true" className={`${label} pt-1 ${onInk ? "text-signal" : "text-ink"}`}>
+                <span aria-hidden="true" className={`${label} pt-1 ${onInk ? "text-signal-on-ink" : "text-ink"}`}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
@@ -161,7 +155,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
         </section>
 
         {project.media.length === 1 && (
-          <div className={`mt-12 grid gap-4 border-t ${rule} pt-8 sm:grid-cols-2`}>
+          <div className="mt-16 grid gap-4 sm:grid-cols-2">
             {project.media.map((m) => (
               <div
                 key={m.src}
@@ -181,19 +175,17 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
         {prd && <PrdSection prd={prd} onInk={onInk} isPage={!isOverlay} />}
 
         {links.length > 0 && (
-          <ul className={`mt-12 flex flex-wrap gap-2 border-t ${rule} pt-6`}>
+          <ul className="mt-16 flex flex-wrap gap-2">
             {links.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group inline-flex border ${onInk ? "border-paper" : "border-ink"} px-4 py-3 ${label} active:translate-y-px ${stamp}`}
+                  className={`group inline-flex px-4 py-3 ${label} active:translate-y-px ${onInk ? "bg-paper text-ink" : "bg-ink text-paper"} hover:bg-signal hover:text-paper focus-visible:bg-signal focus-visible:text-paper`}
                 >
                   {link.label}
-                  <span aria-hidden="true" className="ml-3 inline-block transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                    ↗
-                  </span>
+                  <Icon name="out" className="ml-3 self-center transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </li>
@@ -208,8 +200,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
     // Full page: sits under the fixed running head, which reads its label from here.
     return (
       <main
-        data-running-head={`CASE FILE — ${ref} ${project.title}`}
-        data-running-head-short={ref}
+        data-running-head
         data-tone={onInk ? "ink" : "paper"}
         data-part={project.part}
         className={`min-h-screen pt-12 ${surface}`}
@@ -238,7 +229,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
         animate={{ x: "0%" }}
         exit={{ x: "100%" }}
         transition={{ duration: 0.55, ease: EASE_CRISP }}
-        className={`fixed inset-y-0 right-0 z-50 w-full max-w-2xl border-l ${rule} outline-none`}
+        className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl outline-none"
         role="dialog"
         aria-modal="true"
         aria-label={`${project.title} case file`}

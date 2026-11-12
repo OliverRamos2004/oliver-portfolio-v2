@@ -5,7 +5,7 @@ import { ContactForm } from "./ContactForm";
 import { Masthead } from "./Masthead";
 
 const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
-const stamp = "hover:bg-signal hover:text-ink focus-visible:bg-signal focus-visible:text-ink";
+const stamp = "hover:bg-signal hover:text-paper focus-visible:bg-signal focus-visible:text-paper";
 
 /**
  * The back of the issue (SPEC §3): the contact headline cropped like the

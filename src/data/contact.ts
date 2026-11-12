@@ -1,5 +1,4 @@
 export const EMAIL = "oliver78660@gmail.com";
-export const FORMSPREE_ENDPOINT = "https://formspree.io/f/xzeprlal";
 
 export const RESUMES = [
   { label: "Resume — Consulting", href: "/resume-consulting.pdf" },

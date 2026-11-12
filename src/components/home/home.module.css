@@ -480,24 +480,29 @@
   opacity: 1;
 }
 
-@media (max-width: 760px) {
-  .peek {
-    display: none;
-  }
-  /* Phones never hover, so the name only has to fit OLIVER / RAMOS: run it to the gutter. */
+/* Touch screens in portrait (phones, and tablets without a mouse) never hover,
+   so the name only has to fit OLIVER / RAMOS: run it to the gutter, and put the
+   caption under it. Tablets with a trackpad keep the desktop layout, because
+   the hover answers are wider than the name. */
+@media (max-width: 760px), (max-width: 1100px) and (orientation: portrait) and (hover: none) {
   .root {
     --name: min(30vw, calc((89svh - 260px) / 1.7));
   }
   .stage {
     font-size: var(--name);
   }
-  /* The caption sits under the name, so phones get the one-line "what I do" too. */
   .cap {
     top: calc(11svh + var(--name) * 1.66 + 20px);
     bottom: auto;
     left: var(--gut);
     right: var(--gut);
     text-align: left;
+  }
+}
+
+@media (max-width: 760px) {
+  .peek {
+    display: none;
   }
   /* Captions go under each project name instead of beside it (they ran off the screen). */
   .proj {

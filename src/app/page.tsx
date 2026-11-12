@@ -4,9 +4,6 @@ import type { WorkRow } from "@/components/home/WorkList";
 import { MENU, WORK } from "@/data/home";
 import { projects } from "@/data/projects";
 
-/* The old monograph (Cover / Contents / Part / Turn / Bento) is retired from
-   the home page; its components stay in the tree until the refresh merges. */
-
 function workRows(): WorkRow[] {
   return WORK.map((w) => {
     const project = projects.find((p) => p.id === w.id);

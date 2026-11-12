@@ -66,20 +66,3 @@ export interface ProjectEntry {
   prdId?: string;
 }
 
-/**
- * A bento tile that isn't a client project (Malden Studios, CutbyOliver,
- * drumming). Project bento items are mapped into the same shape for rendering.
- */
-export interface BentoEntry {
-  id: string;
-  part: Part;
-  order: number;
-  title: string;
-  year: number;
-  insight: string;
-  /** `position` is a CSS object-position; tiles crop from the top (right for screenshots) unless set. */
-  image: { src: string; alt: string; position?: string };
-  /** a case file (/work/…) or an outbound link; omit for no link */
-  href?: string;
-}
-

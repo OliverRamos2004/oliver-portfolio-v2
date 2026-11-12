@@ -9,6 +9,7 @@ import type { ProjectEntry } from "@/types/project";
 import { prds } from "@/data/prds";
 import { ProjectGallery } from "./ProjectGallery";
 import { PrdSection } from "./PrdSection";
+import { Icon } from "@/components/ui/Icon";
 
 const EASE_CRISP = [0.76, 0, 0.24, 1] as const;
 const label = "small-text";
@@ -184,9 +185,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
                   className={`group inline-flex px-4 py-3 ${label} active:translate-y-px ${onInk ? "bg-paper text-ink" : "bg-ink text-paper"} hover:bg-signal hover:text-paper focus-visible:bg-signal focus-visible:text-paper`}
                 >
                   {link.label}
-                  <span aria-hidden="true" className="ml-3 inline-block transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                    ↗
-                  </span>
+                  <Icon name="out" className="ml-3 self-center transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </li>

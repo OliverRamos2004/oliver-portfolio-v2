@@ -193,13 +193,9 @@
   gap: clamp(4px, 0.8vw, 12px);
 }
 .icon {
-  display: block;
+  display: block !important;
   width: 30px;
   height: 30px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.6;
-  stroke-linecap: square;
 }
 .close,
 .journey button {
@@ -230,11 +226,12 @@
   transform: none;
   opacity: 1;
 }
+/* A sheet's content fills the screen between the header and the bottom gutter. */
 .fill {
-  min-height: calc(100svh - var(--gut) * 4.4 - 48px);
+  min-height: calc(100svh - max(var(--gut) * 2.4, 88px) - var(--gut) * 2);
 }
 
-/* Journey: previous and next section, pinned to the bottom corners. */
+/* Journey: previous and next section, in the sheet header. */
 .journey {
   display: flex;
   gap: inherit;
@@ -328,12 +325,17 @@
 }
 .btn {
   display: inline-flex;
+  align-items: center;
   gap: 14px;
   padding: 14px 20px;
   background: var(--color-paper);
   color: var(--color-signal);
   font-size: 18px;
   font-weight: 600;
+}
+.out {
+  width: 0.85em;
+  height: 0.85em;
 }
 .btn:hover {
   background: var(--color-ink);
@@ -402,7 +404,9 @@
 }
 .mail {
   display: block;
-  font-size: 9.4vw;
+  /* Sized to the width: @GMAIL.COM, the longer line, runs gutter to gutter.
+     Capped by height so the links row still fits on short screens. */
+  font-size: min(calc((100vw - var(--gut) * 2) / 5.3), calc((100svh - 300px) / 1.75));
   text-align: left;
   cursor: pointer;
   transition: color 0.2s;
@@ -477,13 +481,35 @@
 }
 
 @media (max-width: 760px) {
-  .cap,
   .peek {
     display: none;
   }
   /* Phones never hover, so the name only has to fit OLIVER / RAMOS: run it to the gutter. */
+  .root {
+    --name: min(30vw, calc((89svh - 260px) / 1.7));
+  }
   .stage {
-    font-size: min(30vw, calc((89svh - 260px) / 1.7));
+    font-size: var(--name);
+  }
+  /* The caption sits under the name, so phones get the one-line "what I do" too. */
+  .cap {
+    top: calc(11svh + var(--name) * 1.66 + 20px);
+    bottom: auto;
+    left: var(--gut);
+    right: var(--gut);
+    text-align: left;
+  }
+  /* Captions go under each project name instead of beside it (they ran off the screen). */
+  .proj {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 6px 0;
+  }
+  .projMeta {
+    padding-bottom: 0;
+    text-align: left;
+    font-size: 15px;
   }
   .word {
     padding: 6px 0;
@@ -500,9 +526,6 @@
   }
   .projName {
     font-size: 15vw;
-  }
-  .mail {
-    font-size: 13vw;
   }
 }
 

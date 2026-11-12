@@ -46,13 +46,13 @@ export function RunningHead() {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 ${onInk ? "bg-ink text-paper" : "bg-paper text-ink"}`}>
-      <div className="small-text flex h-12 items-center gap-4 px-4 md:px-10">
+      <div className="small-text flex h-12 items-center gap-3 px-4 md:gap-4 md:px-10">
         <Link href="/" className={`mr-auto shrink-0 px-1 ${stamp}`}>
           Oliver Ramos
         </Link>
-        <nav aria-label="Primary" className="flex shrink-0 items-center gap-1">
+        <nav aria-label="Primary" className="flex shrink-0 items-center md:gap-1">
           {NAV.map((item) => (
-            <Link key={item.href} href={item.href} className={`px-2 py-1 ${stamp}`}>
+            <Link key={item.href} href={item.href} className={`px-1.5 py-1 md:px-2 ${stamp}`}>
               {item.label}
             </Link>
           ))}

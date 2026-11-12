@@ -3,6 +3,7 @@ import { ABOUT, STUDIO } from "@/data/home";
 import { portrait, studio } from "@/data/about";
 import { EMAIL, MALDEN, RESUMES } from "@/data/contact";
 import { SOCIALS } from "@/data/socials";
+import { Icon } from "@/components/ui/Icon";
 import { CopyEmail } from "./CopyEmail";
 import { WorkList, type WorkRow } from "./WorkList";
 import styles from "./home.module.css";
@@ -25,7 +26,7 @@ export function StudioSheet() {
         </h2>
         <p className={styles.lede}>{STUDIO.body}</p>
         <a className={styles.btn} href={MALDEN.href} target="_blank" rel="noopener" data-cursor="Visit ↗">
-          {STUDIO.cta} <span aria-hidden="true">↗</span>
+          {STUDIO.cta} <Icon name="out" className={styles.out} />
         </a>
       </div>
       <Image
@@ -77,23 +78,22 @@ export function AboutSheet() {
 export function ContactSheet() {
   return (
     <div className={`${styles.contact} ${styles.fill}`}>
-      <div>
-        <CopyEmail email={EMAIL} />
-        <div className={styles.links}>
-          <a href={`mailto:${EMAIL}`} data-cursor="↗">
-            Email app
+      {/* Email on top, links pinned to the bottom (.contact is space-between). */}
+      <CopyEmail email={EMAIL} />
+      <div className={styles.links}>
+        <a href={`mailto:${EMAIL}`} data-cursor="↗">
+          Email app
+        </a>
+        {SOCIALS.map((s) => (
+          <a key={s.href} href={s.href} target="_blank" rel="noopener" data-cursor="↗">
+            {s.label}
           </a>
-          {SOCIALS.map((s) => (
-            <a key={s.href} href={s.href} target="_blank" rel="noopener" data-cursor="↗">
-              {s.label}
-            </a>
-          ))}
-          {RESUMES.map((r) => (
-            <a key={r.href} href={r.href} target="_blank" rel="noopener" data-cursor="PDF">
-              {r.label}
-            </a>
-          ))}
-        </div>
+        ))}
+        {RESUMES.map((r) => (
+          <a key={r.href} href={r.href} target="_blank" rel="noopener" data-cursor="PDF">
+            {r.label}
+          </a>
+        ))}
       </div>
     </div>
   );

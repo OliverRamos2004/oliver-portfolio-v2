@@ -3,8 +3,7 @@ import { bio, interests, portrait, studio } from "@/data/about";
 import { MALDEN } from "@/data/contact";
 import { Masthead } from "@/components/credits/Masthead";
 
-const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
-const pad = (n: number) => String(n).padStart(2, "0");
+const label = "small-text";
 
 /**
  * /about as a magazine profile: the same two-sided story as the homepage in
@@ -18,12 +17,11 @@ export function Profile() {
         data-running-head="PROFILE"
         data-running-head-short="PROFILE"
         data-tone="paper"
-        className="overflow-x-clip bg-paper pt-20 text-ink"
+        className="overflow-x-clip bg-paper pt-20 pb-10 text-ink md:pb-16"
       >
-        <p className={`${label} px-4 text-ink-muted md:px-10`}>About</p>
         {/* Sized like the part openers: measured to overrun the viewport ~12%. */}
         {/* relative: keeps the absolutely-positioned sr-only text inside the clipped section. */}
-        <h1 id="profile-title" className="display reveal relative -ml-[0.04em] mt-6 whitespace-nowrap px-4 text-[length:var(--text-profile)] md:px-10">
+        <h1 id="profile-title" className="display reveal relative -ml-[0.04em] whitespace-nowrap px-4 text-[length:var(--text-profile)] md:px-10">
           Profile<span className="sr-only">: Oliver Ramos</span>
         </h1>
       </section>
@@ -33,7 +31,7 @@ export function Profile() {
         data-running-head="PROFILE — OLIVER RAMOS"
         data-running-head-short="PROFILE"
         data-tone="paper"
-        className="border-t border-rule bg-paper text-ink"
+        className="bg-paper text-ink"
       >
         {/* Full-bleed portrait with the lead set over its bottom edge, like a magazine profile opener.
             3:4 on phones leaves room under the face for the text; 16:9 on wide screens. */}
@@ -74,11 +72,10 @@ export function Profile() {
         data-running-head="PROFILE — THE STUDIO"
         data-running-head-short="STUDIO"
         data-tone="paper"
-        className="grid grid-cols-4 gap-x-4 gap-y-10 border-t border-rule bg-paper px-4 py-16 text-ink md:grid-cols-12 md:px-10 md:py-24"
+        className="grid grid-cols-4 gap-x-4 gap-y-10 bg-paper px-4 py-16 text-ink md:grid-cols-12 md:px-10 md:py-24"
       >
         <div className="col-span-4 md:col-span-4">
-          <p className={`${label} text-ink-muted`}>The studio</p>
-          <h2 id="studio-title" className="display mt-6 text-[length:var(--text-d2)]">
+          <h2 id="studio-title" className="display text-[length:var(--text-d2)]">
             {MALDEN.name}
           </h2>
           <p className={`${label} mt-4 text-ink-muted`}>Austin, TX · Est. 2025</p>
@@ -105,7 +102,7 @@ export function Profile() {
             width={studio.image.width}
             height={studio.image.height}
             sizes="(min-width: 768px) 58vw, 100vw"
-            className="h-auto w-full border border-rule"
+            className="h-auto w-full"
           />
         </figure>
       </section>
@@ -121,21 +118,19 @@ export function Profile() {
           Outside the studio
         </h2>
         <ul className="mt-12 grid gap-x-4 gap-y-12 md:grid-cols-12">
-          {interests.map((item, i) => (
-            <li key={item.id} className="border-t border-rule-on-ink pt-4 md:col-span-3">
+          {interests.map((item) => (
+            <li key={item.id} className="md:col-span-3">
               <div className="relative aspect-[3/4] w-full overflow-hidden">
                 {item.photo ? (
                   <Image src={item.photo.src} alt={item.photo.alt} fill sizes="(min-width: 768px) 24vw, 100vw" className="object-cover" />
                 ) : (
-                  <span aria-hidden="true" className="display flex h-full items-center justify-center border border-rule-on-ink text-[8rem]">
+                  <span aria-hidden="true" className="display flex h-full items-center justify-center bg-paper/5 text-[8rem]">
                     {item.title.charAt(0)}
                   </span>
                 )}
               </div>
-              <p className={`${label} mt-4 text-paper-muted`}>
-                {pad(i + 1)} · {item.title}
-              </p>
-              <p className="mt-2 text-[14px] leading-[1.6]">{item.body}</p>
+              <h3 className="mt-4 font-display text-xl font-semibold uppercase leading-tight [font-stretch:80%]">{item.title}</h3>
+              <p className="mt-2 text-[15px] leading-[1.55] text-paper-muted">{item.body}</p>
             </li>
           ))}
         </ul>

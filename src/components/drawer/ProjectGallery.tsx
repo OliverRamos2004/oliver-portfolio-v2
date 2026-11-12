@@ -10,7 +10,7 @@ import type { ProjectMedia } from "@/types/project";
 const STAGE_RATIO = 1600 / 1083;
 const EASE_CRISP = [0.76, 0, 0.24, 1] as const;
 
-const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
+const label = "small-text";
 
 export function ProjectGallery({ media, title, onInk }: { media: ProjectMedia[]; title: string; onInk: boolean }) {
   const stage = onInk ? "bg-paper/5" : "bg-paper-sunk";
@@ -94,7 +94,7 @@ export function ProjectGallery({ media, title, onInk }: { media: ProjectMedia[];
               "relative h-16 shrink-0 outline-offset-0 transition-opacity duration-200 focus-visible:opacity-100 focus-visible:outline-offset-[-2px]",
               stage,
               m.device === "phone" ? "w-10" : "w-24",
-              i === active ? `opacity-100 outline outline-1 ${onInk ? "outline-signal-on-ink" : "outline-signal"}` : "opacity-45 hover:opacity-100",
+              i === active ? "opacity-100" : "opacity-35 hover:opacity-100",
             )}
           >
             {m.type === "image" && <Image src={m.src} alt="" fill sizes="96px" fetchPriority="low" className="object-contain p-1" />}

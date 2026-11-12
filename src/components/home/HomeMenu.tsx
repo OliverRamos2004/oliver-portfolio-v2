@@ -88,6 +88,24 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
 
   useEffect(() => cancelJourney, [cancelJourney]);
 
+  // Deep links from the other pages' header (/#work, /#contact, …) open that
+  // sheet. The hash is cleared at once so closing the sheet leaves a clean URL.
+  useEffect(() => {
+    const fromHash = () => {
+      const key = window.location.hash.slice(1);
+      const item = items.find((i) => i.key === key);
+      if (!item) return;
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+      setOpen(item.key);
+    };
+    const raf = requestAnimationFrame(fromHash);
+    window.addEventListener("hashchange", fromHash);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("hashchange", fromHash);
+    };
+  }, [items]);
+
   // Focus goes back to the word that opened the sheet, once the home page is no longer inert.
   useEffect(() => {
     if (open !== null || !restoreFocus.current) return;

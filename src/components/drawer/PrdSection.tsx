@@ -1,8 +1,8 @@
 import type { PrdEntry } from "@/types/prd";
 
-const label = "font-mono text-[length:var(--text-label)] uppercase tracking-[0.14em]";
+const label = "small-text";
 
-type Tone = { muted: string; rule: string; marker: string };
+type Tone = { muted: string; marker: string };
 
 /** Block headings sit one level below the section heading (h3 on the page, h4 in the drawer). */
 type BlockHeading = "h3" | "h4";
@@ -12,14 +12,13 @@ const body = "text-[15px] leading-[1.6] max-md:text-[14px]";
 function tone(onInk: boolean): Tone {
   return {
     muted: onInk ? "text-paper-muted" : "text-ink-muted",
-    rule: onInk ? "border-rule-on-ink" : "border-rule",
     marker: onInk ? "bg-signal-on-ink" : "bg-signal",
   };
 }
 
 function Block({ heading, as: H, t, children }: { heading: string; as: BlockHeading; t: Tone; children: React.ReactNode }) {
   return (
-    <div className={`mt-10 border-t ${t.rule} pt-5`}>
+    <div className="mt-12">
       <H className={`${label} ${t.muted} mb-4`}>{heading}</H>
       {children}
     </div>
@@ -47,12 +46,12 @@ export function PrdSection({ prd, onInk, isPage }: { prd: PrdEntry; onInk: boole
   const t = tone(onInk);
   const Heading = isPage ? "h2" : "h3";
   const sub: BlockHeading = isPage ? "h3" : "h4";
-  const { muted, rule } = t;
+  const { muted } = t;
 
   return (
-    <section id="prd" aria-labelledby="prd-title" className={`mt-16 border-t-2 ${onInk ? "border-paper" : "border-ink"} pt-6`}>
+    <section id="prd" aria-labelledby="prd-title" className="mt-24">
       <p className={`${label} ${muted}`}>
-        {prd.ref} · {prd.status === "shipped" ? "Shipped" : "In progress"}
+        {prd.status === "shipped" ? "Shipped" : "In progress"}
       </p>
       <Heading id="prd-title" className="display mt-3 text-[length:var(--text-d2)]">
         Product requirements
@@ -96,9 +95,9 @@ export function PrdSection({ prd, onInk, isPage }: { prd: PrdEntry; onInk: boole
       </Block>
 
       <Block t={t} as={sub} heading="Success metrics">
-        <dl className={`grid border-t ${rule} sm:grid-cols-2`}>
+        <dl className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
           {prd.successMetrics.map((m) => (
-            <div key={m.metric} className={`border-b ${rule} py-3 sm:odd:border-r sm:odd:pr-4 sm:even:pl-4`}>
+            <div key={m.metric}>
               <dt className={`${label} ${muted}`}>{m.metric}</dt>
               <dd className={`mt-1.5 ${body}`}>{m.target}</dd>
             </div>

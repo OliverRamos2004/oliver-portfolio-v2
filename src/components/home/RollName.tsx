@@ -3,41 +3,15 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./home.module.css";
 
-/** Matches `.roll`'s transition in home.module.css. */
+/** Matches `.fillRoll`'s transition in home.module.css. */
 const OUT_MS = 260;
-const STAGGER_MS = 70;
 
 /**
- * The signature motion (ROLL): the line slides down out of its mask, the text
- * changes while hidden, and the new text comes in from above. Decorative: the
- * <h1> it sits in carries the accessible name.
- */
-export function RollName({ lines }: { lines: readonly [string, string] }) {
-  return (
-    <>
-      <RollLine text={lines[0]} delay={0} />
-      <RollLine text={lines[1]} delay={STAGGER_MS} />
-    </>
-  );
-}
-
-function RollLine({ text, delay }: { text: string; delay: number }) {
-  const { ref, shown } = useRoll(text, delay);
-  return (
-    <span className={styles.line} aria-hidden="true">
-      <span ref={ref} className={styles.roll}>
-        {/* nbsp keeps an empty line at full height, so nothing below it shifts */}
-        {shown || " "}
-      </span>
-    </span>
-  );
-}
-
-/**
- * The hovered word's title, stretched so its ink fills the screen inside
+ * The name (at rest) or the hovered word's title, stretched so its ink fills the screen inside
  * `.fill`'s padding: x scales the word's width to the box, y scales its real
  * ink height (round letters' overshoot included) to the box, after lifting the
- * line box so the top of the ink sits on the padding edge. Same roll as the name.
+ * line box so the top of the ink sits on the padding edge. Decorative: the
+ * page's <h1> carries the name for screen readers.
  */
 export function FillWord({ text }: { text: string }) {
   const { ref, shown } = useRoll(text, 0);
@@ -139,8 +113,9 @@ function useRoll(text: string, delay: number) {
           });
         }, 0),
       );
-    } else if (!el) {
-      // Nothing on screen yet: swap now, then roll in after the render.
+    } else if (!el || el.style.transform === "translateY(-105%)") {
+      // Nothing on screen yet (no span, or a fresh one parked above its mask):
+      // swap now, then roll in after the render. This is also the intro.
       timers.push(
         window.setTimeout(() => {
           swapText();

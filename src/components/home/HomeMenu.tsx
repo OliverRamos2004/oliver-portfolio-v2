@@ -2,12 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { HOME, type MenuItem, type SheetKey } from "@/data/home";
-import { FillWord, RollName } from "./RollName";
+import { FillWord } from "./RollName";
 import { Sheet, type SheetFrom } from "./Sheet";
 import { Cursor } from "./Cursor";
 import styles from "./home.module.css";
-
-const NO_NAME = ["", ""] as const;
 
 /** Matches `.sheet`'s transform transition in home.module.css. */
 const SLIDE_MS = 700;
@@ -133,11 +131,9 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
   return (
     <div className={styles.root} data-tone={tone} data-surface={tone}>
       <main className={styles.home} inert={open !== null}>
-        <FillWord text={active?.label ?? ""} />
-        {/* The name rolls away while a word's title fills the screen. */}
-        <h1 className={`display ${styles.stage}`} aria-label="Oliver Ramos">
-          <RollName lines={active ? NO_NAME : HOME.swap} />
-        </h1>
+        {/* At rest the name fills the screen; a hovered word's title rolls in over it. */}
+        <FillWord text={active?.label ?? HOME.name} />
+        <h1 className="sr-only">Oliver Ramos</h1>
 
         <nav
           className={styles.menu}

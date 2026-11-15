@@ -20,7 +20,8 @@ export interface MenuItem {
 }
 
 export const HOME = {
-  swap: ["Oliver", "Ramos"],
+  /** what fills the screen at rest */
+  name: "Oliver Ramos",
   caption: "I build systems for small businesses, and I make things.",
 } as const;
 

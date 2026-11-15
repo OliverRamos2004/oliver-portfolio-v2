@@ -407,12 +407,16 @@
 .about {
   position: relative;
 }
+/* The name block sits left, bottom; inside it the lines align right, so
+   "I'M" ends above the photo. */
 .aboutTitle {
   position: absolute;
-  top: 0;
-  right: 0;
+  left: 0;
+  bottom: 0;
   margin: 0;
-  font-size: min(24vw, 44svh);
+  /* The block (OLIVER + photo) is ~2.9em wide: 19vw keeps it to ~55% of the
+     width, clear of the bio column. */
+  font-size: min(19vw, 44svh);
   text-align: right;
   color: #e2dccf;
 }
@@ -438,13 +442,13 @@
   filter: grayscale(1) contrast(1.05);
   mix-blend-mode: multiply;
 }
-/* Top left, in the space beside "I'M" (the photo now ends line two, bottom right). */
+/* Top right, opposite the name. */
 .aboutTxt {
   position: absolute;
-  left: 0;
+  right: 0;
   top: 0;
   z-index: 2;
-  width: min(46ch, 38%);
+  width: min(46ch, 34%);
 }
 .bio {
   text-wrap: pretty;

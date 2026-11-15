@@ -49,39 +49,30 @@ export function StudioSheet() {
 export function AboutSheet() {
   return (
     <div className={`${styles.about} ${styles.fill}`}>
-      <h2 className={`display ${styles.aboutTitle}`}>
-        {ABOUT.title[0]}
-        <br />
-        {/* The photo takes the period's place after the name, one cap height tall. */}
-        <span className={styles.imLine}>
-          {ABOUT.title[1].replace(/\.$/, "")}
-          {/* The wrap carries its own paper, so the blend never shows white
-              while the sheet slides in. */}
-          <span className={styles.figWrap}>
-            <Image
-              className={styles.aboutFig}
-              src={portrait.src}
-              alt={portrait.alt}
-              width={portrait.width}
-              height={portrait.height}
-              sizes="(max-width: 760px) 40vw, 30vw"
-            />
+      {/* First screen: the name, and the bio bottom right like the home caption. */}
+      <div className={styles.aboutHero}>
+        <h2 className={`display ${styles.aboutTitle}`}>
+          {ABOUT.title[0]}
+          <br />
+          {/* The photo takes the period's place after the name, one cap height tall. */}
+          <span className={styles.imLine}>
+            {ABOUT.title[1].replace(/\.$/, "")}
+            {/* The wrap carries its own paper, so the blend never shows white
+                while the sheet slides in. */}
+            <span className={styles.figWrap}>
+              <Image
+                className={styles.aboutFig}
+                src={portrait.src}
+                alt={portrait.alt}
+                width={portrait.width}
+                height={portrait.height}
+                sizes="(max-width: 760px) 40vw, 30vw"
+              />
+            </span>
           </span>
-        </span>
-      </h2>
-      {/* Bio: the lead big, like a pull quote; the rest, facts and icons beside it. */}
-      <div className={styles.aboutTxt}>
-        <p className={styles.lead}>{ABOUT.lead}</p>
-        <div className={styles.aboutSide}>
+        </h2>
+        <div className={styles.aboutTxt}>
           <p className={styles.bio}>{ABOUT.body}</p>
-          <dl className={styles.facts}>
-            {ABOUT.facts.map(([term, value]) => (
-              <div key={term} className="contents">
-                <dt>{term}</dt>
-                <dd>{value}</dd>
-              </div>
-            ))}
-          </dl>
           <SocialIcons className={styles.socialsInline} />
         </div>
       </div>

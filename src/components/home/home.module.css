@@ -413,11 +413,11 @@
 .aboutTitle {
   margin: 0;
   /* The wider line fills the width (--fill-em is its measured width in em),
-     capped so both lines (2.1em) fit under the sheet header on one screen. */
+     capped so both lines (2.1em) and the bio (~170px) fit on one screen. */
   --fill-em: 3.76; /* "HELLO, I'M" is the wider line */
   font-size: min(
     calc((100vw - var(--gut) * 2) / var(--fill-em)),
-    calc((100svh - max(var(--gut) * 2.4, 88px) - var(--gut) * 2) / 2.2)
+    calc((100svh - max(var(--gut) * 2.4, 88px) - var(--gut) * 2 - 170px) / 2.2)
   );
   white-space: nowrap;
   /* Room for the comma's tail above OLIVER. */
@@ -460,25 +460,27 @@
     filter: grayscale(0) contrast(1);
   }
 }
-/* Bio: lead left, big; the rest of the bio, facts and icons right. */
-.aboutTxt {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--gut);
-  align-items: end;
-  margin-top: calc(var(--gut) * 2.5);
+/* First screen: the name on top, the bio bottom right (like the home caption). */
+.aboutHero {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - max(var(--gut) * 2.4, 88px) - var(--gut) * 2);
 }
-.lead {
+.aboutTxt {
+  align-self: flex-end;
+  max-width: 520px;
+  margin-top: auto;
+  padding-top: var(--gut);
+  text-align: right;
+}
+.aboutTxt .bio {
   margin: 0;
-  max-width: 20ch;
-  font-size: clamp(28px, 3.8vw, 60px);
-  font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  font-size: 17px;
   text-wrap: balance;
 }
-.aboutSide .bio {
-  margin-top: 0;
+.aboutTxt .socials {
+  justify-content: flex-end;
+  margin-top: 14px;
 }
 .aboutLabel {
   margin: 0 0 8px;
@@ -654,19 +656,6 @@
   line-height: 1.45;
   letter-spacing: 0;
 }
-.facts {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 4px 28px;
-  margin: 36px 0 0;
-  font-size: 17px;
-}
-.facts dt {
-  color: var(--color-ink-muted);
-}
-.facts dd {
-  margin: 0;
-}
 
 /* ---------- contact ---------- */
 .contact {
@@ -766,9 +755,18 @@
   .fillBox {
     bottom: var(--low);
   }
+  .aboutHero {
+    min-height: 0;
+  }
   .aboutTxt {
-    grid-template-columns: 1fr;
+    align-self: stretch;
+    max-width: none;
     margin-top: calc(var(--gut) * 1.5);
+    padding-top: 0;
+    text-align: left;
+  }
+  .aboutTxt .socials {
+    justify-content: flex-start;
   }
   .interestName {
     font-size: 17vw;

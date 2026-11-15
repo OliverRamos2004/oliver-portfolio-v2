@@ -87,13 +87,7 @@ export const STUDIO = {
 
 export const ABOUT = {
   title: ["Hello, I'm", "Oliver."],
-  // Oliver's own bio (from the old /about), minus "I'm Oliver.", which is the
-  // headline. The lead is set big; the body sits beside it.
-  lead: "I have a bachelor's in computer science and an eye for art and design.",
-  body: "I love to build things that are both functional and beautiful, and to solve problems in a way that is practical and efficient. My work is a reflection of my own personal journey.",
-  facts: [
-    ["Now", "Malden Studios · MatchCut"],
-    ["Before", "Clinic systems · family lawn business"],
-    ["Based", "Austin, TX"],
-  ],
+  // Oliver's own bio (from the old /about), minus "I'm Oliver." (the headline),
+  // opening with where he's based. Sits bottom right of the first screen.
+  body: "Based in Austin, TX. I have a bachelor's in computer science and an eye for art and design. I love to build things that are both functional and beautiful, and to solve problems in a way that is practical and efficient. My work is a reflection of my own personal journey.",
 } as const;

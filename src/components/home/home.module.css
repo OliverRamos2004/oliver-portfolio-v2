@@ -1,6 +1,6 @@
 /* Home: "the name is the menu" (docs/Specs/2026-11-refresh/README.md).
-   Rules: no hairlines, no radii, no shadows. Space and color fields
-   separate things. One text motion (the roll), one ease. */
+   Rules: no hairlines, no radii. Space and color fields separate things.
+   One text motion (the roll), one ease. No shadows. */
 
 .root {
   --gut: clamp(16px, 2.8vw, 40px);
@@ -63,6 +63,50 @@
   from {
     transform: translateY(105%);
   }
+}
+
+/* ---------- the fill word (hover titles) ----------
+   Settings chosen 2026-11-14 in docs/Specs/2026-11-refresh/fill.html (not
+   final): Anton, light squish, tonal color, no shadow, the roll.
+   FillWord stretches the word to the box inside this padding. */
+.fill {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: calc(var(--gut) * 0.7) var(--gut);
+  overflow: hidden;
+  pointer-events: none;
+}
+.fillWord {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  white-space: nowrap;
+  font-family: var(--font-fill), Impact, sans-serif;
+  font-weight: 400;
+  font-stretch: normal;
+  font-size: 200px;
+  line-height: normal;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  /* tonal: a shade off the page color, so the menu reads on top */
+  color: #e2dccf;
+  transition: color 0.35s;
+}
+.root[data-tone="ink"] .fillWord {
+  color: #2a2724;
+}
+.root[data-tone="signal"] .fillWord {
+  color: #7d2a38;
+}
+.fillMask {
+  display: block;
+  overflow: hidden;
+}
+.fillRoll {
+  display: block;
+  transition: transform 0.26s var(--ease);
 }
 
 /* ---------- menu + caption ---------- */

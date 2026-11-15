@@ -13,15 +13,15 @@ export type Tone = "ink" | "signal" | "paper";
 
 export interface MenuItem {
   key: SheetKey;
+  /** the menu word, and the title that fills the screen while it's hovered */
   label: string;
-  /** what the giant name rolls to while this word is hovered */
-  swap: readonly [string, string];
   caption: string;
   tone: Tone;
 }
 
 export const HOME = {
-  swap: ["Oliver", "Ramos"],
+  /** what fills the screen at rest */
+  name: "Oliver Ramos",
   caption: "I build systems for small businesses, and I make things.",
 } as const;
 
@@ -55,28 +55,24 @@ export const MENU: readonly MenuItem[] = [
   {
     key: "work",
     label: "Work",
-    swap: ["I build", "systems"],
     caption: `Stores and software for small businesses. ${workCount()}`,
     tone: "ink",
   },
   {
     key: "studio",
     label: "Studio",
-    swap: ["Malden", "Studios"],
     caption: "My studio. Design-led Shopify stores for brands worth looking at.",
     tone: "signal",
   },
   {
     key: "about",
     label: "About",
-    swap: ["Also", "drums"],
     caption: "CS degree, an eye for design, three years behind the kit.",
     tone: "paper",
   },
   {
     key: "contact",
     label: "Contact",
-    swap: ["Say", "hello"],
     caption: "One email. I answer within a day.",
     tone: "ink",
   },

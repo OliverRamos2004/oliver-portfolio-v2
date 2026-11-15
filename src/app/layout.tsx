@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo } from "next/font/google";
+import { Anton, Archivo } from "next/font/google";
 import { NoiseOverlay } from "@/components/layout/NoiseOverlay";
 import "./globals.css";
 
@@ -9,6 +9,14 @@ const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-archivo",
   axes: ["wdth"],
+});
+
+// The home hover titles: a tall, heavy condensed face, stretched to fill the
+// screen (FillWord). Only one weight exists.
+const anton = Anton({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-fill",
 });
 
 export const metadata: Metadata = {
@@ -28,7 +36,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={archivo.variable}
+      className={`${archivo.variable} ${anton.variable}`}
     >
       <body>
         <NoiseOverlay />

@@ -86,7 +86,7 @@ export const STUDIO = {
 } as const;
 
 export const ABOUT = {
-  title: ["I'm", "Oliver."],
+  title: ["Hello, I'm", "Oliver."],
   // Oliver's own bio (from the old /about), minus "I'm Oliver.", which is the headline.
   body: "I have a bachelor's in computer science and an eye for art and design. I love to build things that are both functional and beautiful, and to solve problems in a way that is practical and efficient. My work is a reflection of my own personal journey.",
   facts: [

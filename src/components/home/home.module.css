@@ -401,22 +401,19 @@
 }
 
 /* ---------- about ----------
-   Portrait-led (2026-11-15, docs/Specs/2026-11-refresh/about.html): the giant
-   name sits behind in the home fill's tonal color, the cut-out stands in front
-   of it and bleeds off the bottom edge, the text sits bottom right. */
+   HELLO, I'M / OLIVER [photo], then the bio, all in the flow: the sheet
+   scrolls, and more sections will go underneath (2026-11-15). */
 .about {
-  position: relative;
+  display: flex;
+  flex-direction: column;
 }
-/* The name block sits left, bottom; both lines start at the left edge. */
 .aboutTitle {
-  position: absolute;
-  left: 0;
-  bottom: 0;
   margin: 0;
-  /* "I'M OLIVER" + photo measures 4.44em: this fills the width exactly. */
-  font-size: calc((100vw - var(--gut) * 2) / 4.45);
+  /* The wider line ("HELLO, I'M") measures 3.75em: this fills the width. */
+  font-size: calc((100vw - var(--gut) * 2) / 3.76);
   white-space: nowrap;
-  text-align: left;
+  /* Room for the comma's tail above OLIVER. */
+  line-height: 1.05;
   color: #e2dccf;
 }
 /* Line two: the name, then the photo in the period's place. Baseline-aligned, so the photo's bottom
@@ -441,13 +438,9 @@
   filter: grayscale(1) contrast(1.05);
   mix-blend-mode: multiply;
 }
-/* Top right, opposite the name. */
 .aboutTxt {
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 2;
-  width: min(46ch, 34%);
+  max-width: 560px;
+  margin-top: calc(var(--gut) * 1.5);
 }
 .bio {
   text-wrap: pretty;
@@ -568,17 +561,6 @@
   }
   .fillBox {
     bottom: var(--low);
-  }
-  /* About: everything in the flow. The name, then the figure, its head
-     overlapping the name's last line, then the text. */
-  .aboutTitle {
-    position: relative;
-  }
-  .aboutTxt {
-    position: relative;
-    width: auto;
-    max-width: 560px;
-    margin-top: 16px;
   }
   .cap {
     top: auto;

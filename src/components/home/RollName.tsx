@@ -1,43 +1,64 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 import styles from "./home.module.css";
 
 /** Matches `.fillRoll`'s transition in home.module.css. */
 const OUT_MS = 260;
 
+/** Matches the phone layout query in home.module.css: there the name stacks. */
+const STACK_QUERY =
+  "(max-width: 760px), (max-width: 1100px) and (orientation: portrait) and (hover: none)";
+/** Space between stacked lines, as a fraction of the box height. */
+const STACK_GAP = 0.02;
+
 /**
  * The name (at rest) or the hovered word's title, stretched so its ink fills the screen inside
- * `.fill`'s padding: x scales the word's width to the box, y scales its real
- * ink height (round letters' overshoot included) to the box, after lifting the
- * line box so the top of the ink sits on the padding edge. Decorative: the
- * page's <h1> carries the name for screen readers.
+ * `.fillBox`'s padding: x scales each line's width to the box, y scales its real
+ * ink height (round letters' overshoot included) to its slot, after lifting the
+ * line box so the top of the ink sits on the slot edge. On phones the name
+ * stacks (OLIVER / RAMOS), one line per word, so the letters keep a readable
+ * shape on a tall screen. Decorative: the page's <h1> carries the name for
+ * screen readers.
  */
 export function FillWord({ text }: { text: string }) {
   const { ref, shown } = useRoll(text, 0);
+  const stack = useMediaQuery(STACK_QUERY);
   const boxRef = useRef<HTMLDivElement>(null);
-  const wordRef = useRef<HTMLSpanElement>(null);
+  const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const lines = shown ? (stack ? shown.split(" ") : [shown]) : [];
+  const key = lines.join("|");
 
   useLayoutEffect(() => {
     const box = boxRef.current;
-    const word = wordRef.current;
-    if (!box || !word || !shown) return;
+    if (!box || !key) return;
 
     const fit = () => {
       const ctx = document.createElement("canvas").getContext("2d");
       if (!ctx) return;
-      const ws = getComputedStyle(word);
       const bs = getComputedStyle(box);
-      ctx.font = `${ws.fontWeight} ${ws.fontSize} ${ws.fontFamily}`;
-      const m = ctx.measureText(shown.toUpperCase());
-      const ink = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
       const padX = parseFloat(bs.paddingLeft);
       const padY = parseFloat(bs.paddingTop);
-      // offsetWidth ignores transforms, so no reset is needed before measuring.
-      const sx = (box.clientWidth - padX * 2) / word.offsetWidth;
-      const sy = (box.clientHeight - padY * 2) / ink;
-      const lift = m.fontBoundingBoxAscent - m.actualBoundingBoxAscent;
-      word.style.transform = `translate(${padX}px, ${padY}px) scale(${sx}, ${sy}) translateY(${-lift}px)`;
+      const innerW = box.clientWidth - padX * 2;
+      const innerH = box.clientHeight - padY * 2;
+      const els = lineRefs.current.slice(0, key.split("|").length);
+      const gap = els.length > 1 ? innerH * STACK_GAP : 0;
+      const slot = (innerH - gap * (els.length - 1)) / els.length;
+
+      els.forEach((el, i) => {
+        if (!el) return;
+        const ws = getComputedStyle(el);
+        ctx.font = `${ws.fontWeight} ${ws.fontSize} ${ws.fontFamily}`;
+        const m = ctx.measureText((el.textContent ?? "").toUpperCase());
+        const ink = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+        // offsetWidth ignores transforms, so no reset is needed before measuring.
+        const sx = innerW / el.offsetWidth;
+        const sy = slot / ink;
+        const lift = m.fontBoundingBoxAscent - m.actualBoundingBoxAscent;
+        const y = padY + i * (slot + gap);
+        el.style.transform = `translate(${padX}px, ${y}px) scale(${sx}, ${sy}) translateY(${-lift}px)`;
+      });
     };
 
     fit();
@@ -49,17 +70,25 @@ export function FillWord({ text }: { text: string }) {
       live = false;
       window.removeEventListener("resize", fit);
     };
-  }, [shown]);
+  }, [key]);
 
   return (
-    <div ref={boxRef} className={styles.fill} aria-hidden="true">
+    <div ref={boxRef} className={styles.fillBox} aria-hidden="true">
       {shown && (
-        <span ref={wordRef} className={styles.fillWord}>
-          <span className={styles.fillMask}>
-            {/* Mounts hidden above its mask; the roll brings it down. */}
-            <span ref={ref} className={styles.fillRoll} style={{ transform: "translateY(-105%)" }}>
-              {shown}
-            </span>
+        <span className={styles.fillMask}>
+          {/* Mounts hidden above its mask; the roll brings it down. */}
+          <span ref={ref} className={styles.fillRoll} style={{ transform: "translateY(-105%)" }}>
+            {lines.map((line, i) => (
+              <span
+                key={i}
+                ref={(el) => {
+                  lineRefs.current[i] = el;
+                }}
+                className={styles.fillWord}
+              >
+                {line}
+              </span>
+            ))}
           </span>
         </span>
       )}

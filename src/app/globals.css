@@ -28,6 +28,8 @@
      Display = Archivo at condensed width (set per element with
      font-stretch / the .display utility below); body + small text = Archivo 100%. */
   --font-display: var(--font-archivo), "Arial Narrow", sans-serif;
+  /* Headers: Anton, the same face as the home fill word (2026-11-15). */
+  --font-head: var(--font-fill), Impact, sans-serif;
   /* Body is Archivo at normal width too (2026-11-11): mono read as a generic
      AI-design tic, so it's gone from the pages as well as the labels. */
   --font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
@@ -95,16 +97,14 @@ body {
   outline-offset: 3px;
 }
 
-/* Display type: Archivo, condensed, heavy, uppercase (SPEC §2). */
+/* Display type: Anton, uppercase, one weight (2026-11-15; was Archivo
+   condensed 850). Same face as the home fill word. */
 .display {
-  font-family: var(--font-display);
-  font-stretch: 65%;
-  font-weight: 850;
+  font-family: var(--font-head);
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  /* Condensed caps swallow normal spaces ("YOSIARCHIVE"); open them up. */
-  word-spacing: 0.12em;
-  line-height: 0.82;
+  line-height: 0.9;
 }
 
 /* ---------------------------------------------------------------------- */

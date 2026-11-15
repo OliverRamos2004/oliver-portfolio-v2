@@ -129,7 +129,7 @@ export function Profile() {
                   </span>
                 )}
               </div>
-              <h3 className="mt-4 font-display text-xl font-semibold uppercase leading-tight [font-stretch:80%]">{item.title}</h3>
+              <h3 className="mt-4 font-head text-xl uppercase leading-tight">{item.title}</h3>
               <p className="mt-2 text-[15px] leading-[1.55] text-paper-muted">{item.body}</p>
             </li>
           ))}

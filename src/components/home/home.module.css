@@ -428,18 +428,23 @@
   max-width: 62%;
   object-fit: contain;
   object-position: 0 100%;
-  /* Dramatic monochrome. Darken before the contrast so the white background
-     still clips to pure white, which multiply then drops into the paper. */
-  filter: grayscale(1) brightness(0.97) contrast(1.45);
+  /* Mono (chosen 2026-11-15 over "dramatic" contrast 1.45). The white
+     background drops into the paper through multiply. */
+  filter: grayscale(1) contrast(1.05);
   mix-blend-mode: multiply;
 }
-/* Lab options (AboutLab, ?lab only). Mono = plain greyscale. Over = the name
-   sits in front of the photo. */
-.about[data-tone="mono"] .aboutFig {
-  filter: grayscale(1) contrast(1.05);
-}
-.about[data-name="over"] .aboutTitle {
+/* Lab options (AboutLab, ?lab only, desktop). Across: the name spans the
+   screen in front of the photo. Bio: the text sits on the photo's shirt. */
+.about[data-name="across"] .aboutTitle {
   z-index: 2;
+  left: 0;
+  font-size: min(31vw, 50svh);
+  line-height: 0.85;
+}
+.about[data-name="bio"] .aboutTxt {
+  right: auto;
+  left: 22%;
+  width: min(44ch, 36%);
 }
 .lab {
   position: fixed;

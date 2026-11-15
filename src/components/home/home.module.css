@@ -409,8 +409,13 @@
 }
 .aboutTitle {
   margin: 0;
-  /* The wider line ("HELLO, I'M") measures 3.75em: this fills the width. */
-  font-size: calc((100vw - var(--gut) * 2) / 3.76);
+  /* The wider line fills the width (--fill-em is its measured width in em),
+     capped so both lines (2.1em) fit under the sheet header on one screen. */
+  --fill-em: 3.07;
+  font-size: min(
+    calc((100vw - var(--gut) * 2) / var(--fill-em)),
+    calc((100svh - max(var(--gut) * 2.4, 88px) - var(--gut) * 2) / 2.2)
+  );
   white-space: nowrap;
   /* Room for the comma's tail above OLIVER. */
   line-height: 1.05;
@@ -423,6 +428,13 @@
   display: inline-flex;
   align-items: baseline;
   gap: 0.06em;
+}
+/* Self-contained blend: the wrap's paper is the backdrop, so the photo's
+   white drops out even while the sheet is mid-slide on its own layer. */
+.figWrap {
+  display: block;
+  background: var(--color-paper);
+  isolation: isolate;
 }
 .aboutFig {
   display: block;
@@ -437,6 +449,13 @@
      heading, so the blend reaches the paper. */
   filter: grayscale(1) contrast(1.05);
   mix-blend-mode: multiply;
+  transition: filter 0.45s var(--ease);
+}
+/* Hover: back to the original color (mouse only). */
+@media (hover: hover) and (pointer: fine) {
+  .figWrap:hover .aboutFig {
+    filter: grayscale(0) contrast(1);
+  }
 }
 .aboutTxt {
   max-width: 560px;

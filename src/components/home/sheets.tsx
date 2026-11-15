@@ -52,14 +52,18 @@ export function AboutSheet() {
         {/* The photo takes the period's place after the name, one cap height tall. */}
         <span className={styles.imLine}>
           {ABOUT.title[1].replace(/\.$/, "")}
-          <Image
-            className={styles.aboutFig}
-            src={portrait.src}
-            alt={portrait.alt}
-            width={portrait.width}
-            height={portrait.height}
-            sizes="(max-width: 760px) 40vw, 30vw"
-          />
+          {/* The wrap carries its own paper, so the blend never shows white
+              while the sheet slides in. */}
+          <span className={styles.figWrap}>
+            <Image
+              className={styles.aboutFig}
+              src={portrait.src}
+              alt={portrait.alt}
+              width={portrait.width}
+              height={portrait.height}
+              sizes="(max-width: 760px) 40vw, 30vw"
+            />
+          </span>
         </span>
       </h2>
       <div className={styles.aboutTxt}>

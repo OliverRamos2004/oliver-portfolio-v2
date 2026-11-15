@@ -411,7 +411,7 @@
   margin: 0;
   /* The wider line fills the width (--fill-em is its measured width in em),
      capped so both lines (2.1em) fit under the sheet header on one screen. */
-  --fill-em: 3.07;
+  --fill-em: 3.76; /* "HELLO, I'M" is the wider line */
   font-size: min(
     calc((100vw - var(--gut) * 2) / var(--fill-em)),
     calc((100svh - max(var(--gut) * 2.4, 88px) - var(--gut) * 2) / 2.2)

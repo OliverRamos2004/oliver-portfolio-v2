@@ -9,6 +9,9 @@ import styles from "./home.module.css";
  * which the CSS reads. Remove once the options are chosen.
  */
 const GROUPS = [
+  { key: "size", label: "Name size", options: [["fit", "Fit"], ["full", "Full width"]] },
+  { key: "stretch", label: "Stretch", options: [["none", "None"], ["tall", "Tall"]] },
+  { key: "color", label: "Color", options: [["tonal", "Tonal"], ["ink", "Ink"]] },
   { key: "interests", label: "Interests", options: [["stack", "Stacked"], ["row", "In rows"]] },
   { key: "icons", label: "Icons", options: [["line", "Line"], ["solid", "Solid"], ["footer", "Big footer"]] },
 ] as const;
@@ -18,7 +21,13 @@ type Key = (typeof GROUPS)[number]["key"];
 export function AboutLab() {
   const ref = useRef<HTMLDivElement>(null);
   const [on, setOn] = useState(false);
-  const [choice, setChoice] = useState<Record<Key, string>>({ interests: "stack", icons: "line" });
+  const [choice, setChoice] = useState<Record<Key, string>>({
+    size: "fit",
+    stretch: "none",
+    color: "tonal",
+    interests: "stack",
+    icons: "line",
+  });
 
   useEffect(() => {
     // After mount: the page is static, so the query string isn't known on the server.
@@ -29,8 +38,7 @@ export function AboutLab() {
   useEffect(() => {
     const box = ref.current?.parentElement;
     if (!box) return;
-    box.dataset.interests = choice.interests;
-    box.dataset.icons = choice.icons;
+    for (const [k, v] of Object.entries(choice)) box.dataset[k] = v;
   }, [choice, on]);
 
   if (!on) return null;

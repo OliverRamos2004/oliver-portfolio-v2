@@ -10,9 +10,9 @@ export const studio = {
 
 /**
  * The About sheet's portrait (2026-11-15, "portrait-led"): Oliver in profile,
- * looking up at the name. A transparent cut-out (white background removed by
- * script from his screenshot; swap in his own full-res export when it comes).
- * The dramatic monochrome is a CSS filter (.aboutFig in home.module.css).
+ * looking up at the name. His own photo on white; the white drops into the
+ * paper with mix-blend-mode: multiply, and the dramatic monochrome is a CSS
+ * filter (.aboutFig in home.module.css).
  */
 export const portrait = {
   src: "/about/profile.png",

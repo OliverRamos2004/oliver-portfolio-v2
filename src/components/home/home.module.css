@@ -428,9 +428,10 @@
   max-width: 62%;
   object-fit: contain;
   object-position: 0 100%;
-  /* Dramatic monochrome. Darken before the contrast so the cut-out's edge
-     pixels don't turn grey. */
+  /* Dramatic monochrome. Darken before the contrast so the white background
+     still clips to pure white, which multiply then drops into the paper. */
   filter: grayscale(1) brightness(0.97) contrast(1.45);
+  mix-blend-mode: multiply;
 }
 .aboutTxt {
   position: absolute;

@@ -68,8 +68,10 @@
 /* ---------- the fill word (hover titles) ----------
    Settings chosen 2026-11-14 in docs/Specs/2026-11-refresh/fill.html (not
    final): Anton, light squish, tonal color, no shadow, the roll.
-   FillWord stretches the word to the box inside this padding. */
-.fill {
+   FillWord stretches the word to the box inside this padding.
+   Not `.fill`: the sheets use that name, and sharing it made the Studio and
+   Contact sheets unclickable (pointer-events: none). */
+.fillBox {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -100,12 +102,15 @@
 .root[data-tone="signal"] .fillWord {
   color: #7d2a38;
 }
+/* The mask and the rolling layer cover the whole box, so a stacked name rolls as one. */
 .fillMask {
-  display: block;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
 }
 .fillRoll {
-  display: block;
+  position: absolute;
+  inset: 0;
   transition: transform 0.26s var(--ease);
 }
 
@@ -222,9 +227,8 @@
 /* Where you are: the sheet's name in the giant display face, small and fat. */
 .where {
   margin: 0;
-  font-family: var(--font-display);
-  font-stretch: 65%;
-  font-weight: 850;
+  font-family: var(--font-head);
+  font-weight: 400;
   text-transform: uppercase;
   font-size: clamp(28px, 2.6vw, 40px);
   line-height: 0.85;
@@ -529,15 +533,18 @@
    caption under it. Tablets with a trackpad keep the desktop layout, because
    the hover answers are wider than the name. */
 @media (max-width: 760px), (max-width: 1100px) and (orientation: portrait) and (hover: none) {
+  /* The stacked name (FillWord) fills the screen above the caption and menu.
+     --low is the menu (4 rows) plus the caption (2 lines) and their gaps. */
   .root {
-    --name: min(30vw, calc((89svh - 260px) / 1.7));
+    --menu-h: 128px;
+    --low: calc(var(--menu-h) + 76px);
   }
-  .stage {
-    font-size: var(--name);
+  .fillBox {
+    bottom: var(--low);
   }
   .cap {
-    top: calc(11svh + var(--name) * 1.66 + 20px);
-    bottom: auto;
+    top: auto;
+    bottom: calc(var(--gut) + var(--menu-h) + 12px);
     left: var(--gut);
     right: var(--gut);
     text-align: left;
@@ -545,6 +552,10 @@
 }
 
 @media (max-width: 760px) {
+  /* Phone menu rows are taller (6px tap padding on each word). */
+  .root {
+    --menu-h: 168px;
+  }
   .peek {
     display: none;
   }

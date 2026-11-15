@@ -146,7 +146,7 @@ export function ProjectDrawer({ project, isOverlay }: ProjectDrawerProps) {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <NoteHeading className="font-display text-xl font-semibold uppercase leading-tight [font-stretch:80%]">{note.heading}</NoteHeading>
+                  <NoteHeading className="font-head text-xl uppercase leading-tight">{note.heading}</NoteHeading>
                   <p className={`mt-2 max-w-2xl ${body} ${muted}`}>{note.body}</p>
                 </div>
               </li>

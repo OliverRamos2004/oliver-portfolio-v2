@@ -11,7 +11,7 @@ const archivo = Archivo({
   axes: ["wdth"],
 });
 
-// The home hover titles: a tall, heavy condensed face, stretched to fill the
+// Headers site-wide (--font-head) and the home fill word, stretched to fill the
 // screen (FillWord). Only one weight exists.
 const anton = Anton({
   subsets: ["latin"],

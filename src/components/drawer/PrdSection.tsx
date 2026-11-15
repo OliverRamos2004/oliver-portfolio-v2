@@ -70,7 +70,7 @@ export function PrdSection({ prd, onInk, isPage }: { prd: PrdEntry; onInk: boole
         <dl className="grid gap-6 sm:grid-cols-2">
           {prd.targetUsers.map((u) => (
             <div key={u.segment}>
-              <dt className="font-display text-lg font-semibold uppercase leading-tight [font-stretch:80%]">{u.segment}</dt>
+              <dt className="font-head text-lg uppercase leading-tight">{u.segment}</dt>
               <dd className={`mt-1.5 ${body} ${muted}`}>{u.detail}</dd>
             </div>
           ))}

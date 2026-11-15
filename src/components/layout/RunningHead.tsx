@@ -10,12 +10,12 @@ type Tone = "paper" | "ink";
 const NAV = [
   { href: "/#work", label: "Work" },
   { href: "/#studio", label: "Studio" },
-  { href: "/about", label: "About" },
+  { href: "/#about", label: "About" },
   { href: "/#contact", label: "Contact" },
 ] as const;
 
 /**
- * The fixed header on /about and the case files: the name home, the four
+ * The fixed header on the case files: the name home, the four
  * words, Austin time. It takes the tone (paper/ink) of whichever section with
  * a data-running-head attribute crosses the viewport's midline. No hairline:
  * the header is a solid field of the surface color.

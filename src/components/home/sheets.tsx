@@ -41,35 +41,34 @@ export function StudioSheet() {
   );
 }
 
+/* Portrait-led (2026-11-15): Oliver in profile, looking up at the giant tonal
+   name behind him; bio and facts bottom right (under the photo on phones). */
 export function AboutSheet() {
   return (
     <div className={`${styles.about} ${styles.fill}`}>
+      <h2 className={`display ${styles.aboutTitle}`}>
+        {ABOUT.title[0]}
+        <br />
+        {ABOUT.title[1]}
+      </h2>
       <Image
-        className={styles.portrait}
-        style={{ objectPosition: portrait.position }}
+        className={styles.aboutFig}
         src={portrait.src}
         alt={portrait.alt}
         width={portrait.width}
         height={portrait.height}
-        sizes="(max-width: 760px) 100vw, 50vw"
+        sizes="(max-width: 760px) 100vw, 60vw"
       />
       <div className={styles.aboutTxt}>
-        <h2 className={`display ${styles.aboutTitle}`}>
-          {ABOUT.title[0]}
-          <br />
-          {ABOUT.title[1]}
-        </h2>
-        <div>
-          <p className={styles.bio}>{ABOUT.body}</p>
-          <dl className={styles.facts}>
-            {ABOUT.facts.map(([term, value]) => (
-              <div key={term} className="contents">
-                <dt>{term}</dt>
-                <dd>{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+        <p className={styles.bio}>{ABOUT.body}</p>
+        <dl className={styles.facts}>
+          {ABOUT.facts.map(([term, value]) => (
+            <div key={term} className="contents">
+              <dt>{term}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </div>
   );

@@ -12,7 +12,11 @@ const nextConfig: NextConfig = {
   // The standalone PRD pages folded into the case file (editorial redesign
   // stage 6). PRD ids match project ids, so one rule covers both.
   async redirects() {
-    return [{ source: "/pm/:slug", destination: "/work/:slug#prd", permanent: true }];
+    return [
+      { source: "/pm/:slug", destination: "/work/:slug#prd", permanent: true },
+      // About is the home sheet now (2026-11-15). Temporary, in case /about comes back.
+      { source: "/about", destination: "/#about", permanent: false },
+    ];
   },
 };
 

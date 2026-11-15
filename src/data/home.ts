@@ -87,11 +87,11 @@ export const STUDIO = {
 
 export const ABOUT = {
   title: ["I'm", "Oliver."],
-  body: "Computer science degree, an eye for art and design, and a habit of building the thing instead of talking about it. I like work that's useful and good to look at, in that order and at the same time.",
+  // Oliver's own bio (from the old /about), minus "I'm Oliver.", which is the headline.
+  body: "I have a bachelor's in computer science and an eye for art and design. I love to build things that are both functional and beautiful, and to solve problems in a way that is practical and efficient. My work is a reflection of my own personal journey.",
   facts: [
     ["Now", "Malden Studios · MatchCut"],
     ["Before", "Clinic systems · family lawn business"],
-    ["Off hours", "Drums: Brazilian jazz, funk, rock"],
     ["Based", "Austin, TX"],
   ],
 } as const;

@@ -416,7 +416,7 @@
   text-align: right;
   color: #e2dccf;
 }
-/* Line one: the photo, then "I'M". Baseline-aligned, so the photo's bottom
+/* Line two: the name, then the photo in the period's place. Baseline-aligned, so the photo's bottom
    sits on the baseline; its height is Anton's cap height, so its top meets
    the top of the letters at any size. */
 .imLine {
@@ -427,21 +427,22 @@
 .aboutFig {
   display: block;
   height: 0.735em;
-  /* Trim the white space right of the face so the nose meets the "I". */
+  /* Trim the white space behind the head so it sits close to the "R". */
   width: auto;
   aspect-ratio: 0.8;
   object-fit: cover;
-  object-position: 0 100%; /* keep the left (head), crop the empty right */
+  object-position: 92% 100%; /* crop the empty left, behind the head */
   /* Mono (chosen 2026-11-15 over "dramatic" contrast 1.45). The white
      background drops into the paper through multiply. No z-index on the
      heading, so the blend reaches the paper. */
   filter: grayscale(1) contrast(1.05);
   mix-blend-mode: multiply;
 }
+/* Top left, in the space beside "I'M" (the photo now ends line two, bottom right). */
 .aboutTxt {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  left: 0;
+  top: 0;
   z-index: 2;
   width: min(46ch, 38%);
 }

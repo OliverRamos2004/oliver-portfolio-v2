@@ -413,9 +413,9 @@
   left: 0;
   bottom: 0;
   margin: 0;
-  /* The block (OLIVER + photo) is ~2.9em wide: 19vw keeps it to ~55% of the
-     width, clear of the bio column. */
-  font-size: min(19vw, 44svh);
+  /* "I'M OLIVER" + photo measures 4.44em: this fills the width exactly. */
+  font-size: calc((100vw - var(--gut) * 2) / 4.45);
+  white-space: nowrap;
   text-align: left;
   color: #e2dccf;
 }
@@ -573,7 +573,6 @@
      overlapping the name's last line, then the text. */
   .aboutTitle {
     position: relative;
-    font-size: 30vw;
   }
   .aboutTxt {
     position: relative;

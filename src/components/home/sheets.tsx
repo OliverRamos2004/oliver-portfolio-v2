@@ -47,11 +47,9 @@ export function AboutSheet() {
   return (
     <div className={`${styles.about} ${styles.fill}`}>
       <h2 className={`display ${styles.aboutTitle}`}>
-        {ABOUT.title[0]}
-        <br />
-        {/* The photo takes the period's place after the name, one cap height tall. */}
+        {/* One line; the photo takes the period's place, one cap height tall. */}
         <span className={styles.imLine}>
-          {ABOUT.title[1].replace(/\.$/, "")}
+          {`${ABOUT.title[0]} ${ABOUT.title[1].replace(/\.$/, "")}`}
           <Image
             className={styles.aboutFig}
             src={portrait.src}

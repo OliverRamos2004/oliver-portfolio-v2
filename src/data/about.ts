@@ -20,3 +20,23 @@ export const portrait = {
   width: 976,
   height: 992,
 };
+
+/**
+ * The About sheet's interests (2026-11-15). Reading and graphic design have no
+ * photo yet: hovering them only dims the others until Oliver sends one.
+ */
+type Photo = { src: string; alt: string; width: number; height: number };
+export const INTERESTS: readonly { id: string; label: string; photo?: Photo }[] = [
+  {
+    id: "drums",
+    label: "Drums",
+    photo: { src: "/about/drumset.jpg", alt: "Oliver's four-piece drum kit", width: 1200, height: 1600 },
+  },
+  {
+    id: "barbering",
+    label: "Barbering",
+    photo: { src: "/about/barbering.jpg", alt: "A haircut by Oliver", width: 1200, height: 1600 },
+  },
+  { id: "reading", label: "Reading" },
+  { id: "graphic-design", label: "Graphic design" },
+];

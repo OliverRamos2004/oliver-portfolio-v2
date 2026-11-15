@@ -4,7 +4,10 @@ import { portrait, studio } from "@/data/about";
 import { EMAIL, MALDEN, RESUMES } from "@/data/contact";
 import { SOCIALS } from "@/data/socials";
 import { Icon } from "@/components/ui/Icon";
+import { AboutInterests } from "./AboutInterests";
+import { AboutLab } from "./AboutLab";
 import { CopyEmail } from "./CopyEmail";
+import { SocialIcons } from "./SocialIcons";
 import { WorkList, type WorkRow } from "./WorkList";
 import styles from "./home.module.css";
 
@@ -66,17 +69,25 @@ export function AboutSheet() {
           </span>
         </span>
       </h2>
+      {/* Bio: the lead big, like a pull quote; the rest, facts and icons beside it. */}
       <div className={styles.aboutTxt}>
-        <p className={styles.bio}>{ABOUT.body}</p>
-        <dl className={styles.facts}>
-          {ABOUT.facts.map(([term, value]) => (
-            <div key={term} className="contents">
-              <dt>{term}</dt>
-              <dd>{value}</dd>
-            </div>
-          ))}
-        </dl>
+        <p className={styles.lead}>{ABOUT.lead}</p>
+        <div className={styles.aboutSide}>
+          <p className={styles.bio}>{ABOUT.body}</p>
+          <dl className={styles.facts}>
+            {ABOUT.facts.map(([term, value]) => (
+              <div key={term} className="contents">
+                <dt>{term}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+          <SocialIcons className={styles.socialsInline} />
+        </div>
       </div>
+      <AboutInterests />
+      <SocialIcons className={styles.socialsFooter} />
+      <AboutLab />
     </div>
   );
 }

@@ -407,8 +407,7 @@
 .about {
   position: relative;
 }
-/* The name block sits left, bottom; inside it the lines align right, so
-   "I'M" ends above the photo. */
+/* The name block sits left, bottom; both lines start at the left edge. */
 .aboutTitle {
   position: absolute;
   left: 0;
@@ -417,7 +416,7 @@
   /* The block (OLIVER + photo) is ~2.9em wide: 19vw keeps it to ~55% of the
      width, clear of the bio column. */
   font-size: min(19vw, 44svh);
-  text-align: right;
+  text-align: left;
   color: #e2dccf;
 }
 /* Line two: the name, then the photo in the period's place. Baseline-aligned, so the photo's bottom

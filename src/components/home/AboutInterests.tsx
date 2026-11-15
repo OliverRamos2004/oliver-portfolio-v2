@@ -7,8 +7,7 @@ import styles from "./home.module.css";
 /**
  * The About sheet's interests in giant type. Hovering one dims the rest and
  * shows its caption bottom right, like the home page's caption. On touch the
- * captions sit under their words instead. Layout (stacked or in rows) comes
- * from the `.about` box's data-interests.
+ * captions sit under their words instead. One per line.
  */
 export function AboutInterests() {
   const [active, setActive] = useState<string | null>(null);

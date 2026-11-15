@@ -410,27 +410,13 @@
   display: flex;
   flex-direction: column;
 }
-.about {
-  --k: 1;
-}
 .aboutTitle {
   margin: 0;
-  /* The wider line fills the width (--fill-em is its measured width in em),
-     capped so both lines (2.1em) and the bio (~170px) fit on one screen. */
-  --fill-em: 3.76; /* "HELLO, I'M" is the wider line */
-  font-size: min(
-    calc((100vw - var(--gut) * 2) / var(--fill-em)),
-    calc((100svh - max(var(--gut) * 2.4, 88px) - var(--gut) * 2 - 170px) / (2.2 * var(--k)))
-  );
-  /* --k stretches the letters vertically (1 = none). The heading scales on Y;
-     the extra height is added as margin so the layout below makes room. */
-  transform: scaleY(var(--k));
-  transform-origin: 0 0;
-  /* Keep the gap between the lines the same when stretched: the cap height
-     (0.735em) stretches, the 0.315em gap shrinks to cancel the scale. */
-  --lh: calc(0.735 + 0.315 / var(--k));
-  line-height: var(--lh);
-  margin-bottom: calc((var(--k) - 1) * 2em * var(--lh));
+  /* Full width (chosen 2026-11-15): "HELLO, I'M", the wider line, measures
+     3.75em, so this runs it edge to edge. */
+  font-size: calc((100vw - var(--gut) * 2) / 3.76);
+  /* Room for the comma's tail above OLIVER. */
+  line-height: 1.05;
   white-space: nowrap;
   color: #e2dccf;
 }
@@ -446,16 +432,13 @@
    white drops out even while the sheet is mid-slide on its own layer. */
 .figWrap {
   display: block;
-  /* Undo the heading's stretch so the photo isn't distorted. */
-  transform: scaleY(calc(1 / var(--k)));
-  transform-origin: 0 100%;
   background: var(--color-paper);
   isolation: isolate;
 }
 .aboutFig {
   display: block;
-  /* Cap height, times the stretch, so it still matches the letters. */
-  height: calc(0.735em * var(--k));
+  /* Anton's cap height, so the photo matches the letters. */
+  height: 0.735em;
   /* Trim the white space behind the head so it sits close to the "R". */
   width: auto;
   aspect-ratio: 0.8;
@@ -501,25 +484,12 @@
   color: var(--color-ink-muted);
 }
 
-/* Name lab options (?lab): full width drops the height cap; tall stretches
-   the letters 1.5x; ink makes the name solid. */
-.about[data-size="full"] .aboutTitle {
-  font-size: calc((100vw - var(--gut) * 2) / var(--fill-em));
-}
-.about[data-stretch="tall"] {
-  --k: 1.5;
-}
-.about[data-color="ink"] .aboutTitle {
-  color: var(--color-ink);
-}
-
 /* Interests: giant words; hover dims the rest and shows a caption bottom right. */
 .interests {
   margin-top: calc(var(--gut) * 4);
 }
 /* Room at the end of the sheet. */
-.about > :last-child,
-.about[data-icons="footer"] .socialsFooter {
+.about > :last-child {
   margin-bottom: calc(var(--gut) * 2);
 }
 .interestList {
@@ -529,7 +499,7 @@
 }
 .interestName {
   display: block;
-  font-size: 10vw;
+  font-size: 6vw;
   transition: color 0.2s, transform 0.35s var(--ease);
 }
 .interestList[data-dim="true"] .interestName {
@@ -538,19 +508,6 @@
 .interestList[data-dim="true"] .interest[data-active="true"] .interestName {
   color: var(--color-ink);
   transform: translateX(1.4vw);
-}
-/* In rows (lab): the words run on, wrapping to a second row. */
-.about[data-interests="row"] .interestList {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 0.28em;
-  font-size: 7.4vw;
-}
-.about[data-interests="row"] .interestName {
-  font-size: 1em;
-}
-.about[data-interests="row"] .interestList[data-dim="true"] .interest[data-active="true"] .interestName {
-  transform: none;
 }
 /* Hover caption: fixed bottom right, like the home caption (mouse only). */
 .interestCap {
@@ -587,8 +544,7 @@
   }
 }
 
-/* Socials as icons. "line" (default) or "solid" glyphs; "footer" swaps the
-   inline row for a big band at the end of the sheet. */
+/* Social icons (line). */
 .socials {
   display: flex;
   gap: 18px;
@@ -609,70 +565,12 @@
   width: 28px;
   height: 28px;
 }
-.glyphSolid {
-  display: none !important;
-}
-.about[data-icons="solid"] .glyphSolid {
-  display: block !important;
-}
-.about[data-icons="solid"] .glyphLine {
-  display: none !important;
-}
 .socialLabel {
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
   clip-path: inset(50%);
-}
-.socialsFooter {
-  display: none;
-}
-.about[data-icons="footer"] .socialsInline {
-  display: none;
-}
-.about[data-icons="footer"] .socialsFooter {
-  display: flex;
-  justify-content: space-between;
-  margin-top: calc(var(--gut) * 4);
-}
-.about[data-icons="footer"] .socialsFooter svg {
-  width: min(16vw, 180px);
-  height: min(16vw, 180px);
-}
-.about[data-icons="footer"] .socialsFooter .socialLabel {
-  position: static;
-  width: auto;
-  height: auto;
-  clip-path: none;
-  display: block;
-  margin-top: 10px;
-}
-
-/* Temporary lab panel (AboutLab, ?lab only). */
-.lab {
-  position: fixed;
-  left: var(--gut);
-  bottom: var(--gut);
-  z-index: 30;
-  display: grid;
-  gap: 6px;
-  padding: 10px 12px;
-  background: var(--color-ink);
-  color: var(--color-paper);
-  font-size: 13px;
-}
-.lab span {
-  display: inline-block;
-  width: 64px;
-  opacity: 0.6;
-}
-.lab button {
-  padding: 2px 8px;
-}
-.lab button[data-on="true"] {
-  background: var(--color-paper);
-  color: var(--color-ink);
 }
 .bio {
   text-wrap: pretty;
@@ -795,7 +693,7 @@
     justify-content: flex-start;
   }
   .interestName {
-    font-size: 17vw;
+    font-size: 12vw;
   }
   .cap {
     top: auto;

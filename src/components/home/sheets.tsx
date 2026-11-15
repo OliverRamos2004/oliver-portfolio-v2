@@ -5,7 +5,6 @@ import { EMAIL, MALDEN, RESUMES } from "@/data/contact";
 import { SOCIALS } from "@/data/socials";
 import { Icon } from "@/components/ui/Icon";
 import { AboutInterests } from "./AboutInterests";
-import { AboutLab } from "./AboutLab";
 import { CopyEmail } from "./CopyEmail";
 import { SocialIcons } from "./SocialIcons";
 import { WorkList, type WorkRow } from "./WorkList";
@@ -73,12 +72,10 @@ export function AboutSheet() {
         </h2>
         <div className={styles.aboutTxt}>
           <p className={styles.bio}>{ABOUT.body}</p>
-          <SocialIcons className={styles.socialsInline} />
+          <SocialIcons />
         </div>
       </div>
       <AboutInterests />
-      <SocialIcons className={styles.socialsFooter} />
-      <AboutLab />
     </div>
   );
 }

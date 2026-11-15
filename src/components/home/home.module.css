@@ -485,7 +485,7 @@
   color: var(--color-ink-muted);
 }
 
-/* Interests: giant words, the Work list's hover (dim + trailing photo). */
+/* Interests: giant words; hover dims the rest and shows a caption bottom right. */
 .interests {
   margin-top: calc(var(--gut) * 4);
 }
@@ -524,24 +524,39 @@
 .about[data-interests="row"] .interestList[data-dim="true"] .interest[data-active="true"] .interestName {
   transform: none;
 }
-/* Photos under the words on touch only; with a mouse they trail the cursor. */
-.interestImg {
+/* Hover caption: fixed bottom right, like the home caption (mouse only). */
+.interestCap {
+  position: fixed;
+  right: var(--gut);
+  bottom: var(--gut);
+  z-index: 3;
+  max-width: 380px;
+  margin: 0;
+  text-align: right;
+  font-size: 17px;
+  text-wrap: balance;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s, transform 0.35s var(--ease);
+  pointer-events: none;
+}
+.interestCap[data-show="true"] {
+  opacity: 1;
+  transform: none;
+}
+/* Touch: no hover, so each caption sits under its word. */
+.interestNote {
   display: none;
 }
 @media (hover: none) {
-  .about:not([data-interests="row"]) .interestImg {
-    display: block;
-    width: 100%;
-    max-width: 420px;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    margin: 8px 0 24px;
+  .interestCap {
+    display: none;
   }
-}
-.peekTall {
-  width: min(24vw, 320px);
-  aspect-ratio: 4 / 5;
+  .interestNote {
+    display: block;
+    margin: 2px 0 18px;
+    color: var(--color-ink-muted);
+  }
 }
 
 /* Socials as icons. "line" (default) or "solid" glyphs; "footer" swaps the

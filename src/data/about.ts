@@ -22,21 +22,13 @@ export const portrait = {
 };
 
 /**
- * The About sheet's interests (2026-11-15). Reading and graphic design have no
- * photo yet: hovering them only dims the others until Oliver sends one.
+ * The About sheet's interests (2026-11-15): a giant list; hovering a word
+ * shows its caption bottom right. Captions are Claude drafts from Oliver's old
+ * /about copy (graphic design is new); his to edit.
  */
-type Photo = { src: string; alt: string; width: number; height: number };
-export const INTERESTS: readonly { id: string; label: string; photo?: Photo }[] = [
-  {
-    id: "drums",
-    label: "Drums",
-    photo: { src: "/about/drumset.jpg", alt: "Oliver's four-piece drum kit", width: 1200, height: 1600 },
-  },
-  {
-    id: "barbering",
-    label: "Barbering",
-    photo: { src: "/about/barbering.jpg", alt: "A haircut by Oliver", width: 1200, height: 1600 },
-  },
-  { id: "reading", label: "Reading" },
-  { id: "graphic-design", label: "Graphic design" },
+export const INTERESTS: readonly { id: string; label: string; caption: string }[] = [
+  { id: "drums", label: "Drums", caption: "Three years behind the kit. Brazilian jazz, funk and rock." },
+  { id: "barbering", label: "Barbering", caption: "A form of art. Four years cutting and styling hair." },
+  { id: "reading", label: "Reading", caption: "Always mid-book. Favorite: Mary Shelley's Frankenstein." },
+  { id: "graphic-design", label: "Graphic design", caption: "Posters, type and identities, mostly for the fun of it." },
 ];

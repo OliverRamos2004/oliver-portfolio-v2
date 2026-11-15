@@ -433,43 +433,6 @@
   filter: grayscale(1) contrast(1.05);
   mix-blend-mode: multiply;
 }
-/* Lab options (AboutLab, ?lab only, desktop). Across: the name spans the
-   screen in front of the photo. Bio: the text sits on the photo's shirt. */
-.about[data-name="across"] .aboutTitle {
-  z-index: 2;
-  left: 0;
-  font-size: min(31vw, 50svh);
-  line-height: 0.85;
-}
-.about[data-name="bio"] .aboutTxt {
-  right: auto;
-  left: 22%;
-  width: min(44ch, 36%);
-}
-.lab {
-  position: fixed;
-  left: var(--gut);
-  bottom: var(--gut);
-  z-index: 30;
-  display: grid;
-  gap: 6px;
-  padding: 10px 12px;
-  background: var(--color-ink);
-  color: var(--color-paper);
-  font-size: 13px;
-}
-.lab span {
-  display: inline-block;
-  width: 48px;
-  opacity: 0.6;
-}
-.lab button {
-  padding: 2px 8px;
-}
-.lab button[data-on="true"] {
-  background: var(--color-paper);
-  color: var(--color-ink);
-}
 .aboutTxt {
   position: absolute;
   right: 0;

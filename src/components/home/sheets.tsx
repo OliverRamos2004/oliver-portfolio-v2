@@ -4,7 +4,6 @@ import { portrait, studio } from "@/data/about";
 import { EMAIL, MALDEN, RESUMES } from "@/data/contact";
 import { SOCIALS } from "@/data/socials";
 import { Icon } from "@/components/ui/Icon";
-import { AboutLab } from "./AboutLab";
 import { CopyEmail } from "./CopyEmail";
 import { WorkList, type WorkRow } from "./WorkList";
 import styles from "./home.module.css";
@@ -71,7 +70,6 @@ export function AboutSheet() {
           ))}
         </dl>
       </div>
-      <AboutLab />
     </div>
   );
 }

@@ -457,17 +457,17 @@
     filter: grayscale(0) contrast(1);
   }
 }
-/* First screen: the name on top, the bio bottom right (like the home caption). */
+/* The name, then the bio under it at the right edge. */
 .aboutHero {
   display: flex;
   flex-direction: column;
-  min-height: calc(100svh - max(var(--gut) * 2.4, 88px) - var(--gut) * 2);
 }
+/* Right under the name, right-aligned: shares its edge with the interest
+   captions below (critique 2026-11-15). */
 .aboutTxt {
   align-self: flex-end;
   max-width: 520px;
-  margin-top: auto;
-  padding-top: var(--gut);
+  margin-top: calc(var(--gut) * 1.5);
   text-align: right;
 }
 .aboutTxt .bio {
@@ -509,39 +509,47 @@
   color: var(--color-ink);
   transform: translateX(1.4vw);
 }
-/* Hover caption: fixed bottom right, like the home caption (mouse only). */
-.interestCap {
-  position: fixed;
-  right: var(--gut);
-  bottom: var(--gut);
-  z-index: 3;
-  max-width: 380px;
-  margin: 0;
-  text-align: right;
-  font-size: 17px;
-  text-wrap: balance;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.25s, transform 0.35s var(--ease);
-  pointer-events: none;
+/* Row: word left, caption right on the word's baseline (the Work list's
+   pattern), so the section spans the measure. Phones stack them. */
+.interest {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
 }
-.interestCap[data-show="true"] {
-  opacity: 1;
-  transform: none;
-}
-/* Touch: no hover, so each caption sits under its word. */
 .interestNote {
-  display: none;
+  flex: none;
+  max-width: 32ch;
+  padding-bottom: 1.1vw;
+  text-align: right;
+  text-wrap: balance;
+  color: var(--color-ink-muted);
+  transition: color 0.2s;
 }
-@media (hover: none) {
-  .interestCap {
-    display: none;
-  }
-  .interestNote {
-    display: block;
-    margin: 2px 0 18px;
-    color: var(--color-ink-muted);
-  }
+.interestList[data-dim="true"] .interest[data-active="true"] .interestNote {
+  color: var(--color-ink);
+}
+
+/* The sheet's last word: on to Contact. */
+.aboutNext {
+  display: block;
+  width: fit-content;
+  margin-top: calc(var(--gut) * 4);
+  color: var(--color-ink);
+  transition: color 0.2s;
+}
+.aboutNext:hover {
+  color: var(--color-signal);
+}
+.aboutNext .aboutLabel {
+  display: block;
+}
+.aboutNextWord {
+  display: flex;
+  align-items: center;
+  gap: 0.15em;
+  font-size: 6vw;
+  line-height: 0.9;
 }
 
 /* Social icons (line). */
@@ -679,21 +687,13 @@
   .fillBox {
     bottom: var(--low);
   }
-  .aboutHero {
-    min-height: 0;
-  }
   .aboutTxt {
     align-self: stretch;
     max-width: none;
-    margin-top: calc(var(--gut) * 1.5);
-    padding-top: 0;
     text-align: left;
   }
   .aboutTxt .socials {
     justify-content: flex-start;
-  }
-  .interestName {
-    font-size: 12vw;
   }
   .cap {
     top: auto;
@@ -705,6 +705,22 @@
 }
 
 @media (max-width: 760px) {
+  .interestName,
+  .aboutNextWord {
+    font-size: 12vw;
+  }
+  /* Interests: caption under the word. */
+  .interest {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .interestNote {
+    max-width: none;
+    margin: 2px 0 18px;
+    padding-bottom: 0;
+    text-align: left;
+  }
   /* Phone menu rows are taller (6px tap padding on each word). */
   .root {
     --menu-h: 168px;

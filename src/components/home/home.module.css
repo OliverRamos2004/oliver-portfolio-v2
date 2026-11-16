@@ -606,6 +606,15 @@
   margin-top: 40px;
   font-size: 18px;
 }
+/* Each link: its line icon, then the label (same glyphs as the About icons). */
+.links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.links svg {
+  font-size: 22px;
+}
 .links a:hover {
   color: var(--color-signal-on-ink);
 }

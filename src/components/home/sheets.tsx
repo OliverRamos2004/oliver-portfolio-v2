@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { ABOUT, STUDIO } from "@/data/home";
 import { portrait, studio } from "@/data/about";
-import { EMAIL, MALDEN, RESUMES } from "@/data/contact";
+import { EMAIL, MALDEN } from "@/data/contact";
 import { SOCIALS } from "@/data/socials";
 import { Icon } from "@/components/ui/Icon";
 import { AboutInterests } from "./AboutInterests";
 import { CopyEmail } from "./CopyEmail";
-import { SocialIcons } from "./SocialIcons";
+import { SocialGlyph, SocialIcons } from "./SocialIcons";
 import { WorkList, type WorkRow } from "./WorkList";
 import styles from "./home.module.css";
 
@@ -88,16 +88,13 @@ export function ContactSheet() {
       <CopyEmail email={EMAIL} />
       <div className={styles.links}>
         <a href={`mailto:${EMAIL}`} data-cursor="↗">
+          <SocialGlyph name="Email" />
           Email app
         </a>
         {SOCIALS.map((s) => (
           <a key={s.href} href={s.href} target="_blank" rel="noopener" data-cursor="↗">
+            <SocialGlyph name={s.label} />
             {s.label}
-          </a>
-        ))}
-        {RESUMES.map((r) => (
-          <a key={r.href} href={r.href} target="_blank" rel="noopener" data-cursor="PDF">
-            {r.label}
           </a>
         ))}
       </div>

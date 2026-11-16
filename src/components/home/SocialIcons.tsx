@@ -26,6 +26,14 @@ const GLYPHS: Record<string, Glyph> = {
       </>
     ),
   },
+  Email: {
+    line: (
+      <>
+        <path d="M2 5h20v14H2z" />
+        <path d="M2 5l10 8 10-8" />
+      </>
+    ),
+  },
   Instagram: {
     line: (
       <>
@@ -36,6 +44,28 @@ const GLYPHS: Record<string, Glyph> = {
     ),
   },
 };
+
+/** One line glyph (GitHub, LinkedIn, Instagram, Email), 1em, currentColor. */
+export function SocialGlyph({ name, className }: { name: string; className?: string }) {
+  const g = GLYPHS[name];
+  if (!g) return null;
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      width="1em"
+      height="1em"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="square"
+      strokeLinejoin="miter"
+      aria-hidden="true"
+    >
+      {g.line}
+    </svg>
+  );
+}
 
 export function SocialIcons({ className }: { className?: string }) {
   return (

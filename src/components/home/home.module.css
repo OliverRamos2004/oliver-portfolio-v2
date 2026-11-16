@@ -104,37 +104,23 @@
 }
 /* The mask and the rolling layer cover the whole box, so a stacked name rolls as one. */
 /* The resting name changes color with no transition (2026-11-15): tonal,
-   wine, ink, 4s each. On desktop the letters below --cut (just above the
-   menu, set by FillWord) stay tonal in every phase, so the menu and caption
-   always sit on tonal. --name-c is registered so it can be animated. */
-@property --name-c {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #e2dccf;
-}
+   wine, ink, 4s each. On desktop it ends above the menu (FillWord), so the
+   colors never cover the menu or caption. */
 .fillBox[data-rest="true"] .fillWord {
-  color: transparent;
-  background-image: linear-gradient(
-    to bottom,
-    var(--name-c) 0 var(--cut, 100%),
-    #e2dccf var(--cut, 100%) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
   animation: name-color 12s steps(1, end) infinite;
 }
 @keyframes name-color {
   0% {
-    --name-c: #e2dccf;
+    color: #e2dccf;
   }
   33.333% {
-    --name-c: var(--color-signal);
+    color: var(--color-signal);
   }
   66.667% {
-    --name-c: var(--color-ink);
+    color: var(--color-ink);
   }
   100% {
-    --name-c: #e2dccf;
+    color: #e2dccf;
   }
 }
 @media (prefers-reduced-motion: reduce) {

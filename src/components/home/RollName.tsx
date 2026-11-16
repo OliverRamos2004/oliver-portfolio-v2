@@ -27,7 +27,7 @@ export function FillWord({
   restText,
 }: {
   text: string;
-  /** The resting text (the name): it cycles colors in hard wipes (2026-11-15). */
+  /** The resting text (the name): it cycles colors and, on desktop, ends above the menu. */
   restText?: string;
 }) {
   const { ref, shown } = useRoll(text, 0);
@@ -49,7 +49,15 @@ export function FillWord({
       const padX = parseFloat(bs.paddingLeft);
       const padY = parseFloat(bs.paddingTop);
       const innerW = box.clientWidth - padX * 2;
-      const innerH = box.clientHeight - padY * 2;
+      let innerH = box.clientHeight - padY * 2;
+      // Desktop: the resting name ends above the menu, so the two never
+      // overlap (hover words still fill the screen). Phones already stack it
+      // above the caption and menu.
+      const nav = resting && !stack ? box.parentElement?.querySelector("nav") : null;
+      if (nav) {
+        const menuTop = nav.getBoundingClientRect().top - box.getBoundingClientRect().top;
+        innerH = Math.min(innerH, menuTop - padY - padY * 1.4);
+      }
       const els = lineRefs.current.slice(0, key.split("|").length);
       const gap = els.length > 1 ? innerH * STACK_GAP : 0;
       const slot = (innerH - gap * (els.length - 1)) / els.length;
@@ -66,18 +74,6 @@ export function FillWord({
         const lift = m.fontBoundingBoxAscent - m.actualBoundingBoxAscent;
         const y = padY + i * (slot + gap);
         el.style.transform = `translate(${padX}px, ${y}px) scale(${sx}, ${sy}) translateY(${-lift}px)`;
-        // Desktop: where the menu starts, as a % of this line's box, so the
-        // resting colors stop above it (the rest stays tonal).
-        const nav = stack ? null : box.parentElement?.querySelector("nav");
-        if (nav) {
-          const menuTop = nav.getBoundingClientRect().top - box.getBoundingClientRect().top - 14;
-          const elTop = y - lift * sy;
-          const elH = el.offsetHeight * sy;
-          const cut = Math.max(0, Math.min(100, ((menuTop - elTop) / elH) * 100));
-          el.style.setProperty("--cut", `${cut}%`);
-        } else {
-          el.style.setProperty("--cut", "100%");
-        }
       });
     };
 
@@ -90,7 +86,7 @@ export function FillWord({
       live = false;
       window.removeEventListener("resize", fit);
     };
-  }, [key, stack]);
+  }, [key, stack, resting]);
 
   return (
     <div

@@ -129,7 +129,7 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
   const tone = active?.tone ?? "paper";
 
   return (
-    <div className={styles.root} data-tone={tone} data-surface={tone} data-rest={!active}>
+    <div className={styles.root} data-tone={tone} data-surface={tone}>
       <main className={styles.home} inert={open !== null}>
         {/* At rest the name fills the screen; a hovered word's title rolls in over it. */}
         <FillWord text={active?.label ?? HOME.name} />

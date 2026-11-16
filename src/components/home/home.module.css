@@ -74,9 +74,6 @@
 .fillBox {
   position: absolute;
   inset: 0;
-  /* The name ends above the menu (4 rows) and caption, so they sit on clear
-     paper now that the resting name is solid ink (2026-11-15). */
-  bottom: calc(var(--gut) * 1.6 + 4 * 1.15 * clamp(22px, 2.4vw, 34px) + 16px);
   z-index: 1;
   padding: calc(var(--gut) * 0.7) var(--gut);
   overflow: hidden;
@@ -98,10 +95,6 @@
   /* tonal: a shade off the page color, so the menu reads on top */
   color: #e2dccf;
   transition: color 0.35s;
-}
-/* At rest (nothing hovered) the name is solid ink (2026-11-15). */
-.root[data-rest="true"] .fillWord {
-  color: var(--color-ink);
 }
 .root[data-tone="ink"] .fillWord {
   color: #2a2724;

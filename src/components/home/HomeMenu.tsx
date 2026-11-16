@@ -5,15 +5,10 @@ import { HOME, type MenuItem, type SheetKey } from "@/data/home";
 import { FillWord } from "./RollName";
 import { Sheet, type SheetFrom } from "./Sheet";
 import { Cursor } from "./Cursor";
-import { HomeLab, type HomeLabState } from "./HomeLab";
 import styles from "./home.module.css";
 
 /** Matches `.sheet`'s transform transition in home.module.css. */
 const SLIDE_MS = 700;
-
-/** Lab "idle roll": what the name rolls through at rest (Claude's draft). */
-const IDLE_WORDS = [HOME.name, "Designer", "Developer", "Drummer", "Barber"];
-const IDLE_MS = 3000;
 
 interface HomeMenuProps {
   items: readonly MenuItem[];
@@ -40,16 +35,6 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
   useEffect(() => {
     openRef.current = open;
   }, [open]);
-
-  // Lab (?lab): resting-screen experiments.
-  const [lab, setLab] = useState<HomeLabState>({ face: false, idle: false, reveal: false });
-  const [idleAt, setIdleAt] = useState(0);
-  const resting = hovered === null && open === null;
-  useEffect(() => {
-    if (!lab.idle || !resting) return;
-    const id = window.setInterval(() => setIdleAt((i) => (i + 1) % IDLE_WORDS.length), IDLE_MS);
-    return () => window.clearInterval(id);
-  }, [lab.idle, resting]);
 
   const current = open ?? hovered;
   const active = items.find((item) => item.key === current);
@@ -144,14 +129,10 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
   const tone = active?.tone ?? "paper";
 
   return (
-    <div className={styles.root} data-tone={tone} data-surface={tone}>
+    <div className={styles.root} data-tone={tone} data-surface={tone} data-rest={!active}>
       <main className={styles.home} inert={open !== null}>
         {/* At rest the name fills the screen; a hovered word's title rolls in over it. */}
-        <FillWord
-          text={active?.label ?? (lab.idle ? IDLE_WORDS[idleAt] : HOME.name)}
-          faceFor={lab.face ? HOME.name : undefined}
-          reveal={lab.reveal}
-        />
+        <FillWord text={active?.label ?? HOME.name} />
         <h1 className="sr-only">Oliver Ramos</h1>
 
         <nav
@@ -203,7 +184,6 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
         </Sheet>
       ))}
 
-      <HomeLab value={lab} onChange={setLab} />
       <Cursor />
     </div>
   );

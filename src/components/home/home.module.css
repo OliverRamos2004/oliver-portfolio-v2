@@ -103,38 +103,28 @@
   color: #7d2a38;
 }
 /* The mask and the rolling layer cover the whole box, so a stacked name rolls as one. */
-/* Lab (?lab): color animations for the resting name. Each starts and ends
-   on the tonal color, so the screen begins as it is now. */
-.fillBox[data-variant="smooth"] .fillWord,
-.fillBox[data-variant="hard"] .fillWord,
-.fillBox[data-variant="sweep"] .fillWord {
+/* Lab (?lab): hard color bands moving down the resting name. The base is
+   the tonal color (or ink, reversed); --b1/--b2 are the band colors and
+   --w1/--w2 their widths, in percent of a gradient four times the word's height. */
+.fillBox[data-variant="hard"] .fillWord {
+  --base: #e2dccf;
+  --b1: var(--color-ink);
+  --b2: var(--color-signal);
+  /* Band widths are % of the gradient, which is 4x the word's height:
+     medium ≈ 35% of the letters. */
+  --w1: 5%;
+  --w2: 3.5%;
   color: transparent;
+  background-image: linear-gradient(
+    to bottom,
+    var(--base) 0 25%,
+    var(--b1) 25% calc(25% + var(--w1)),
+    var(--b2) calc(25% + var(--w1)) calc(25% + var(--w1) + var(--w2)),
+    var(--base) calc(25% + var(--w1) + var(--w2)) 100%
+  );
+  background-size: 100% 400%;
   -webkit-background-clip: text;
   background-clip: text;
-}
-/* Smooth: tonal → ink → wine → tonal flowing down through the letters. */
-.fillBox[data-variant="smooth"] .fillWord {
-  background-image: linear-gradient(
-    to bottom,
-    #e2dccf 0%,
-    var(--color-ink) 25%,
-    var(--color-signal) 50%,
-    #e2dccf 75%,
-    #e2dccf 100%
-  );
-  background-size: 100% 400%;
-  animation: fill-flow var(--dur) linear infinite;
-}
-/* Hard: the same colors as bands with sharp edges. */
-.fillBox[data-variant="hard"] .fillWord {
-  background-image: linear-gradient(
-    to bottom,
-    #e2dccf 0 25%,
-    var(--color-ink) 25% 45%,
-    var(--color-signal) 45% 60%,
-    #e2dccf 60% 100%
-  );
-  background-size: 100% 400%;
   animation: fill-flow var(--dur) linear infinite;
 }
 @keyframes fill-flow {
@@ -145,43 +135,34 @@
     background-position: 0 0%;
   }
 }
-/* Sweep: one ink band passes left to right, then tonal again. */
-.fillBox[data-variant="sweep"] .fillWord {
-  background-image: linear-gradient(
-    to right,
-    #e2dccf 0%,
-    #e2dccf 40%,
-    var(--color-ink) 48%,
-    var(--color-ink) 52%,
-    #e2dccf 60%,
-    #e2dccf 100%
-  );
-  background-size: 300% 100%;
-  animation: fill-sweep var(--dur) var(--ease) infinite;
+.fillBox[data-palette="ink"] .fillWord {
+  --b1: var(--color-ink);
+  --b2: var(--color-ink);
 }
-@keyframes fill-sweep {
-  from {
-    background-position: 100% 0;
-  }
-  to {
-    background-position: 0% 0;
-  }
+.fillBox[data-palette="wine"] .fillWord {
+  --b1: var(--color-signal);
+  --b2: var(--color-signal);
 }
-/* Cycle: the whole name shifts tonal → wine → ink → tonal. */
-.fillBox[data-variant="cycle"] .fillWord {
-  animation: fill-cycle var(--dur) ease-in-out infinite;
+.fillBox[data-palette="inkRose"] .fillWord {
+  --b1: var(--color-ink);
+  --b2: var(--color-signal-on-ink);
 }
-@keyframes fill-cycle {
-  0%,
-  100% {
-    color: #e2dccf;
-  }
-  33% {
-    color: var(--color-signal);
-  }
-  66% {
-    color: var(--color-ink);
-  }
+.fillBox[data-palette="wineRose"] .fillWord {
+  --b1: var(--color-signal);
+  --b2: var(--color-signal-on-ink);
+}
+.fillBox[data-palette="reverse"] .fillWord {
+  --base: var(--color-ink);
+  --b1: #e2dccf;
+  --b2: var(--color-signal);
+}
+.fillBox[data-width="thin"] .fillWord {
+  --w1: 2%;
+  --w2: 1.5%;
+}
+.fillBox[data-width="wide"] .fillWord {
+  --w1: 10%;
+  --w2: 7%;
 }
 @media (prefers-reduced-motion: reduce) {
   .fillBox:not([data-variant="none"]) .fillWord {
@@ -732,8 +713,17 @@
 }
 .labRow {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
-  margin-top: 6px;
+  max-width: 300px;
+}
+.labGroup + .labGroup {
+  margin-top: 8px;
+}
+.labGroup > span {
+  display: block;
+  margin-bottom: 4px;
+  opacity: 0.6;
 }
 
 /* ---------- cursor (fine pointers only; mounted by <Cursor>) ---------- */

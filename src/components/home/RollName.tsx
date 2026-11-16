@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { portrait } from "@/data/about";
 import { useMediaQuery } from "@/lib/useMediaQuery";
 import styles from "./home.module.css";
 
@@ -13,6 +15,17 @@ const STACK_QUERY =
 /** Space between stacked lines, as a fraction of the box height. */
 const STACK_GAP = 0.02;
 
+/** Width of the face crop over its height (matches the About lockup). */
+const FACE_RATIO = 0.8;
+
+interface FillWordProps {
+  text: string;
+  /** Lab: when this text is showing, the face ends its last line, cap height tall. */
+  faceFor?: string;
+  /** Lab: an ink copy of the word shows through a circle that follows the mouse. */
+  reveal?: boolean;
+}
+
 /**
  * The name (at rest) or the hovered word's title, stretched so its ink fills the screen inside
  * `.fillBox`'s padding: x scales each line's width to the box, y scales its real
@@ -22,17 +35,20 @@ const STACK_GAP = 0.02;
  * shape on a tall screen. Decorative: the page's <h1> carries the name for
  * screen readers.
  */
-export function FillWord({ text }: { text: string }) {
+export function FillWord({ text, faceFor, reveal = false }: FillWordProps) {
   const { ref, shown } = useRoll(text, 0);
   const stack = useMediaQuery(STACK_QUERY);
   const boxRef = useRef<HTMLDivElement>(null);
   const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const inkRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const faceRef = useRef<HTMLSpanElement>(null);
   const lines = shown ? (stack ? shown.split(" ") : [shown]) : [];
-  const key = lines.join("|");
+  const face = Boolean(faceFor) && shown === faceFor;
+  const key = `${lines.join("|")}${face ? "+face" : ""}`;
 
   useLayoutEffect(() => {
     const box = boxRef.current;
-    if (!box || !key) return;
+    if (!box || !lines.length) return;
 
     const fit = () => {
       const ctx = document.createElement("canvas").getContext("2d");
@@ -42,23 +58,40 @@ export function FillWord({ text }: { text: string }) {
       const padY = parseFloat(bs.paddingTop);
       const innerW = box.clientWidth - padX * 2;
       const innerH = box.clientHeight - padY * 2;
-      const els = lineRefs.current.slice(0, key.split("|").length);
-      const gap = els.length > 1 ? innerH * STACK_GAP : 0;
-      const slot = (innerH - gap * (els.length - 1)) / els.length;
+      const n = lines.length;
+      const gap = n > 1 ? innerH * STACK_GAP : 0;
+      const slot = (innerH - gap * (n - 1)) / n;
 
-      els.forEach((el, i) => {
-        if (!el) return;
+      for (let i = 0; i < n; i++) {
+        const el = lineRefs.current[i];
+        if (!el) continue;
         const ws = getComputedStyle(el);
         ctx.font = `${ws.fontWeight} ${ws.fontSize} ${ws.fontFamily}`;
         const m = ctx.measureText((el.textContent ?? "").toUpperCase());
         const ink = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+        const y = padY + i * (slot + gap);
+        let textW = innerW;
+        // The face ends the last line: cap height tall, capped so the word keeps most of the width.
+        if (face && i === n - 1 && faceRef.current) {
+          const faceW = Math.min(slot * FACE_RATIO, innerW * 0.42);
+          const faceH = faceW / FACE_RATIO;
+          const faceGap = slot * 0.04;
+          textW = innerW - faceW - faceGap;
+          const f = faceRef.current.style;
+          f.left = `${padX + textW + faceGap}px`;
+          f.top = `${y + slot - faceH}px`;
+          f.width = `${faceW}px`;
+          f.height = `${faceH}px`;
+        }
         // offsetWidth ignores transforms, so no reset is needed before measuring.
-        const sx = innerW / el.offsetWidth;
+        const sx = textW / el.offsetWidth;
         const sy = slot / ink;
         const lift = m.fontBoundingBoxAscent - m.actualBoundingBoxAscent;
-        const y = padY + i * (slot + gap);
-        el.style.transform = `translate(${padX}px, ${y}px) scale(${sx}, ${sy}) translateY(${-lift}px)`;
-      });
+        const t = `translate(${padX}px, ${y}px) scale(${sx}, ${sy}) translateY(${-lift}px)`;
+        el.style.transform = t;
+        const inkEl = inkRefs.current[i];
+        if (inkEl) inkEl.style.transform = t;
+      }
     };
 
     fit();
@@ -70,7 +103,23 @@ export function FillWord({ text }: { text: string }) {
       live = false;
       window.removeEventListener("resize", fit);
     };
-  }, [key]);
+    // lines and face are derived from key.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, reveal]);
+
+  // Reveal: track the mouse in the box's coordinates for the mask.
+  useEffect(() => {
+    const box = boxRef.current;
+    if (!reveal || !box) return;
+    const move = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      const r = box.getBoundingClientRect();
+      box.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      box.style.setProperty("--my", `${e.clientY - r.top}px`);
+    };
+    window.addEventListener("pointermove", move);
+    return () => window.removeEventListener("pointermove", move);
+  }, [reveal]);
 
   return (
     <div ref={boxRef} className={styles.fillBox} aria-hidden="true">
@@ -89,6 +138,26 @@ export function FillWord({ text }: { text: string }) {
                 {line}
               </span>
             ))}
+            {face && (
+              <span ref={faceRef} className={styles.fillFace}>
+                <Image src={portrait.src} alt="" fill sizes="45vw" className={styles.fillFaceImg} priority />
+              </span>
+            )}
+            {reveal && (
+              <span className={styles.fillReveal}>
+                {lines.map((line, i) => (
+                  <span
+                    key={i}
+                    ref={(el) => {
+                      inkRefs.current[i] = el;
+                    }}
+                    className={styles.fillWord}
+                  >
+                    {line}
+                  </span>
+                ))}
+              </span>
+            )}
           </span>
         </span>
       )}

@@ -103,6 +103,33 @@
   color: #7d2a38;
 }
 /* The mask and the rolling layer cover the whole box, so a stacked name rolls as one. */
+/* Lab: the face ending the name (cap height, mono, its own paper so the
+   white drops out even mid-roll). */
+.fillFace {
+  position: absolute;
+  background: var(--color-paper);
+  isolation: isolate;
+}
+.fillFaceImg {
+  object-fit: cover;
+  object-position: 92% 100%;
+  filter: grayscale(1) contrast(1.05);
+  mix-blend-mode: multiply;
+}
+/* Lab: an ink copy of the word, seen only through a circle at the mouse. */
+.fillReveal {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: radial-gradient(circle 150px at var(--mx, -999px) var(--my, -999px), #000 98%, transparent 100%);
+  mask-image: radial-gradient(circle 150px at var(--mx, -999px) var(--my, -999px), #000 98%, transparent 100%);
+}
+.fillReveal .fillWord {
+  color: var(--color-ink);
+}
+.root[data-tone="ink"] .fillReveal .fillWord,
+.root[data-tone="signal"] .fillReveal .fillWord {
+  color: var(--color-paper);
+}
 .fillMask {
   position: absolute;
   inset: 0;
@@ -617,6 +644,39 @@
 }
 .links a:hover {
   color: var(--color-signal-on-ink);
+}
+
+/* Temporary lab panel (?lab only). */
+.lab {
+  position: fixed;
+  left: var(--gut);
+  bottom: var(--gut);
+  z-index: 30;
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-display);
+  font-size: 13px;
+}
+.lab span {
+  display: inline-block;
+  width: 150px;
+  opacity: 0.6;
+}
+.lab button {
+  padding: 2px 8px;
+}
+.lab button[data-on="true"] {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+.homeLab {
+  top: var(--gut);
+  right: var(--gut);
+  left: auto;
+  bottom: auto;
 }
 
 /* ---------- cursor (fine pointers only; mounted by <Cursor>) ---------- */

@@ -81,13 +81,13 @@ export const MENU: readonly MenuItem[] = [
 
 export const STUDIO = {
   title: ["Malden", "Studios"],
-  body: "A design and development studio in Austin. Shopify stores and websites for brands with something to say. Launch builds in about two weeks.",
+  body: "A design and development studio in Austin. Shopify stores and websites for brands with something to say.",
   cta: "maldenstudios.com",
   // Hover descriptions (Claude drafts; Oliver's to edit).
   notes: {
-    title: "Founded 2025. Shopify stores and websites, designed and built in Austin.",
+    title: "Recent: YOSI Archive, Back Issue Supply.",
     cta: "Opens the studio site in a new tab.",
-    shot: "The Malden Studios home page.",
+    shot: "maldenstudios.com",
   },
 } as const;
 

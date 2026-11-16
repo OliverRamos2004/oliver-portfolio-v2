@@ -36,15 +36,18 @@ export function StudioSheet() {
           </a>
         </HoverNote>
       </div>
+      {/* Desktop: the whole right half of the sheet, edge to edge (critique 2026-11-15). */}
       <HoverNote note={STUDIO.notes.shot}>
-        <Image
-          className={styles.shot}
-          src={studio.image.src}
-          alt={studio.image.alt}
-          width={studio.image.width}
-          height={studio.image.height}
-          sizes="(max-width: 760px) 100vw, 47vw"
-        />
+        <span className={styles.shotWrap}>
+          <Image
+            className={styles.shot}
+            src={studio.image.src}
+            alt={studio.image.alt}
+            width={studio.image.width}
+            height={studio.image.height}
+            sizes="(max-width: 760px) 100vw, (max-width: 1100px) and (orientation: portrait) 100vw, 50vw"
+          />
+        </span>
       </HoverNote>
     </div>
   );

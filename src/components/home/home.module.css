@@ -358,7 +358,7 @@
 /* ---------- studio ---------- */
 .studio {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--gut);
   align-items: end;
 }
@@ -392,12 +392,29 @@
   background: var(--color-ink);
   color: var(--color-paper);
 }
+/* Desktop: the image is the sheet's whole right half, edge to edge (the
+   bar's wine band sits over its top). It's a little taller than the half
+   and pinned to the bottom, so the Malden nav strip at the top of the
+   screenshot is cropped off. */
+.shotWrap {
+  position: absolute;
+  /* .stack (the positioned box) sits inside the sheet's padding; reach
+     through it to the screen's top, right and bottom edges. */
+  top: calc(-1 * max(var(--gut) * 2.4, 88px));
+  right: calc(-1 * var(--gut));
+  bottom: calc(-2 * var(--gut));
+  width: calc(50% + var(--gut));
+  overflow: hidden;
+}
 .shot {
+  position: absolute;
+  left: 0;
+  bottom: 0;
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
+  height: 108%;
   object-fit: cover;
+  object-position: 48% 100%;
   filter: grayscale(1) contrast(1.15);
   /* On wine: darks go wine, lights stay light (a duotone). */
   mix-blend-mode: screen;
@@ -701,6 +718,21 @@
   .aboutTxt .socials {
     justify-content: flex-start;
   }
+  /* Studio: stacked, from the top; the image back in the flow at 4:3. */
+  .studio {
+    grid-template-columns: 1fr;
+    align-content: start;
+  }
+  .shotWrap {
+    position: relative;
+    inset: auto;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+  .shot {
+    object-position: 50% 100%;
+  }
   .cap {
     top: auto;
     bottom: calc(var(--gut) + var(--menu-h) + 12px);
@@ -743,9 +775,6 @@
   }
   .word {
     padding: 6px 0;
-  }
-  .studio {
-    grid-template-columns: 1fr;
   }
   .studioTitle {
     font-size: 22vw;

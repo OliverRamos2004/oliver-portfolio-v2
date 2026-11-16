@@ -22,43 +22,33 @@ const STACK_GAP = 0.02;
  * shape on a tall screen. Decorative: the page's <h1> carries the name for
  * screen readers.
  */
-export type FillVariant =
-  | "none"
-  | "hollow"
-  | "construct"
-  | "react"
-  | "print"
-  | "fadeInk"
-  | "tonalInk"
-  | "tonalWine";
-
-interface Guides {
-  lines: { top: number; base: number; xs: number[] }[];
-}
+/** Lab (?lab): a color animation for the resting name. */
+export type FillVariant = "none" | "smooth" | "hard" | "sweep" | "cycle";
 
 export function FillWord({
   text,
   variant = "none",
   restText,
+  duration = 8,
 }: {
   text: string;
-  /** Lab (?lab): a treatment for the resting name only. */
   variant?: FillVariant;
   /** The resting text the variant applies to. */
   restText?: string;
+  /** Seconds per loop. */
+  duration?: number;
 }) {
   const { ref, shown } = useRoll(text, 0);
   const stack = useMediaQuery(STACK_QUERY);
   const boxRef = useRef<HTMLDivElement>(null);
   const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const [guides, setGuides] = useState<Guides | null>(null);
   const lines = shown ? (stack ? shown.split(" ") : [shown]) : [];
+  const key = lines.join("|");
   const v: FillVariant = shown && shown === restText ? variant : "none";
-  const key = `${lines.join("|")}#${v}`;
 
   useLayoutEffect(() => {
     const box = boxRef.current;
-    if (!box || !lines.length) return;
+    if (!box || !key) return;
 
     const fit = () => {
       const ctx = document.createElement("canvas").getContext("2d");
@@ -68,18 +58,15 @@ export function FillWord({
       const padY = parseFloat(bs.paddingTop);
       const innerW = box.clientWidth - padX * 2;
       const innerH = box.clientHeight - padY * 2;
-      const els = lineRefs.current.slice(0, lines.length);
+      const els = lineRefs.current.slice(0, key.split("|").length);
       const gap = els.length > 1 ? innerH * STACK_GAP : 0;
       const slot = (innerH - gap * (els.length - 1)) / els.length;
-      const g: Guides = { lines: [] };
 
       els.forEach((el, i) => {
         if (!el) return;
         const ws = getComputedStyle(el);
         ctx.font = `${ws.fontWeight} ${ws.fontSize} ${ws.fontFamily}`;
-        ctx.letterSpacing = ws.letterSpacing;
-        const word = (el.textContent ?? "").toUpperCase();
-        const m = ctx.measureText(word);
+        const m = ctx.measureText((el.textContent ?? "").toUpperCase());
         const ink = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
         // offsetWidth ignores transforms, so no reset is needed before measuring.
         const sx = innerW / el.offsetWidth;
@@ -87,19 +74,7 @@ export function FillWord({
         const lift = m.fontBoundingBoxAscent - m.actualBoundingBoxAscent;
         const y = padY + i * (slot + gap);
         el.style.transform = `translate(${padX}px, ${y}px) scale(${sx}, ${sy}) translateY(${-lift}px)`;
-        // The print texture counter-scales its dots with these.
-        el.style.setProperty("--sx", String(sx));
-        el.style.setProperty("--sy", String(sy));
-        if (v === "construct") {
-          const xs: number[] = [];
-          for (let k = 0; k <= word.length; k++) {
-            if (word[k - 1] === " ") continue;
-            xs.push(padX + ctx.measureText(word.slice(0, k)).width * sx);
-          }
-          g.lines.push({ top: y, base: y + slot, xs });
-        }
       });
-      setGuides(v === "construct" ? g : null);
     };
 
     fit();
@@ -111,51 +86,16 @@ export function FillWord({
       live = false;
       window.removeEventListener("resize", fit);
     };
-    // lines and v are derived from key.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
-  // React: letters near the mouse squash down in a wave.
-  useEffect(() => {
-    const box = boxRef.current;
-    if (v !== "react" || !box) return;
-    let raf = 0;
-    let at: { x: number; y: number } | null = null;
-    const letters = () => Array.from(box.querySelectorAll<HTMLElement>("[data-letter]"));
-    const apply = () => {
-      raf = 0;
-      for (const l of letters()) {
-        if (!at) {
-          l.style.transform = "";
-          continue;
-        }
-        const r = l.getBoundingClientRect();
-        const d = Math.hypot(at.x - (r.left + r.width / 2), (at.y - (r.top + r.height / 2)) * 0.35);
-        const f = Math.exp(-((d / 220) ** 2));
-        l.style.transform = `scaleY(${1 - 0.32 * f})`;
-      }
-    };
-    const move = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse") return;
-      at = { x: e.clientX, y: e.clientY };
-      if (!raf) raf = requestAnimationFrame(apply);
-    };
-    const leave = () => {
-      at = null;
-      if (!raf) raf = requestAnimationFrame(apply);
-    };
-    window.addEventListener("pointermove", move);
-    document.addEventListener("pointerleave", leave);
-    return () => {
-      window.removeEventListener("pointermove", move);
-      document.removeEventListener("pointerleave", leave);
-      cancelAnimationFrame(raf);
-      for (const l of letters()) l.style.transform = "";
-    };
-  }, [v, key]);
-
   return (
-    <div ref={boxRef} className={styles.fillBox} data-variant={v} aria-hidden="true">
+    <div
+      ref={boxRef}
+      className={styles.fillBox}
+      data-variant={v}
+      style={{ "--dur": `${duration}s` } as React.CSSProperties}
+      aria-hidden="true"
+    >
       {shown && (
         <span className={styles.fillMask}>
           {/* Mounts hidden above its mask; the roll brings it down. */}
@@ -168,35 +108,9 @@ export function FillWord({
                 }}
                 className={styles.fillWord}
               >
-                {v === "react"
-                  ? Array.from(line).map((ch, k) => (
-                      <span key={k} data-letter className={styles.fillLetter}>
-                        {ch === " " ? "\u00a0" : ch}
-                      </span>
-                    ))
-                  : line}
+                {line}
               </span>
             ))}
-            {guides && (
-              <svg className={styles.fillGuides} width="100%" height="100%">
-                {guides.lines.map((ln, i) => (
-                  <g key={i}>
-                    <line x1="0" x2="100%" y1={ln.top} y2={ln.top} />
-                    <line x1="0" x2="100%" y1={ln.base} y2={ln.base} />
-                    {ln.xs.map((x, k) => (
-                      <line key={k} x1={x} x2={x} y1={ln.top} y2={ln.base} />
-                    ))}
-                    <text x="6" y={ln.top - 6}>cap {Math.round(ln.base - ln.top)}px</text>
-                    <text x="6" y={ln.base + 14}>baseline</text>
-                    {ln.xs.slice(0, -1).map((x, k) => (
-                      <text key={k} x={x + 4} y={ln.base - 6}>
-                        {String(k + 1).padStart(2, "0")}
-                      </text>
-                    ))}
-                  </g>
-                ))}
-              </svg>
-            )}
           </span>
         </span>
       )}

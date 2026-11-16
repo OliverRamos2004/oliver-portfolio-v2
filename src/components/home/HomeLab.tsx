@@ -5,21 +5,21 @@ import type { FillVariant } from "./RollName";
 import styles from "./home.module.css";
 
 /**
- * TEMPORARY (2026-11-15): compare treatments for the resting name on the live
- * home page. Shown only with `?lab` in the URL. Remove once one is chosen.
+ * TEMPORARY (2026-11-15): compare color animations for the resting name on
+ * the live home page. Shown only with `?lab` in the URL. Remove once chosen.
  */
-const OPTIONS: [FillVariant, string][] = [
+const STYLES: [FillVariant, string][] = [
   ["none", "Now"],
-  ["hollow", "Hollow skeleton"],
-  ["construct", "Exposed construction"],
-  ["react", "Letters that react"],
-  ["print", "Raw print"],
-  ["fadeInk", "Gradient: ink fade"],
-  ["tonalInk", "Gradient: tonal to ink"],
-  ["tonalWine", "Gradient: tonal to wine"],
+  ["smooth", "Smooth gradient"],
+  ["hard", "Hard bands"],
+  ["sweep", "Sweep"],
+  ["cycle", "Color cycle"],
 ];
+const DURATIONS = [4, 8, 16];
 
-export function HomeLab({ value, onChange }: { value: FillVariant; onChange: (v: FillVariant) => void }) {
+export type HomeLabState = { variant: FillVariant; duration: number };
+
+export function HomeLab({ value, onChange }: { value: HomeLabState; onChange: (v: HomeLabState) => void }) {
   const [on, setOn] = useState(false);
 
   useEffect(() => {
@@ -31,11 +31,18 @@ export function HomeLab({ value, onChange }: { value: FillVariant; onChange: (v:
   if (!on) return null;
   return (
     <div className={`${styles.lab} ${styles.homeLab}`}>
-      {OPTIONS.map(([key, label]) => (
-        <button key={key} type="button" data-on={value === key} onClick={() => onChange(key)}>
+      {STYLES.map(([key, label]) => (
+        <button key={key} type="button" data-on={value.variant === key} onClick={() => onChange({ ...value, variant: key })}>
           {label}
         </button>
       ))}
+      <div className={styles.labRow}>
+        {DURATIONS.map((d) => (
+          <button key={d} type="button" data-on={value.duration === d} onClick={() => onChange({ ...value, duration: d })}>
+            {d}s
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

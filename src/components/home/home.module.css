@@ -103,65 +103,92 @@
   color: #7d2a38;
 }
 /* The mask and the rolling layer cover the whole box, so a stacked name rolls as one. */
-/* Lab variants for the resting name (?lab). */
-/* Hollow: ink outline, open centers (the stroke scales with the stretch). */
-.fillBox[data-variant="hollow"] .fillWord {
-  color: transparent;
-  -webkit-text-stroke: 1.6px var(--color-ink);
-}
-/* Construction: the type's own lines, drawn over the tonal letters. */
-.fillGuides {
-  position: absolute;
-  inset: 0;
-  overflow: visible;
-  pointer-events: none;
-}
-.fillGuides line {
-  stroke: var(--color-ink);
-  stroke-width: 1;
-  opacity: 0.55;
-}
-.fillGuides text {
-  font-family: var(--font-display);
-  font-size: 11px;
-  fill: var(--color-ink-muted);
-}
-/* React: each letter scales on its own, from the baseline. */
-.fillLetter {
-  display: inline-block;
-  transform-origin: 50% 100%;
-  transition: transform 0.25s var(--ease);
-}
-/* Print: a halftone screen. Paper-colored dots over the whole box (unscaled,
-   so they stay round) punch through darker tonal letters; on the paper
-   itself they vanish. */
-.fillBox[data-variant="print"] .fillWord {
-  color: #cbc1ad;
-}
-.fillBox[data-variant="print"]::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, var(--color-paper) 0 42%, transparent 46%) 0 0 / 8px 8px;
-  pointer-events: none;
-}
-/* Gradients (palette only): fill the letters through a vertical gradient. */
-.fillBox[data-variant="fadeInk"] .fillWord,
-.fillBox[data-variant="tonalInk"] .fillWord,
-.fillBox[data-variant="tonalWine"] .fillWord {
+/* Lab (?lab): color animations for the resting name. Each starts and ends
+   on the tonal color, so the screen begins as it is now. */
+.fillBox[data-variant="smooth"] .fillWord,
+.fillBox[data-variant="hard"] .fillWord,
+.fillBox[data-variant="sweep"] .fillWord {
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
 }
-/* Ink at the top, gone by the bottom, so the menu and caption sit on paper. */
-.fillBox[data-variant="fadeInk"] .fillWord {
-  background-image: linear-gradient(to bottom, var(--color-ink) 10%, #e2dccf 78%, var(--color-paper) 100%);
+/* Smooth: tonal → ink → wine → tonal flowing down through the letters. */
+.fillBox[data-variant="smooth"] .fillWord {
+  background-image: linear-gradient(
+    to bottom,
+    #e2dccf 0%,
+    var(--color-ink) 25%,
+    var(--color-signal) 50%,
+    #e2dccf 75%,
+    #e2dccf 100%
+  );
+  background-size: 100% 400%;
+  animation: fill-flow var(--dur) linear infinite;
 }
-.fillBox[data-variant="tonalInk"] .fillWord {
-  background-image: linear-gradient(to bottom, #e2dccf 15%, var(--color-ink) 100%);
+/* Hard: the same colors as bands with sharp edges. */
+.fillBox[data-variant="hard"] .fillWord {
+  background-image: linear-gradient(
+    to bottom,
+    #e2dccf 0 25%,
+    var(--color-ink) 25% 45%,
+    var(--color-signal) 45% 60%,
+    #e2dccf 60% 100%
+  );
+  background-size: 100% 400%;
+  animation: fill-flow var(--dur) linear infinite;
 }
-.fillBox[data-variant="tonalWine"] .fillWord {
-  background-image: linear-gradient(to bottom, #e2dccf 15%, var(--color-signal) 100%);
+@keyframes fill-flow {
+  from {
+    background-position: 0 100%;
+  }
+  to {
+    background-position: 0 0%;
+  }
+}
+/* Sweep: one ink band passes left to right, then tonal again. */
+.fillBox[data-variant="sweep"] .fillWord {
+  background-image: linear-gradient(
+    to right,
+    #e2dccf 0%,
+    #e2dccf 40%,
+    var(--color-ink) 48%,
+    var(--color-ink) 52%,
+    #e2dccf 60%,
+    #e2dccf 100%
+  );
+  background-size: 300% 100%;
+  animation: fill-sweep var(--dur) var(--ease) infinite;
+}
+@keyframes fill-sweep {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
+}
+/* Cycle: the whole name shifts tonal → wine → ink → tonal. */
+.fillBox[data-variant="cycle"] .fillWord {
+  animation: fill-cycle var(--dur) ease-in-out infinite;
+}
+@keyframes fill-cycle {
+  0%,
+  100% {
+    color: #e2dccf;
+  }
+  33% {
+    color: var(--color-signal);
+  }
+  66% {
+    color: var(--color-ink);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fillBox:not([data-variant="none"]) .fillWord {
+    animation: none !important;
+    color: #e2dccf !important;
+    background: none !important;
+  }
 }
 .fillMask {
   position: absolute;
@@ -702,6 +729,11 @@
 .homeLab {
   top: var(--gut);
   right: var(--gut);
+}
+.labRow {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
 }
 
 /* ---------- cursor (fine pointers only; mounted by <Cursor>) ---------- */

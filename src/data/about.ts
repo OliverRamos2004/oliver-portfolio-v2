@@ -32,3 +32,32 @@ export const INTERESTS: readonly { id: string; label: string; caption: string }[
   { id: "reading", label: "Reading", caption: "Always mid-book. Favorite: Mary Shelley's Frankenstein." },
   { id: "graphic-design", label: "Graphic design", caption: "Posters, type and identities, mostly for the fun of it." },
 ];
+
+/**
+ * The About sheet's Approach section (2026-11-15), in Oliver's own words from
+ * "Manifestations of the Raw: A Manifesto on Modernism, Brutalism, and
+ * Boundary-Breaking Design" (his Google Doc, V3). Notes are trimmed, not
+ * rewritten.
+ */
+export const APPROACH = {
+  quote:
+    "At its core, design is a skeleton. Master the skeleton, and every path forward holds integrity; neglect it, and no amount of surface finish can save the structure.",
+  intro: "Modernism and brutalism, from the Bauhaus to béton brut. Three principles I build by:",
+  principles: [
+    {
+      id: "function",
+      label: "Functionality is the art",
+      note: "Let things exist as they are. Structural honesty is the statement, not decoration.",
+    },
+    {
+      id: "boundaries",
+      label: "Break the boundaries",
+      note: "Never design to please everyone. Push against the status quo; forge new visual languages.",
+    },
+    {
+      id: "raw",
+      label: "Honor the raw",
+      note: "The unpolished grain, the exposed grid, the unyielding skeleton. Authenticity outlasts trends.",
+    },
+  ],
+} as const;

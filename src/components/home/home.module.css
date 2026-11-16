@@ -486,7 +486,7 @@
 
 /* Interests: giant words; hover dims the rest and shows a caption bottom right. */
 .interests {
-  margin-top: calc(var(--gut) * 4);
+  margin-top: calc(var(--gut) * 2.5);
 }
 /* Room at the end of the sheet. */
 .about > :last-child {
@@ -499,7 +499,7 @@
 }
 .interestName {
   display: block;
-  font-size: 6vw;
+  font-size: 3.6vw;
   transition: color 0.2s, transform 0.35s var(--ease);
 }
 .interestList[data-dim="true"] .interestName {
@@ -519,8 +519,9 @@
 }
 .interestNote {
   flex: none;
-  max-width: 32ch;
-  padding-bottom: 1.1vw;
+  /* One line, so every row is the word's height and the list stays even. */
+  white-space: nowrap;
+  padding-bottom: 0.6vw;
   text-align: right;
   text-wrap: balance;
   color: var(--color-ink-muted);
@@ -530,61 +531,11 @@
   color: var(--color-ink);
 }
 
-/* Approach: the manifesto quote big, then three principles in the interest
-   row pattern (name left, note right), numbered. */
-.approach {
-  margin-top: calc(var(--gut) * 4);
-}
-/* Quote left; the intro takes the right column, on the shared right edge. */
-.approachHead {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: var(--gut);
-  margin-bottom: calc(var(--gut) * 1.5);
-}
-.approachQuote {
-  margin: 0;
-}
-.approachQuote p {
-  margin: 0;
-  max-width: 26ch;
-  font-size: clamp(26px, 3.4vw, 52px);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-}
-.approachIntro {
-  max-width: 30ch;
-  margin: 0;
-  text-align: right;
-  text-wrap: balance;
-  color: var(--color-ink-muted);
-}
-.principles {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.principleName {
-  display: flex;
-  align-items: baseline;
-  gap: 0.3em;
-  font-size: 4.2vw;
-}
-.principleNum {
-  font-family: var(--font-display);
-  font-size: 15px;
-  letter-spacing: 0;
-  color: var(--color-ink-muted);
-}
-
 /* The sheet's last word: on to Contact. */
 .aboutNext {
   display: block;
   width: fit-content;
-  margin-top: calc(var(--gut) * 4);
+  margin-top: calc(var(--gut) * 2.5);
   color: var(--color-ink);
   transition: color 0.2s;
 }
@@ -598,7 +549,7 @@
   display: flex;
   align-items: center;
   gap: 0.15em;
-  font-size: 6vw;
+  font-size: 3.6vw;
   line-height: 0.9;
 }
 
@@ -757,18 +708,9 @@
 @media (max-width: 760px) {
   .interestName,
   .aboutNextWord {
-    font-size: 12vw;
-  }
-  .principleName {
     font-size: 9vw;
   }
-  .approachHead {
-    grid-template-columns: 1fr;
-  }
-  .approachIntro {
-    max-width: none;
-    text-align: left;
-  }
+
   /* Interests: caption under the word. */
   .interest {
     flex-direction: column;
@@ -777,6 +719,7 @@
   }
   .interestNote {
     max-width: none;
+    white-space: normal;
     margin: 2px 0 18px;
     padding-bottom: 0;
     text-align: left;

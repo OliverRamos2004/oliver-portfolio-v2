@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ABOUT, STUDIO } from "@/data/home";
-import { APPROACH, portrait, studio } from "@/data/about";
+import { portrait, studio } from "@/data/about";
 import { EMAIL, MALDEN, RESUMES } from "@/data/contact";
 import { SOCIALS } from "@/data/socials";
 import { Icon } from "@/components/ui/Icon";
@@ -75,27 +75,6 @@ export function AboutSheet() {
           <SocialIcons />
         </div>
       </div>
-      {/* Approach: his manifesto on modernism and brutalism, in his words. */}
-      <section className={styles.approach} aria-label="Approach">
-        <p className={styles.aboutLabel}>Approach</p>
-        <div className={styles.approachHead}>
-          <blockquote className={styles.approachQuote}>
-            <p>&ldquo;{APPROACH.quote}&rdquo;</p>
-          </blockquote>
-          <p className={styles.approachIntro}>{APPROACH.intro}</p>
-        </div>
-        <ol className={styles.principles}>
-          {APPROACH.principles.map((p, i) => (
-            <li key={p.id} className={styles.interest}>
-              <span className={`display ${styles.principleName}`}>
-                <span className={styles.principleNum}>{String(i + 1).padStart(2, "0")}</span>
-                {p.label}
-              </span>
-              <span className={styles.interestNote}>{p.note}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
       <AboutInterests />
       {/* The end of the scroll: a next step instead of a dead end. */}
       <a className={styles.aboutNext} href="#contact" data-cursor="Open">

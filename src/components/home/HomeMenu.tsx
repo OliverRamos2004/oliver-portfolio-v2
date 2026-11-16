@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { HOME, type MenuItem, type SheetKey } from "@/data/home";
 import { FillWord } from "./RollName";
-import { HomeLab, useLabOn, type HomeLabState } from "./HomeLab";
 import { Sheet, type SheetFrom } from "./Sheet";
 import { Cursor } from "./Cursor";
 import styles from "./home.module.css";
@@ -36,10 +35,6 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
   useEffect(() => {
     openRef.current = open;
   }, [open]);
-
-  // Lab (?lab): a treatment for the resting name.
-  const labOn = useLabOn();
-  const [lab, setLab] = useState<HomeLabState>({ palette: "wineInk", width: "medium", duration: "8" });
 
   const current = open ?? hovered;
   const active = items.find((item) => item.key === current);
@@ -137,14 +132,7 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
     <div className={styles.root} data-tone={tone} data-surface={tone}>
       <main className={styles.home} inert={open !== null}>
         {/* At rest the name fills the screen; a hovered word's title rolls in over it. */}
-        <FillWord
-          text={active?.label ?? HOME.name}
-          variant={labOn ? "hard" : "none"}
-          duration={Number(lab.duration)}
-          palette={lab.palette}
-          width={lab.width}
-          restText={HOME.name}
-        />
+        <FillWord text={active?.label ?? HOME.name} restText={HOME.name} />
         <h1 className="sr-only">Oliver Ramos</h1>
 
         <nav
@@ -196,7 +184,6 @@ export function HomeMenu({ items, sheets }: HomeMenuProps) {
         </Sheet>
       ))}
 
-      <HomeLab value={lab} onChange={setLab} />
       <Cursor />
     </div>
   );

@@ -22,26 +22,13 @@ const STACK_GAP = 0.02;
  * shape on a tall screen. Decorative: the page's <h1> carries the name for
  * screen readers.
  */
-/** Lab (?lab): a color animation for the resting name. */
-export type FillVariant = "none" | "hard";
-
 export function FillWord({
   text,
-  variant = "none",
   restText,
-  duration = 8,
-  palette = "wineInk",
-  width = "medium",
 }: {
   text: string;
-  variant?: FillVariant;
-  /** The resting text the variant applies to. */
+  /** The resting text (the name): it cycles colors in hard wipes (2026-11-15). */
   restText?: string;
-  /** Seconds per loop. */
-  duration?: number;
-  /** Lab: band palette and width (data attributes the CSS reads). */
-  palette?: string;
-  width?: string;
 }) {
   const { ref, shown } = useRoll(text, 0);
   const stack = useMediaQuery(STACK_QUERY);
@@ -49,7 +36,7 @@ export function FillWord({
   const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const lines = shown ? (stack ? shown.split(" ") : [shown]) : [];
   const key = lines.join("|");
-  const v: FillVariant = shown && shown === restText ? variant : "none";
+  const resting = Boolean(shown) && shown === restText;
 
   useLayoutEffect(() => {
     const box = boxRef.current;
@@ -97,10 +84,7 @@ export function FillWord({
     <div
       ref={boxRef}
       className={styles.fillBox}
-      data-variant={v}
-      data-palette={palette}
-      data-width={width}
-      style={{ "--dur": `${duration}s` } as React.CSSProperties}
+      data-rest={resting}
       aria-hidden="true"
     >
       {shown && (

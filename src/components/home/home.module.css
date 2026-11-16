@@ -103,72 +103,49 @@
   color: #7d2a38;
 }
 /* The mask and the rolling layer cover the whole box, so a stacked name rolls as one. */
-/* Lab (?lab): hard color bands moving down the resting name. The base is
-   the tonal color (or ink, reversed); --b1/--b2 are the band colors and
-   --w1/--w2 their widths, in percent of a gradient four times the word's height. */
-.fillBox[data-variant="hard"] .fillWord {
-  --base: #e2dccf;
-  --b1: var(--color-ink);
-  --b2: var(--color-signal);
-  /* Band widths are % of the gradient, which is 4x the word's height:
-     medium ≈ 35% of the letters. */
-  --w1: 5%;
-  --w2: 3.5%;
+/* The resting name cycles its color (2026-11-15): it holds each color for
+   4s, then a full-height band of the next wipes through: tonal → wine → ink
+   → tonal. The gradient is four word-heights of solid color with hard
+   edges; moving it one segment is one wipe. 3 × (4s hold + 0.7s wipe). */
+.fillBox[data-rest="true"] .fillWord {
   color: transparent;
   background-image: linear-gradient(
     to bottom,
-    var(--base) 0 25%,
-    var(--b1) 25% calc(25% + var(--w1)),
-    var(--b2) calc(25% + var(--w1)) calc(25% + var(--w1) + var(--w2)),
-    var(--base) calc(25% + var(--w1) + var(--w2)) 100%
+    #e2dccf 0 25%,
+    var(--color-signal) 25% 50%,
+    var(--color-ink) 50% 75%,
+    #e2dccf 75% 100%
   );
   background-size: 100% 400%;
   -webkit-background-clip: text;
   background-clip: text;
-  animation: fill-flow var(--dur) linear infinite;
+  animation: name-wipe 14.1s infinite;
 }
-@keyframes fill-flow {
-  from {
+@keyframes name-wipe {
+  0%,
+  28.37% {
+    background-position: 0 0%;
+    animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  33.33%,
+  61.7% {
+    background-position: 0 33.333%;
+    animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  66.67%,
+  95.04% {
+    background-position: 0 66.667%;
+    animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  100% {
     background-position: 0 100%;
   }
-  to {
-    background-position: 0 0%;
-  }
-}
-.fillBox[data-palette="ink"] .fillWord {
-  --b1: var(--color-ink);
-  --b2: var(--color-ink);
-}
-.fillBox[data-palette="wine"] .fillWord {
-  --b1: var(--color-signal);
-  --b2: var(--color-signal);
-}
-.fillBox[data-palette="inkRose"] .fillWord {
-  --b1: var(--color-ink);
-  --b2: var(--color-signal-on-ink);
-}
-.fillBox[data-palette="wineRose"] .fillWord {
-  --b1: var(--color-signal);
-  --b2: var(--color-signal-on-ink);
-}
-.fillBox[data-palette="reverse"] .fillWord {
-  --base: var(--color-ink);
-  --b1: #e2dccf;
-  --b2: var(--color-signal);
-}
-.fillBox[data-width="thin"] .fillWord {
-  --w1: 2%;
-  --w2: 1.5%;
-}
-.fillBox[data-width="wide"] .fillWord {
-  --w1: 10%;
-  --w2: 7%;
 }
 @media (prefers-reduced-motion: reduce) {
-  .fillBox:not([data-variant="none"]) .fillWord {
-    animation: none !important;
-    color: #e2dccf !important;
-    background: none !important;
+  .fillBox[data-rest="true"] .fillWord {
+    animation: none;
+    background: none;
+    color: #e2dccf;
   }
 }
 .fillMask {
@@ -685,45 +662,6 @@
 }
 .links a:hover {
   color: var(--color-signal-on-ink);
-}
-
-/* Temporary lab panel (?lab only). */
-.lab {
-  position: fixed;
-  z-index: 30;
-  display: grid;
-  gap: 4px;
-  padding: 10px 12px;
-  background: var(--color-ink);
-  color: var(--color-paper);
-  font-family: var(--font-display);
-  font-size: 13px;
-}
-.lab button {
-  padding: 2px 8px;
-  text-align: left;
-}
-.lab button[data-on="true"] {
-  background: var(--color-paper);
-  color: var(--color-ink);
-}
-.homeLab {
-  top: var(--gut);
-  right: var(--gut);
-}
-.labRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  max-width: 300px;
-}
-.labGroup + .labGroup {
-  margin-top: 8px;
-}
-.labGroup > span {
-  display: block;
-  margin-bottom: 4px;
-  opacity: 0.6;
 }
 
 /* ---------- cursor (fine pointers only; mounted by <Cursor>) ---------- */

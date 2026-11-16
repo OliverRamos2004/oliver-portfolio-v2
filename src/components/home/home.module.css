@@ -145,6 +145,24 @@
   background: radial-gradient(circle, var(--color-paper) 0 42%, transparent 46%) 0 0 / 8px 8px;
   pointer-events: none;
 }
+/* Gradients (palette only): fill the letters through a vertical gradient. */
+.fillBox[data-variant="fadeInk"] .fillWord,
+.fillBox[data-variant="tonalInk"] .fillWord,
+.fillBox[data-variant="tonalWine"] .fillWord {
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+/* Ink at the top, gone by the bottom, so the menu and caption sit on paper. */
+.fillBox[data-variant="fadeInk"] .fillWord {
+  background-image: linear-gradient(to bottom, var(--color-ink) 10%, #e2dccf 78%, var(--color-paper) 100%);
+}
+.fillBox[data-variant="tonalInk"] .fillWord {
+  background-image: linear-gradient(to bottom, #e2dccf 15%, var(--color-ink) 100%);
+}
+.fillBox[data-variant="tonalWine"] .fillWord {
+  background-image: linear-gradient(to bottom, #e2dccf 15%, var(--color-signal) 100%);
+}
 .fillMask {
   position: absolute;
   inset: 0;

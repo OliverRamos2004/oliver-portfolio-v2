@@ -14,6 +14,9 @@ const OPTIONS: [FillVariant, string][] = [
   ["construct", "Exposed construction"],
   ["react", "Letters that react"],
   ["print", "Raw print"],
+  ["fadeInk", "Gradient: ink fade"],
+  ["tonalInk", "Gradient: tonal to ink"],
+  ["tonalWine", "Gradient: tonal to wine"],
 ];
 
 export function HomeLab({ value, onChange }: { value: FillVariant; onChange: (v: FillVariant) => void }) {

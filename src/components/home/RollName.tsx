@@ -22,7 +22,15 @@ const STACK_GAP = 0.02;
  * shape on a tall screen. Decorative: the page's <h1> carries the name for
  * screen readers.
  */
-export type FillVariant = "none" | "hollow" | "construct" | "react" | "print";
+export type FillVariant =
+  | "none"
+  | "hollow"
+  | "construct"
+  | "react"
+  | "print"
+  | "fadeInk"
+  | "tonalInk"
+  | "tonalWine";
 
 interface Guides {
   lines: { top: number; base: number; xs: number[] }[];

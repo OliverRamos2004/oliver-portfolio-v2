@@ -103,6 +103,48 @@
   color: #7d2a38;
 }
 /* The mask and the rolling layer cover the whole box, so a stacked name rolls as one. */
+/* Lab variants for the resting name (?lab). */
+/* Hollow: ink outline, open centers (the stroke scales with the stretch). */
+.fillBox[data-variant="hollow"] .fillWord {
+  color: transparent;
+  -webkit-text-stroke: 1.6px var(--color-ink);
+}
+/* Construction: the type's own lines, drawn over the tonal letters. */
+.fillGuides {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+.fillGuides line {
+  stroke: var(--color-ink);
+  stroke-width: 1;
+  opacity: 0.55;
+}
+.fillGuides text {
+  font-family: var(--font-display);
+  font-size: 11px;
+  fill: var(--color-ink-muted);
+}
+/* React: each letter scales on its own, from the baseline. */
+.fillLetter {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  transition: transform 0.25s var(--ease);
+}
+/* Print: a halftone screen. Paper-colored dots over the whole box (unscaled,
+   so they stay round) punch through darker tonal letters; on the paper
+   itself they vanish. */
+.fillBox[data-variant="print"] .fillWord {
+  color: #cbc1ad;
+}
+.fillBox[data-variant="print"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, var(--color-paper) 0 42%, transparent 46%) 0 0 / 8px 8px;
+  pointer-events: none;
+}
 .fillMask {
   position: absolute;
   inset: 0;
@@ -617,6 +659,31 @@
 }
 .links a:hover {
   color: var(--color-signal-on-ink);
+}
+
+/* Temporary lab panel (?lab only). */
+.lab {
+  position: fixed;
+  z-index: 30;
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-display);
+  font-size: 13px;
+}
+.lab button {
+  padding: 2px 8px;
+  text-align: left;
+}
+.lab button[data-on="true"] {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+.homeLab {
+  top: var(--gut);
+  right: var(--gut);
 }
 
 /* ---------- cursor (fine pointers only; mounted by <Cursor>) ---------- */

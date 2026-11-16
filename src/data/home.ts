@@ -83,7 +83,16 @@ export const STUDIO = {
   title: ["Malden", "Studios"],
   body: "A design and development studio in Austin. Shopify stores and websites for brands with something to say. Launch builds in about two weeks.",
   cta: "maldenstudios.com",
+  // Hover descriptions (Claude drafts; Oliver's to edit).
+  notes: {
+    title: "Founded 2025. Shopify stores and websites, designed and built in Austin.",
+    cta: "Opens the studio site in a new tab.",
+    shot: "The Malden Studios home page.",
+  },
 } as const;
+
+/** Hover description on the Contact sheet's giant email (Claude draft). */
+export const CONTACT_NOTE = "Click to copy. I answer within a day.";
 
 export const ABOUT = {
   title: ["Hello, I'm", "Oliver."],

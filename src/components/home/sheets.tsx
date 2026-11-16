@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { ABOUT, STUDIO } from "@/data/home";
+import { ABOUT, CONTACT_NOTE, STUDIO } from "@/data/home";
 import { portrait, studio } from "@/data/about";
 import { EMAIL, MALDEN } from "@/data/contact";
 import { SOCIALS } from "@/data/socials";
 import { Icon } from "@/components/ui/Icon";
 import { AboutInterests } from "./AboutInterests";
 import { CopyEmail } from "./CopyEmail";
+import { HoverNote } from "./HoverNote";
 import { SocialGlyph, SocialIcons } from "./SocialIcons";
 import { WorkList, type WorkRow } from "./WorkList";
 import styles from "./home.module.css";
@@ -21,24 +22,30 @@ export function StudioSheet() {
   return (
     <div className={`${styles.studio} ${styles.fill}`}>
       <div>
-        <h2 className={`display ${styles.studioTitle}`}>
-          {STUDIO.title[0]}
-          <br />
-          {STUDIO.title[1]}
-        </h2>
+        <HoverNote note={STUDIO.notes.title}>
+          <h2 className={`display ${styles.studioTitle}`}>
+            {STUDIO.title[0]}
+            <br />
+            {STUDIO.title[1]}
+          </h2>
+        </HoverNote>
         <p className={styles.lede}>{STUDIO.body}</p>
-        <a className={styles.btn} href={MALDEN.href} target="_blank" rel="noopener" data-cursor="Visit ↗">
-          {STUDIO.cta} <Icon name="out" className={styles.out} />
-        </a>
+        <HoverNote note={STUDIO.notes.cta}>
+          <a className={styles.btn} href={MALDEN.href} target="_blank" rel="noopener" data-cursor="Visit ↗">
+            {STUDIO.cta} <Icon name="out" className={styles.out} />
+          </a>
+        </HoverNote>
       </div>
-      <Image
-        className={styles.shot}
-        src={studio.image.src}
-        alt={studio.image.alt}
-        width={studio.image.width}
-        height={studio.image.height}
-        sizes="(max-width: 760px) 100vw, 47vw"
-      />
+      <HoverNote note={STUDIO.notes.shot}>
+        <Image
+          className={styles.shot}
+          src={studio.image.src}
+          alt={studio.image.alt}
+          width={studio.image.width}
+          height={studio.image.height}
+          sizes="(max-width: 760px) 100vw, 47vw"
+        />
+      </HoverNote>
     </div>
   );
 }
@@ -85,7 +92,9 @@ export function ContactSheet() {
   return (
     <div className={`${styles.contact} ${styles.fill}`}>
       {/* Email on top, links pinned to the bottom (.contact is space-between). */}
-      <CopyEmail email={EMAIL} />
+      <HoverNote note={CONTACT_NOTE}>
+        <CopyEmail email={EMAIL} />
+      </HoverNote>
       <div className={styles.links}>
         <a href={`mailto:${EMAIL}`} data-cursor="↗">
           <SocialGlyph name="Email" />

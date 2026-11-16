@@ -103,49 +103,43 @@
   color: #7d2a38;
 }
 /* The mask and the rolling layer cover the whole box, so a stacked name rolls as one. */
-/* The resting name cycles its color (2026-11-15): it holds each color for
-   4s, then a full-height band of the next wipes through: tonal → wine → ink
-   → tonal. The gradient is four word-heights of solid color with hard
-   edges; moving it one segment is one wipe. 3 × (4s hold + 0.7s wipe). */
+/* The resting name changes color with no transition (2026-11-15): tonal,
+   wine, ink, 4s each. On desktop the letters below --cut (just above the
+   menu, set by FillWord) stay tonal in every phase, so the menu and caption
+   always sit on tonal. --name-c is registered so it can be animated. */
+@property --name-c {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e2dccf;
+}
 .fillBox[data-rest="true"] .fillWord {
   color: transparent;
   background-image: linear-gradient(
     to bottom,
-    #e2dccf 0 25%,
-    var(--color-signal) 25% 50%,
-    var(--color-ink) 50% 75%,
-    #e2dccf 75% 100%
+    var(--name-c) 0 var(--cut, 100%),
+    #e2dccf var(--cut, 100%) 100%
   );
-  background-size: 100% 400%;
   -webkit-background-clip: text;
   background-clip: text;
-  animation: name-wipe 14.1s infinite;
+  animation: name-color 12s steps(1, end) infinite;
 }
-@keyframes name-wipe {
-  0%,
-  28.37% {
-    background-position: 0 0%;
-    animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+@keyframes name-color {
+  0% {
+    --name-c: #e2dccf;
   }
-  33.33%,
-  61.7% {
-    background-position: 0 33.333%;
-    animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+  33.333% {
+    --name-c: var(--color-signal);
   }
-  66.67%,
-  95.04% {
-    background-position: 0 66.667%;
-    animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+  66.667% {
+    --name-c: var(--color-ink);
   }
   100% {
-    background-position: 0 100%;
+    --name-c: #e2dccf;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .fillBox[data-rest="true"] .fillWord {
     animation: none;
-    background: none;
-    color: #e2dccf;
   }
 }
 .fillMask {

@@ -20,9 +20,21 @@ const anton = Anton({
 });
 
 export const metadata: Metadata = {
-  title: "Oliver Ramos — Creative Technologist & Artist",
-  description:
-    "Portfolio of Oliver Ramos: software systems and generative art at the seam between engineering and craft.",
+  metadataBase: new URL("https://oliver-portfolio-v2.vercel.app"),
+  title: "Oliver Ramos",
+  description: "I build systems for small businesses, and I make things. Based in Austin, TX.",
+  openGraph: {
+    title: "Oliver Ramos",
+    description: "I build systems for small businesses, and I make things.",
+    url: "/",
+    siteName: "Oliver Ramos",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Oliver Ramos",
+    description: "I build systems for small businesses, and I make things.",
+  },
 };
 
 export default function RootLayout({

@@ -66,6 +66,18 @@ export function FillWord({
         const lift = m.fontBoundingBoxAscent - m.actualBoundingBoxAscent;
         const y = padY + i * (slot + gap);
         el.style.transform = `translate(${padX}px, ${y}px) scale(${sx}, ${sy}) translateY(${-lift}px)`;
+        // Desktop: where the menu starts, as a % of this line's box, so the
+        // resting colors stop above it (the rest stays tonal).
+        const nav = stack ? null : box.parentElement?.querySelector("nav");
+        if (nav) {
+          const menuTop = nav.getBoundingClientRect().top - box.getBoundingClientRect().top - 14;
+          const elTop = y - lift * sy;
+          const elH = el.offsetHeight * sy;
+          const cut = Math.max(0, Math.min(100, ((menuTop - elTop) / elH) * 100));
+          el.style.setProperty("--cut", `${cut}%`);
+        } else {
+          el.style.setProperty("--cut", "100%");
+        }
       });
     };
 
@@ -78,7 +90,7 @@ export function FillWord({
       live = false;
       window.removeEventListener("resize", fit);
     };
-  }, [key]);
+  }, [key, stack]);
 
   return (
     <div

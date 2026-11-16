@@ -76,13 +76,7 @@ export function AboutSheet() {
         </div>
       </div>
       <AboutInterests />
-      {/* The end of the scroll: a next step instead of a dead end. */}
-      <a className={styles.aboutNext} href="#contact" data-cursor="Open">
-        <span className={styles.aboutLabel}>Next</span>
-        <span className={`display ${styles.aboutNextWord}`}>
-          Contact <Icon name="next" />
-        </span>
-      </a>
+      <p className={styles.aboutEnd}>[END OF SECTION]</p>
     </div>
   );
 }

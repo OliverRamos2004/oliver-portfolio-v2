@@ -492,65 +492,55 @@
 .about > :last-child {
   margin-bottom: calc(var(--gut) * 2);
 }
+/* One horizontal line of words (wraps on narrow screens). */
 .interestList {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.35em;
   margin: 0;
   padding: 0;
   list-style: none;
+  font-size: 3.6vw;
 }
 .interestName {
-  display: block;
-  font-size: 3.6vw;
-  transition: color 0.2s, transform 0.35s var(--ease);
+  font-size: 1em;
+  line-height: 1;
+  text-align: left;
+  cursor: default;
+  transition: color 0.2s;
 }
 .interestList[data-dim="true"] .interestName {
   color: #d6cfc0;
 }
-.interestList[data-dim="true"] .interest[data-active="true"] .interestName {
+.interestList[data-dim="true"] .interestName[data-active="true"] {
   color: var(--color-ink);
-  transform: translateX(1.4vw);
 }
-/* Row: word left, caption right on the word's baseline (the Work list's
-   pattern), so the section spans the measure. Phones stack them. */
-.interest {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 24px;
-}
-.interestNote {
-  flex: none;
-  /* One line, so every row is the word's height and the list stays even. */
-  white-space: nowrap;
-  padding-bottom: 0.6vw;
+/* The description: fixed bottom right, like the home caption. */
+.interestCap {
+  position: fixed;
+  right: var(--gut);
+  bottom: var(--gut);
+  z-index: 3;
+  max-width: 380px;
+  margin: 0;
   text-align: right;
+  font-size: 17px;
   text-wrap: balance;
-  color: var(--color-ink-muted);
-  transition: color 0.2s;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s, transform 0.35s var(--ease);
+  pointer-events: none;
 }
-.interestList[data-dim="true"] .interest[data-active="true"] .interestNote {
-  color: var(--color-ink);
+.interestCap[data-show="true"] {
+  opacity: 1;
+  transform: none;
 }
 
-/* The sheet's last word: on to Contact. */
-.aboutNext {
-  display: block;
-  width: fit-content;
-  margin-top: calc(var(--gut) * 2.5);
-  color: var(--color-ink);
-  transition: color 0.2s;
-}
-.aboutNext:hover {
-  color: var(--color-signal);
-}
-.aboutNext .aboutLabel {
-  display: block;
-}
-.aboutNextWord {
-  display: flex;
-  align-items: center;
-  gap: 0.15em;
-  font-size: 3.6vw;
-  line-height: 0.9;
+/* The sheet's end mark. */
+.aboutEnd {
+  margin: calc(var(--gut) * 3) 0 0;
+  text-align: center;
+  color: var(--color-ink-muted);
 }
 
 /* Social icons (line). */
@@ -706,24 +696,20 @@
 }
 
 @media (max-width: 760px) {
-  .interestName,
-  .aboutNextWord {
+  .interestList {
     font-size: 9vw;
   }
-
-  /* Interests: caption under the word. */
-  .interest {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-  }
-  .interestNote {
+  /* Phones: the description sits under the words (a fixed corner would
+     cover the end mark on a short sheet). Space is reserved so the end mark
+     doesn't jump when a tap shows it. */
+  .interestCap {
+    position: static;
     max-width: none;
-    white-space: normal;
-    margin: 2px 0 18px;
-    padding-bottom: 0;
+    min-height: 2.9em;
+    margin-top: 12px;
     text-align: left;
   }
+
   /* Phone menu rows are taller (6px tap padding on each word). */
   .root {
     --menu-h: 168px;

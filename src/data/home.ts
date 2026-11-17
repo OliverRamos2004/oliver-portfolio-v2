@@ -22,7 +22,7 @@ export interface MenuItem {
 export const HOME = {
   /** what fills the screen at rest */
   name: "Oliver Ramos",
-  caption: "I build systems for small businesses, and I make things.",
+  caption: "I build systems, create art, ship software, and play drums.",
 } as const;
 
 /**
@@ -61,19 +61,19 @@ export const MENU: readonly MenuItem[] = [
   {
     key: "studio",
     label: "Studio",
-    caption: "My studio. Design-led Shopify stores for brands worth looking at.",
+    caption: "Malden Studios. My creative space, and where I take client work.",
     tone: "signal",
   },
   {
     key: "about",
     label: "About",
-    caption: "CS degree, an eye for design, three years behind the kit.",
+    caption: "Developer, drummer, barber. Based in Austin.",
     tone: "paper",
   },
   {
     key: "contact",
     label: "Contact",
-    caption: "One email. I answer within a day.",
+    caption: "Say hello. Projects, jobs, or just to talk.",
     tone: "ink",
   },
 ];
@@ -85,7 +85,7 @@ export const STUDIO = {
   cta: "maldenstudios.com",
   // Hover descriptions (Claude drafts; Oliver's to edit).
   notes: {
-    title: "Recent: YOSI Archive, Back Issue Supply.",
+    title: "Recent: YOSI Archive.",
     cta: "Opens the studio site in a new tab.",
     shot: "maldenstudios.com",
   },
@@ -98,5 +98,5 @@ export const ABOUT = {
   title: ["Hello, I'm", "Oliver."],
   // Oliver's own bio (from the old /about), minus "I'm Oliver." (the headline),
   // opening with where he's based. Sits bottom right of the first screen.
-  body: "Based in Austin, TX. I have a bachelor's in computer science and an eye for art and design. I love to build things that are both functional and beautiful, and to solve problems in a way that is practical and efficient. My work is a reflection of my own personal journey.",
+  body: "Based in Austin, TX. I have a bachelor's in computer science and an eye for art and design. I love to build things that are both functional and beautiful. I start with the structure and strip it down to what the work needs, then let the details carry it. My work is a reflection of my own personal journey.",
 } as const;

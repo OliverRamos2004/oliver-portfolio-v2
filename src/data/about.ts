@@ -27,9 +27,9 @@ export const portrait = {
  * /about copy (graphic design is new); his to edit.
  */
 export const INTERESTS: readonly { id: string; label: string; caption: string }[] = [
-  { id: "drums", label: "Drums", caption: "Three years behind the kit. Brazilian jazz, funk and rock." },
-  { id: "barbering", label: "Barbering", caption: "A form of art. Four years cutting and styling hair." },
-  { id: "reading", label: "Reading", caption: "Always mid-book. Favorite: Mary Shelley's Frankenstein." },
-  { id: "graphic-design", label: "Graphic design", caption: "Posters, type and identities, mostly for the fun of it." },
+  { id: "drums", label: "Drums", caption: "Three years behind the kit. Rock, soul and Brazilian jazz." },
+  { id: "barbering", label: "Barbering", caption: "Not as often anymore, but the clippers still come out now and then." },
+  { id: "reading", label: "Reading", caption: "Gothic fiction, self-improvement and the classics. Favorite: Frankenstein." },
+  { id: "graphic-design", label: "Graphic design", caption: "Where the eye for design started." },
 ];
 

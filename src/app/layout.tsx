@@ -22,10 +22,10 @@ const anton = Anton({
 export const metadata: Metadata = {
   metadataBase: new URL("https://oliver-portfolio-v2.vercel.app"),
   title: "Oliver Ramos",
-  description: "I build systems for small businesses, and I make things. Based in Austin, TX.",
+  description: "I build systems, create art, ship software, and play drums. Based in Austin, TX.",
   openGraph: {
     title: "Oliver Ramos",
-    description: "I build systems for small businesses, and I make things.",
+    description: "I build systems, create art, ship software, and play drums.",
     url: "/",
     siteName: "Oliver Ramos",
     type: "website",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Oliver Ramos",
-    description: "I build systems for small businesses, and I make things.",
+    description: "I build systems, create art, ship software, and play drums.",
   },
 };
 

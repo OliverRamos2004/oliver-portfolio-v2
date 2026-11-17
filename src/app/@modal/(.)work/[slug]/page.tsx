@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
 import { prds } from "@/data/prds";
-import { CaseSwitch } from "@/components/case/CaseSwitch";
+import { CaseFile } from "@/components/case/CaseFile";
 import { caseName, caseNav } from "@/lib/caseNav";
 
 export default async function InterceptedWorkModal({
@@ -14,5 +14,5 @@ export default async function InterceptedWorkModal({
   if (!project) notFound();
 
   const prd = project.prdId ? prds.find((p) => p.id === project.prdId) : undefined;
-  return <CaseSwitch project={project} prd={prd} name={caseName(slug)} {...caseNav(slug)} isOverlay />;
+  return <CaseFile project={project} prd={prd} name={caseName(slug)} {...caseNav(slug)} isOverlay />;
 }

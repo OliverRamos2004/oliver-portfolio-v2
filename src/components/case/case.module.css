@@ -1,0 +1,527 @@
+/* Case file (lab 2026-11-16): A / B / C layouts on one shell.
+   Same system as the home sheets: Anton heads, Archivo text, no hairlines,
+   no radii, color fields separate things. */
+
+.case {
+  --gut: clamp(16px, 2.8vw, 40px);
+  --ease: cubic-bezier(0.7, 0, 0.2, 1);
+  --bar: calc(var(--gut) + 44px);
+  --muted: var(--color-ink-muted);
+  --tonal: #e2dccf;
+  --field: var(--color-paper-sunk);
+  --hover: var(--color-signal);
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--bg);
+  color: var(--fg);
+}
+.case[data-tone="paper"] {
+  --bg: var(--color-paper);
+  --fg: var(--color-ink);
+}
+.case[data-tone="ink"] {
+  --bg: var(--color-ink);
+  --fg: var(--color-paper);
+  --muted: var(--color-paper-muted);
+  --tonal: #2a2724;
+  --field: #1d1b19;
+  --hover: var(--color-signal-on-ink);
+}
+
+/* ---------- shell ---------- */
+.bar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 3;
+  height: var(--bar);
+  padding: 0 var(--gut);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+}
+.where {
+  font-family: var(--font-head);
+  text-transform: uppercase;
+  font-size: clamp(28px, 2.6vw, 40px);
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+  transition: color 0.2s;
+}
+.where:hover {
+  color: var(--hover);
+}
+.controls {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 0.8vw, 12px);
+}
+.controls > * {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.controls > *:hover {
+  color: var(--hover);
+}
+.icon {
+  display: block !important;
+  width: 30px;
+  height: 30px;
+}
+.scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--bar) var(--gut) 0;
+}
+
+/* ---------- shared parts ---------- */
+.lineWide,
+.lineNarrow {
+  display: block;
+  white-space: nowrap;
+  width: max-content;
+}
+.lineNarrow {
+  display: none;
+}
+@media (max-width: 700px) {
+  .lineWide {
+    display: none;
+  }
+  .lineNarrow {
+    display: block;
+  }
+}
+
+.dek {
+  margin: 0;
+  max-width: 560px;
+  font-size: clamp(19px, 1.9vw, 28px);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 20px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.facts dt {
+  color: var(--muted);
+}
+.facts dd {
+  margin: 0;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 18px;
+  background: var(--fg);
+  color: var(--bg);
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+.btn:hover {
+  background: var(--color-signal);
+  color: var(--color-paper);
+}
+.out {
+  width: 0.85em;
+  height: 0.85em;
+}
+.story {
+  max-width: 760px;
+}
+.lede {
+  margin: 0;
+  font-size: clamp(18px, 1.6vw, 23px);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+.notes {
+  display: grid;
+  gap: 32px;
+  margin: 56px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.notes li {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+}
+.num {
+  color: var(--hover);
+  font-size: 15px;
+  padding-top: 4px;
+}
+.noteHead {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1;
+}
+.notes p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.55;
+  max-width: 620px;
+}
+.prd {
+  max-width: 760px;
+}
+.contain {
+  object-fit: contain;
+}
+.shot {
+  margin: 0;
+}
+.shotImg {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+.shot figcaption,
+.phone figcaption {
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--muted);
+}
+.phones {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--gut);
+}
+.phone {
+  margin: 0;
+}
+
+/* Facts | story: the closing two columns on A and C. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 2fr;
+  gap: var(--gut);
+  padding: clamp(64px, 9vw, 140px) 0 0;
+}
+.splitSide {
+  align-self: start;
+  position: sticky;
+  top: var(--gut);
+}
+
+/* Next project: the closing word, big. */
+.end {
+  margin: clamp(80px, 12vw, 180px) 0 0;
+  padding-bottom: var(--gut);
+}
+.end a {
+  display: block;
+}
+.endLabel {
+  display: block;
+  font-size: 15px;
+  color: var(--muted);
+}
+.endName {
+  display: block;
+  font-family: var(--font-head);
+  text-transform: uppercase;
+  font-size: 13vw;
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+  color: var(--tonal);
+  transition: color 0.25s;
+}
+.end a:hover .endName {
+  color: var(--fg);
+}
+
+/* ---------- A: the name fills the first screen ---------- */
+.heroA {
+  min-height: calc(100svh - var(--bar));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: var(--gut);
+}
+.titleA {
+  margin: 0 0 clamp(20px, 3vw, 48px);
+  line-height: 0.82;
+}
+.heroFoot {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--gut);
+}
+.heroMeta {
+  margin: 0;
+  font-size: 17px;
+  color: var(--muted);
+  text-align: right;
+}
+/* Shots: full-bleed color fields, edge to edge. */
+.bleed {
+  margin: 0 calc(-1 * var(--gut));
+}
+.bleed > .shot {
+  background: var(--field);
+  padding: clamp(32px, 6vw, 110px) clamp(16px, 9vw, 180px);
+}
+.bleed > .shot figcaption {
+  text-align: right;
+}
+.bleed > .phones {
+  background: var(--tonal);
+  padding: clamp(32px, 6vw, 110px) var(--gut);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+/* ---------- B: pinned left, shots bled right ---------- */
+.gridB {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gut);
+  margin-right: calc(-1 * var(--gut));
+}
+.pinB {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: calc(100svh - var(--bar));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: var(--gut);
+}
+.titleB {
+  margin: 0;
+  line-height: 0.82;
+}
+.pinFoot {
+  display: grid;
+  gap: 28px;
+}
+.pinFoot .links {
+  margin: 0;
+}
+.flowB {
+  min-width: 0;
+}
+.shotsB {
+  display: grid;
+  gap: 4px;
+}
+.shotsB > .shot {
+  background: var(--field);
+  padding: clamp(24px, 4vw, 64px);
+}
+.shotsB > .phones {
+  background: var(--tonal);
+  padding: clamp(24px, 4vw, 64px);
+}
+.flowText {
+  padding: clamp(56px, 7vw, 110px) var(--gut) 0 0;
+}
+
+/* ---------- C: contact sheet ---------- */
+.headC {
+  display: grid;
+  gap: clamp(20px, 3vw, 40px);
+  padding: clamp(24px, 5vw, 80px) 0 clamp(40px, 5vw, 72px);
+}
+.titleC {
+  margin: 0;
+  line-height: 0.82;
+  /* Takes two thirds of the width so the sheet below reads as the subject. */
+  width: 66%;
+}
+.headFoot {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 1fr);
+  gap: var(--gut);
+  align-items: end;
+}
+.sheetC {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
+}
+.cell {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  cursor: pointer;
+  background: var(--field);
+  padding: clamp(12px, 1.6vw, 24px);
+}
+.cell[data-device="phone"] {
+  grid-column: span 2;
+}
+.cellImg {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: auto 0;
+  transition: transform 0.35s var(--ease);
+}
+.cell:hover .cellImg {
+  transform: scale(1.03);
+}
+.cellCap {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.cellCap span {
+  color: var(--fg);
+}
+.fold {
+  margin-top: 72px;
+}
+.fold summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-head);
+  text-transform: uppercase;
+  font-size: clamp(32px, 4.4vw, 64px);
+  line-height: 0.9;
+  padding: 24px clamp(16px, 2vw, 28px);
+  background: var(--field);
+  transition: color 0.2s;
+}
+.fold summary::-webkit-details-marker {
+  display: none;
+}
+.fold summary:hover {
+  color: var(--hover);
+}
+.plus {
+  position: relative;
+  flex: none;
+  width: 0.6em;
+  height: 0.6em;
+}
+.plus::before,
+.plus::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 4px;
+  margin-top: -2px;
+  transition: transform 0.35s var(--ease);
+}
+.plus::after {
+  transform: rotate(90deg);
+}
+.fold[open] .plus::after {
+  transform: rotate(0deg);
+}
+.fold .prd :global(#prd) {
+  margin-top: 40px;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: var(--bg);
+  display: grid;
+  grid-template-rows: var(--bar) 1fr auto;
+}
+.lbBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--gut);
+}
+.lbCount {
+  margin: 0;
+  font-family: var(--font-head);
+  font-size: clamp(28px, 2.6vw, 40px);
+  line-height: 0.85;
+}
+.lbStage {
+  position: relative;
+  margin: 0 var(--gut);
+  cursor: zoom-out;
+}
+.lbCap {
+  margin: 0;
+  padding: 16px var(--gut) var(--gut);
+  font-size: 15px;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ---------- narrow ---------- */
+@media (max-width: 900px) {
+  .split,
+  .gridB,
+  .headFoot {
+    grid-template-columns: 1fr;
+  }
+  .splitSide,
+  .pinB {
+    position: static;
+  }
+  .gridB {
+    margin-right: 0;
+  }
+  .pinB {
+    height: auto;
+    min-height: calc(100svh - var(--bar));
+    padding-top: 12px;
+  }
+  .shotsB {
+    margin: 0 calc(-1 * var(--gut));
+  }
+  .flowText {
+    padding-right: 0;
+  }
+  .titleC {
+    width: 100%;
+  }
+  .cell {
+    grid-column: span 6;
+  }
+  .cell[data-device="phone"] {
+    grid-column: span 4;
+  }
+  .heroFoot {
+    flex-direction: column;
+    align-items: start;
+  }
+  .heroMeta {
+    text-align: left;
+  }
+}

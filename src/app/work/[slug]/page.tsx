@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
-import { ProjectDrawer } from "@/components/drawer/ProjectDrawer";
-import { RunningHead } from "@/components/layout/RunningHead";
+import { prds } from "@/data/prds";
+import { CaseSwitch } from "@/components/case/CaseSwitch";
+import { caseName, caseNav } from "@/lib/caseNav";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.id }));
@@ -31,10 +32,6 @@ export default async function WorkPage({
   const project = projects.find((p) => p.id === slug);
   if (!project) notFound();
 
-  return (
-    <>
-      <RunningHead />
-      <ProjectDrawer project={project} isOverlay={false} />
-    </>
-  );
+  const prd = project.prdId ? prds.find((p) => p.id === project.prdId) : undefined;
+  return <CaseSwitch project={project} prd={prd} name={caseName(slug)} {...caseNav(slug)} isOverlay={false} />;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,16 @@ import { PrdSection } from "./PrdSection";
 import styles from "./case.module.css";
 
 const EASE = [0.7, 0, 0.2, 1] as const;
+
+/**
+ * Back / next between case files: the outgoing file leaves a note here, so the
+ * incoming one (a fresh mount) knows it's a step, not an open. It then skips
+ * the slide-up, brings its content in from the side it was asked for, and
+ * crossfades from the previous file's tone.
+ */
+type Tone = "ink" | "paper";
+let handoff: { at: number; dir: 1 | -1; tone: Tone } | null = null;
+const HANDOFF_MS = 5000;
 
 const STATUS: Record<ProjectEntry["status"], string> = {
   live: "Live",
@@ -40,7 +50,23 @@ interface CaseFileProps {
 export function CaseFile({ project, prd, name, prev, next, isOverlay }: CaseFileProps) {
   const router = useRouter();
   const reduce = useReducedMotion();
-  const tone = project.part === "craft" ? "ink" : "paper";
+  const tone: Tone = project.part === "craft" ? "ink" : "paper";
+  // Read once on mount: was this file reached by back / next?
+  const [step] = useState(() => (handoff && performance.now() - handoff.at < HANDOFF_MS ? handoff : null));
+  const [shownTone, setShownTone] = useState<Tone>(step?.tone ?? tone);
+  const [leaving, setLeaving] = useState<1 | -1 | null>(null);
+
+  useEffect(() => {
+    handoff = null;
+    // One frame on the previous tone, then the real one, so the background crossfades.
+    const id = requestAnimationFrame(() => setShownTone(tone));
+    return () => cancelAnimationFrame(id);
+  }, [tone]);
+
+  const go = (dir: 1 | -1) => () => {
+    handoff = { at: performance.now(), dir, tone };
+    setLeaving(dir);
+  };
 
   const close = useCallback(() => {
     if (isOverlay) router.back();
@@ -69,11 +95,11 @@ export function CaseFile({ project, prd, name, prev, next, isOverlay }: CaseFile
   return (
     <motion.div
       className={styles.case}
-      data-tone={tone}
+      data-tone={shownTone}
       role={isOverlay ? "dialog" : undefined}
       aria-modal={isOverlay ? true : undefined}
       aria-label={`${name} case file`}
-      initial={isOverlay && !reduce ? { y: "101%" } : false}
+      initial={isOverlay && !reduce && !step ? { y: "101%" } : false}
       animate={{ y: 0 }}
       transition={{ duration: 0.7, ease: EASE }}
     >
@@ -82,10 +108,10 @@ export function CaseFile({ project, prd, name, prev, next, isOverlay }: CaseFile
           Work
         </Link>
         <div className={styles.controls}>
-          <Link href={prev.href} replace={isOverlay} scroll={false} data-cursor={prev.label} aria-label={`Back: ${prev.label}`}>
+          <Link href={prev.href} replace={isOverlay} scroll={false} onClick={go(-1)} data-cursor={prev.label} aria-label={`Back: ${prev.label}`}>
             <Icon name="back" className={styles.icon} />
           </Link>
-          <Link href={next.href} replace={isOverlay} scroll={false} data-cursor={next.label} aria-label={`Next: ${next.label}`}>
+          <Link href={next.href} replace={isOverlay} scroll={false} onClick={go(1)} data-cursor={next.label} aria-label={`Next: ${next.label}`}>
             <Icon name="next" className={styles.icon} />
           </Link>
           <button type="button" onClick={close} data-cursor="Close" aria-label={`Close ${name}`}>
@@ -94,7 +120,13 @@ export function CaseFile({ project, prd, name, prev, next, isOverlay }: CaseFile
         </div>
       </div>
 
-      <div className={styles.scroll}>
+      <div className={styles.scroll} data-leaving={leaving ?? undefined}>
+        <div className={styles.page}>
+        <motion.div
+          initial={step && !reduce ? { opacity: 0, x: step.dir * 56 } : false}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.55, ease: EASE, delay: 0.05 }}
+        >
         <div className={styles.grid}>
           <aside className={styles.pin}>
             <Title className="sr-only">{project.title}</Title>
@@ -169,11 +201,13 @@ export function CaseFile({ project, prd, name, prev, next, isOverlay }: CaseFile
         </div>
 
         <p className={styles.end}>
-          <Link href={next.href} replace={isOverlay} scroll={false} data-cursor="Next">
+          <Link href={next.href} replace={isOverlay} scroll={false} onClick={go(1)} data-cursor="Next">
             <span className={styles.endLabel}>Next</span>
             <span className={styles.endName}>{next.label}</span>
           </Link>
         </p>
+        </motion.div>
+        </div>
       </div>
     </motion.div>
   );

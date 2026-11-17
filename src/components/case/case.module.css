@@ -15,6 +15,8 @@
   z-index: 50;
   background: var(--bg);
   color: var(--fg);
+  /* Back / next between an ink and a paper project crossfades the field. */
+  transition: background-color 0.45s var(--ease), color 0.45s var(--ease);
 }
 .case[data-tone="paper"] {
   --bg: var(--color-paper);
@@ -42,6 +44,7 @@
   align-items: center;
   justify-content: space-between;
   background: var(--bg);
+  transition: background-color 0.45s var(--ease);
 }
 .where {
   font-family: var(--font-head);
@@ -81,6 +84,27 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 0 var(--gut);
+}
+
+/* Back / next: the outgoing file slides away from the direction of travel
+   and fades while the next one loads; the incoming one comes in from the side. */
+.page {
+  transition: opacity 0.2s, transform 0.25s var(--ease);
+}
+.scroll[data-leaving="1"] .page {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+.scroll[data-leaving="-1"] .page {
+  opacity: 0;
+  transform: translateX(40px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .case,
+  .bar,
+  .page {
+    transition: none;
+  }
 }
 
 /* ---------- layout ---------- */

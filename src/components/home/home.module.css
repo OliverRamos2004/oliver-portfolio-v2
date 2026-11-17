@@ -33,38 +33,6 @@
   display: contents;
 }
 
-/* ---------- the name + roll ---------- */
-.stage {
-  position: absolute;
-  top: 11svh;
-  left: var(--gut);
-  right: var(--gut);
-  margin: 0;
-  /* Two lines at line-height .82 end above the menu (~4 rows + gutter) at any height. */
-  font-size: min(23vw, calc((89svh - 260px) / 1.7));
-}
-.line {
-  display: block;
-  overflow: hidden;
-  white-space: nowrap;
-  padding-bottom: 0.02em;
-}
-.roll {
-  display: block;
-  transition: transform 0.26s var(--ease);
-  /* Intro: the name rolls up into place. `backwards` releases the transform
-     when it ends, so the swap engine's inline transforms take over. */
-  animation: roll-in 0.7s var(--ease) 0.15s backwards;
-}
-.line + .line .roll {
-  animation-delay: 0.22s;
-}
-@keyframes roll-in {
-  from {
-    transform: translateY(105%);
-  }
-}
-
 /* ---------- the fill word (hover titles) ----------
    Settings chosen 2026-11-14 in docs/Specs/2026-11-refresh/fill.html (not
    final): Anton, light squish, tonal color, no shadow, the roll.
@@ -790,7 +758,6 @@
 
 /* Reduced motion: instant swaps, no slides. Color changes stay. */
 @media (prefers-reduced-motion: reduce) {
-  .roll,
   .sheet,
   .sheet[data-open="true"],
   .stack,

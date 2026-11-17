@@ -66,8 +66,6 @@ export function AboutSheet() {
           {/* The photo takes the period's place after the name, one cap height tall. */}
           <span className={styles.imLine}>
             {ABOUT.title[1].replace(/\.$/, "")}
-            {/* The wrap carries its own paper, so the blend never shows white
-                while the sheet slides in. */}
             <span className={styles.figWrap}>
               <Image
                 className={styles.aboutFig}
@@ -76,6 +74,16 @@ export function AboutSheet() {
                 width={portrait.width}
                 height={portrait.height}
                 sizes="(max-width: 760px) 40vw, 30vw"
+                unoptimized
+              />
+              <Image
+                className={`${styles.aboutFig} ${styles.aboutFigColor}`}
+                src={portrait.colorSrc}
+                alt=""
+                width={portrait.width}
+                height={portrait.height}
+                sizes="(max-width: 760px) 40vw, 30vw"
+                unoptimized
               />
             </span>
           </span>

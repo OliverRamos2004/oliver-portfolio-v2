@@ -150,10 +150,12 @@
 }
 .word {
   padding: 1px 0;
-  font-size: clamp(22px, 2.4vw, 34px);
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  font-family: var(--font-head);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(24px, 2.6vw, 38px);
+  line-height: 1.05;
+  letter-spacing: 0;
   text-align: left;
   cursor: pointer;
 }
@@ -448,9 +450,8 @@
 /* Self-contained blend: the wrap's paper is the backdrop, so the photo's
    white drops out even while the sheet is mid-slide on its own layer. */
 .figWrap {
+  position: relative;
   display: block;
-  background: var(--color-paper);
-  isolation: isolate;
 }
 .aboutFig {
   display: block;
@@ -461,17 +462,20 @@
   aspect-ratio: 0.8;
   object-fit: cover;
   object-position: 92% 100%; /* crop the empty left, behind the head */
-  /* Mono (chosen 2026-11-15 over "dramatic" contrast 1.45). The white
-     background drops into the paper through multiply. No z-index on the
-     heading, so the blend reaches the paper. */
-  filter: grayscale(1) contrast(1.05);
-  mix-blend-mode: multiply;
-  transition: filter 0.45s var(--ease);
+  /* Mono (chosen 2026-11-15). Both files are pre-blended into the paper
+     color (what multiply did), so no CSS filter or blend: iOS Safari dropped
+     the blend and showed the photo's white square (2026-11-16). */
 }
-/* Hover: back to the original color (mouse only). */
+/* The color version sits on top, shown on hover (mouse only). */
+.aboutFigColor {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.45s var(--ease);
+}
 @media (hover: hover) and (pointer: fine) {
-  .figWrap:hover .aboutFig {
-    filter: grayscale(0) contrast(1);
+  .figWrap:hover .aboutFigColor {
+    opacity: 1;
   }
 }
 /* The name, then the bio under it at the right edge. */

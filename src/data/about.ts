@@ -10,15 +10,16 @@ export const studio = {
 
 /**
  * The About sheet's portrait (2026-11-15, "portrait-led"): Oliver in profile,
- * looking up at the name. His own photo on white; the white drops into the
- * paper with mix-blend-mode: multiply, and the dramatic monochrome is a CSS
- * filter (.aboutFig in home.module.css).
+ * looking up at the name. His own photo (profile.png, on white), pre-blended
+ * into the paper color as a mono and a color file (multiply, baked
+ * 2026-11-16 so iOS Safari can't show the white square). Color on hover.
  */
 export const portrait = {
-  src: "/about/profile.png",
+  src: "/about/profile-mono.webp",
+  colorSrc: "/about/profile-color.webp",
   alt: "Oliver Ramos in profile, looking up",
-  width: 976,
-  height: 992,
+  width: 590,
+  height: 600,
 };
 
 /**
